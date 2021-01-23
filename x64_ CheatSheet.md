@@ -6,29 +6,22 @@
 
 | 64 bits | 32 bits | 16 bits | 8 bits |
 |---------|---------|---------|--------|
-| rax | eax | ax | al |
-|-----|-----|----|----|
-| rbx | ebx | bx | bl |
-|-----|-----|----|----|
-|
+| rax | eax | ax | al | |
+| rbx | ebx | bx | bl | |
+| rcx | ecx | cx | cl | |
+| rdx | edx | dx | dl | |
+| rsi | esi | si | sil| Source Index (source for data copies) |
+| rdi | edi | di | dil | Destination Index (destination for data copies) |
+| rsp | esp | sp | spl | Stack Pointer |
+| rip | eip | ip | XX | Instruction Pointer |
+| rbp | ebp | bp | XX | <base Pointer (start of stack) |
+| r8 | r8d | r8w | r8b | General Purpose |
+| ... | ... | ... | ... | General Purpose |
+| r15 | r15d | r15w | r15b | General Purpose |
+|---------|--------|----------|---------|
+
+#### RFLAGS Register
+---
 
 
 
-
-8-byte register Bytes 0-3 Bytes 0-1 Byte 0
-%rax %eax %ax %al
-%rcx %ecx %cx %cl
-%rdx %edx %dx %dl
-%rbx %ebx %bx %bl
-%rsi %esi %si %sil
-%rdi %edi %di %dil
-%rsp %esp %sp %spl
-%rbp %ebp %bp %bpl
-%r8 %r8d %r8w %r8b
-%r9 %r9d %r9w %r9b
-%r10 %r10d %r10w %r10b
-%r11 %r11d %r11w %r11b
-%r12 %r12d %r12w %r12b
-%r13 %r13d %r13w %r13b
-%r14 %r14d %r14w %r14b
-%r15 %r15d %r15w %r15b
