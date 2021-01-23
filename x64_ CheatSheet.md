@@ -18,10 +18,11 @@
 | r8 | r8d | r8w | r8b | General Purpose |
 | ... | ... | ... | ... | General Purpose |
 | r15 | r15d | r15w | r15b | General Purpose |
-|---------|--------|----------|---------|-----------|
 
 #### RFLAGS Register
 ---
 
-
-
+|-------|--------|
+| Bit | 0 |
+| Abbreviation | CF |
+| Description | Carry Flag |
