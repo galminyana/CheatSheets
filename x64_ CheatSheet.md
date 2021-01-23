@@ -4,8 +4,8 @@
 ### Registers
 ---
 
-| 64 bits | 32 bits | 16 bits | 8 bits |
-|---------|---------|---------|--------|
+| 64 bits | 32 bits | 16 bits | 8 bits | Description |
+|---------|---------|---------|--------|-------------|
 | rax | eax | ax | al | |
 | rbx | ebx | bx | bl | |
 | rcx | ecx | cx | cl | |
@@ -18,7 +18,7 @@
 | r8 | r8d | r8w | r8b | General Purpose |
 | ... | ... | ... | ... | General Purpose |
 | r15 | r15d | r15w | r15b | General Purpose |
-|---------|--------|----------|---------|
+|---------|--------|----------|---------|-----------|
 
 #### RFLAGS Register
 ---
