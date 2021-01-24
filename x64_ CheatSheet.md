@@ -53,6 +53,13 @@
 ### Instructions
 ---
 
+#### Comparison and Test Instructions
+---
+| Instruction | Description | 
+|-------------|-------------|
+| cmp Op1, Op2 | Set condition codes according to Op1-Op2 |
+| test Op1, Op2 | Set condition codes according to Op1 & Op2 |
+
 #### Jump Instructions
 ---
 
