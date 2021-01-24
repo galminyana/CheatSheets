@@ -49,3 +49,35 @@
 | 22‑31 | Reserved |
 | RFLAGS |
 | 32‑63	| Reserved | 
+
+### Instructions
+---
+
+#### Jump Instructions
+---
+
+| Instruction | Description | Condition Code | 
+|-------------|-------------|----------------|
+| jmp label | Jump to label |
+| je / jz label | Jump if equal/zero | ZF |
+| jne / jnz label | Jump if not equal/nonzero | ~ZF |
+| js label | Jump if negative | SF |
+| jns label | Jump if nonnegative | ~SF |
+| jg / jnle label | Jump if greater (signed) |
+| jge / jnl label | Jump if greater or equal (signed) |
+| jl / jnge label | Jump if less (signed) |
+| jle / jng label | Jump if less or equal |
+| ja / jnbe label |Jump if above (unsigned) |
+| jae / jnb label | Jump if above or equal (unsigned) | ~CF |
+| jb / jnae label | Jump if below (unsigned) | CF |
+| jbe / jna label | Jump if below or equal (unsigned) | CF|ZF |
+
+
+
+
+
+
+
+
+
+
