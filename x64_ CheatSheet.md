@@ -121,6 +121,14 @@ section .bss
 | leave | Set RSP to RBP, then pop top of stack into RBP |
 | ret | Pop return address from stack and jump there |
 
+#### Bit Shift Instructions
+---
+| Instruction | Description | Opcode | Instruction Size | 
+|-------------|-------------|--------|------------------|
+| rol / rcl |
+| ror / rcr |
+| shl / sal |
+| shr / sar |
 
 ### System Calls
 ---
