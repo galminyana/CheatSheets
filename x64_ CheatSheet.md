@@ -21,23 +21,24 @@
 
 #### RFLAGS Register
 ---
-| Bit #	| Abbreviation | Description	| 
+| Bit #	| Abbreviation | Description	|
+|-------|--------------|--------------|
 | FLAGS |
-0	| CF | Carry flag	|
-1	| Reserved | always 1 in EFLAGS	| 
-2	|	PF | Parity flag |	
-3	| Reserved |	 
-4	| AF | Adjust flag |	
-5	| Reserved | 
-6	| ZF | Zero flag |	
-7	| SF | Sign flag |	
-8	| TF | Trap flag (single step) |	
-9	| IF | Interrupt enable flag |	
-10 | DF	| Direction flag |	
-11 | OF	| Overflow flag |	
-12-13 | IOPL | I/O privilege level (286+ only) |
-14 | NT	| Nested task flag (286+ only) |
-15 | Reserved. | Always 1 on 8086 and 186,always 0 on later models |	 
+| 0	| CF | Carry flag	|
+| 1	| Reserved | always 1 in EFLAGS	| 
+| 2	|	PF | Parity flag |	
+| 3	| Reserved |	 
+| 4	| AF | Adjust flag |	
+| 5	| Reserved | 
+| 6	| ZF | Zero flag |	
+| 7	| SF | Sign flag |	
+| 8	| TF | Trap flag (single step) |	
+| 9	| IF | Interrupt enable flag |	
+| 10 | DF	| Direction flag |	
+| 11 | OF	| Overflow flag |	
+| 12-13 | IOPL | I/O privilege level (286+ only) |
+| 14 | NT	| Nested task flag (286+ only) |
+| 15 | Reserved. | Always 1 on 8086 and 186,always 0 on later models |	 
 | EFLAGS |
 | 16 | RF	| Resume flag (386+ only) |	
 | 17 | VM	| Virtual 8086 mode flag (386+ only) |	
