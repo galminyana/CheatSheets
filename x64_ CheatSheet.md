@@ -125,8 +125,10 @@ section .bss
 ---
 | Instruction | Description | Opcode | Instruction Size | 
 |-------------|-------------|--------|------------------|
-| rol / rcl |
-| ror / rcr |
+| rol | Rotate Left. _bit_0_ <- _bit_64_ and CF <- _bit_64_ |
+| ror | Rotate Right. _bit_64_ <- bit_0 and CF <- _bit_64_ |
+| rcl | Shift Left. _bit_0_ <- CF, then CF <- _bit_64_ |
+| rcr | Shift Right._ bit_64_ <- CF, then CF <- _bit_0_ |
 | shl / sal |
 | shr / sar |
 
