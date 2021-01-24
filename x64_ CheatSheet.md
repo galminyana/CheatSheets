@@ -78,18 +78,28 @@ section .bss
 ### Instructions
 ---
 
+#### Moving Data Instructions
+---
+| Instruction | Description | Opcode | Instruction Size |
+|-------------|-------------|--------|------------------|
+| mov _op1, op2_ | Mov _op2_ into _op1_ |
+| lea _op1, op2_ | Load Effective Address of _op2_ into _op1_ |
+| xchg _op1, op2_ | 
+|
+|
+
 #### Comparison and Test Instructions
 ---
-| Instruction | Description | 
-|-------------|-------------|
+| Instruction | Description | Opcode | Instruction Size |
+|-------------|-------------|--------|------------------|
 | cmp Op1, Op2 | Set condition codes according to Op1-Op2 |
 | test Op1, Op2 | Set condition codes according to Op1 & Op2 |
 
 #### Jump Instructions
 ---
 
-| Instruction | Description | Condition Code | 
-|-------------|-------------|----------------|
+| Instruction | Description | Condition Code | Opcode | Instruction Size |
+|-------------|-------------|----------------|--------|------------------|
 | jmp label | Jump to label |
 | je / jz label | Jump if equal/zero | ZF |
 | jne / jnz label | Jump if not equal/nonzero | ~ZF |
@@ -106,8 +116,8 @@ section .bss
 
 #### Procedure Call instructions
 ---
-| Instruction | Description | 
-|-------------|-------------|
+| Instruction | Description | Opcode | Instruction Size | 
+|-------------|-------------|--------|------------------|
 | call label | Push return address and jump to label | 
 | call @ |Push return address and jump to specified location |
 | leave | Set RSP to RBP, then pop top of stack into RBP |
