@@ -85,41 +85,39 @@ section .bss
 | mov _op1, op2_ | Mov _op2_ into _op1_ |
 | lea _op1, op2_ | Load Effective Address of _op2_ into _op1_ |
 | xchg _op1, op2_ | 
-|
-|
 
 #### Comparison and Test Instructions
 ---
 | Instruction | Description | Opcode | Instruction Size |
 |-------------|-------------|--------|------------------|
-| cmp Op1, Op2 | Set condition codes according to Op1-Op2 |
-| test Op1, Op2 | Set condition codes according to Op1 & Op2 |
+| cmp _Op1, Op2_ | Set condition codes according to Op1-Op2 |
+| test _Op1, Op2_ | Set condition codes according to Op1 & Op2 |
 
 #### Jump Instructions
 ---
 
 | Instruction | Description | Condition Code | Opcode | Instruction Size |
 |-------------|-------------|----------------|--------|------------------|
-| jmp label | Jump to label |
-| je / jz label | Jump if equal/zero | ZF |
-| jne / jnz label | Jump if not equal/nonzero | ~ZF |
-| js label | Jump if negative | SF |
-| jns label | Jump if nonnegative | ~SF |
-| jg / jnle label | Jump if greater (signed) |
-| jge / jnl label | Jump if greater or equal (signed) |
-| jl / jnge label | Jump if less (signed) |
-| jle / jng label | Jump if less or equal |
-| ja / jnbe label |Jump if above (unsigned) |
-| jae / jnb label | Jump if above or equal (unsigned) | ~CF |
-| jb / jnae label | Jump if below (unsigned) | CF |
-| jbe / jna label | Jump if below or equal (unsigned) | CF \| ZF |
+| jmp _label_ | Jump to label |
+| je / jz _label_ | Jump if equal/zero | ZF |
+| jne / jnz _label_ | Jump if not equal/nonzero | ~ZF |
+| js _label_ | Jump if negative | SF |
+| jns _label_ | Jump if nonnegative | ~SF |
+| jg / jnle _label_ | Jump if greater (signed) |
+| jge / jnl _label_ | Jump if greater or equal (signed) |
+| jl / jnge _label_ | Jump if less (signed) |
+| jle / jng _label_ | Jump if less or equal |
+| ja / jnbe _label_ |Jump if above (unsigned) |
+| jae / jnb _label_ | Jump if above or equal (unsigned) | ~CF |
+| jb / jnae _label_ | Jump if below (unsigned) | CF |
+| jbe / jna _label_ | Jump if below or equal (unsigned) | CF \| ZF |
 
 #### Procedure Call instructions
 ---
 | Instruction | Description | Opcode | Instruction Size | 
 |-------------|-------------|--------|------------------|
-| call label | Push return address and jump to label | 
-| call @ |Push return address and jump to specified location |
+| call _label_ | Push return address and jump to label | 
+| call _@_ |Push return address and jump to specified location |
 | leave | Set RSP to RBP, then pop top of stack into RBP |
 | ret | Pop return address from stack and jump there |
 
