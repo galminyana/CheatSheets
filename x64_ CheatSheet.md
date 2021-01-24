@@ -89,6 +89,17 @@
 | ret | Pop return address from stack and jump there |
 
 
+### System Calls
+---
+Values returned in RAX.
+Registers:
+- RAX : System Call Number
+- RDI : Argument 1
+- RSI : Argument 2
+- RDX : Argument 3
+- R10 : Argument 4
+- R8 : Argument 5
+- R9 : Argument 6
 
 
 
