@@ -132,6 +132,13 @@ section .bss
 | shl / sal |
 | shr / sar |
 
+#### Loop Instruction
+---
+| Instruction | Description | Opcode | Instruction Size | 
+|-------------|-------------|--------|------------------|
+| loop _label_ | rcx -= rcx, if rcx != 0 jumps to _label_ |
+
+
 ### System Calls
 ---
 Values returned in RAX.
