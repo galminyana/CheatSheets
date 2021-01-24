@@ -1,0 +1,6 @@
+## msfvenom CheatSheet
+---
+---
+
+### List Payloads
+---
