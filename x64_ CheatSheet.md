@@ -1,6 +1,31 @@
 ## Intel x64 CheatSheet
 ---
 ---
+### Template
+---
+```asm
+global _start
+section .text
+
+_start:
+
+   Code
+
+section .data
+
+   Initialized Variables
+
+section .bss
+
+   Uninitialized Variables
+```
+#### Compile and Link
+```bash
+# nasm -f elf64 file.nasm -o file.o
+# ld file.o -o file
+# ld -N file.o -o file     <== Option -N allows program to read/write in .text
+```
+
 ### Registers
 ---
 
