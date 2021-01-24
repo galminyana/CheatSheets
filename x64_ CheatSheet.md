@@ -1,6 +1,12 @@
 ## Intel x64 CheatSheet
 ---
 ---
+
+| aa | bbb | ccc | ddd | | ee | ff | gg | hh |
+|----|-----|-----|-----| |----|-----|-----|-----|
+|a|a|a|a|                |a|a|a|a|
+|q|q|q|q|                |a|a|a|a|
+
 ### Template
 ---
 ```asm
@@ -144,13 +150,13 @@ section .bss
 ---
 Values returned in RAX.
 Registers:
-- RAX : System Call Number
-- RDI : Argument 1
-- RSI : Argument 2
-- RDX : Argument 3
-- R10 : Argument 4
-- R8 : Argument 5
-- R9 : Argument 6
+- **RAX** : System Call Number
+- **RDI** : Argument 1
+- **RSI** : Argument 2
+- **RDX** : Argument 3
+- **R10** : Argument 4
+- **R8** : Argument 5
+- **R9** : Argument 6
 
 ### Referencing Variables
 ---
