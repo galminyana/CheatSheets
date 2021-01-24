@@ -52,9 +52,9 @@ Example: `/opt/metasploit-framework/bin/../embedded/framework/msfvenom -p window
 ### Commonly Used Parameters
 ---
 ```markdown
-- **b "\x00\x0a\x0d"**                <== Don't use this bad characters
-- **f c**                             <== Output in C Hex String
-- **e x86/shikata_ga_nai -i 5**       <== Encodes
+-b "\x00\x0a\x0d"                <== Don't use this bad characters
+-f c                             <== Output in C Hex String
+-e x86/shikata_ga_nai -i 5       <== Encodes
 ```
 ### Windows Payloads
 ---
