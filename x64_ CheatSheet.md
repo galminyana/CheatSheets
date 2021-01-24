@@ -2,13 +2,6 @@
 ---
 ---
 
-| aa | bbb | ccc | ddd | 
-|----|-----|-----|-----| 
-|a|a|a|a|               
-|q|q|q|q|
-| ee | ff | gg | hh |
----------------------
-
 ### Template
 ---
 ```asm
@@ -196,6 +189,8 @@ real_start:
        lea rsi, [rel hello_world]
 ```
 
+### Linux x64 Syscalls
+---
 
 
 
