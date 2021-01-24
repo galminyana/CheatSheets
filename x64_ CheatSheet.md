@@ -136,7 +136,8 @@ section .bss
 ---
 | Instruction | Description | Opcode | Instruction Size | 
 |-------------|-------------|--------|------------------|
-| loop _label_ | rcx -= rcx, if rcx != 0 jumps to _label_ |
+| loop _label_ | rcx -= rcx, if rcx != 0 jumps to _label_. If rcx == 0 continues |
+| red _instruction_ | if rcx != 0 execs _instruction_, then decrements rcx. If rcx == 0 continues |
 
 
 ### System Calls
@@ -151,7 +152,41 @@ Registers:
 - R8 : Argument 5
 - R9 : Argument 6
 
+### Referencing Variables
+---
 
+#### JMP-CALL-POP Technique
+```asm
+global _start
+section .text
+
+_start:
+   jmp call_shellcode
+
+shellcode:
+	pop rsi         ; RSI <- @ string 
+	<CODE>
+
+call_shellcode:
+	call shellcode
+	string db “Hello World”
+```
+#### Stack Technique
+---
+Stack String bytes in reverse order. Make **RSI** get **RSP** value, then **RSI** gets the value of @ string
+
+#### Relative Addressing
+---
+```asm
+global _start
+section .text
+_start:
+       jmp real_start
+       hello_world: db "Hello World",0xa
+
+real_start:
+       lea rsi, [rel hello_world]
+```
 
 
 
