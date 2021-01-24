@@ -70,8 +70,16 @@
 | ja / jnbe label |Jump if above (unsigned) |
 | jae / jnb label | Jump if above or equal (unsigned) | ~CF |
 | jb / jnae label | Jump if below (unsigned) | CF |
-| jbe / jna label | Jump if below or equal (unsigned) | CF|ZF |
+| jbe / jna label | Jump if below or equal (unsigned) | CF \| ZF |
 
+#### Procedure Call instructions
+---
+| Instruction | Description | 
+|-------------|-------------|
+| call label | Push return address and jump to label | 
+| call @ |Push return address and jump to specified location |
+| leave | Set RSP to RBP, then pop top of stack into RBP |
+| ret | Pop return address from stack and jump there |
 
 
 
