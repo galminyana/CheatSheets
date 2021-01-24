@@ -57,7 +57,14 @@
 | x/8xb 0x12345678 | Display 8 Hex bytes of memory starting at 0x12345678 |
 
 
-
+### Hook-Stop
+---
+```markup
+(gdb$) define hook-stop
+> _COMMAND_
+< end
+(gdb$)
+```
 
 ### Logging
 ---
