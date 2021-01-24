@@ -32,15 +32,15 @@ section .bss
 
 | 64 bits | 32 bits | 16 bits | 8 bits | Description |
 |---------|---------|---------|--------|-------------|
-| rax | eax | ax | al | |
-| rbx | ebx | bx | bl | |
-| rcx | ecx | cx | cl | |
-| rdx | edx | dx | dl | |
+| rax | eax | ax | al | Accumulator; used to store some calculation results |
+| rbx | ebx | bx | bl | Base; index register for MOVE |
+| rcx | ecx | cx | cl | Counter; count for string operations & shifts |
+| rdx | edx | dx | dl | Datas; port address for IN and OUT |
 | rsi | esi | si | sil| Source Index (source for data copies) |
 | rdi | edi | di | dil | Destination Index (destination for data copies) |
 | rsp | esp | sp | spl | Stack Pointer |
-| rip | eip | ip | XX | Instruction Pointer |
-| rbp | ebp | bp | XX | <base Pointer (start of stack) |
+| rip | eip | ip | ipl | Instruction Pointer |
+| rbp | ebp | bp | bpl | <base Pointer (start of stack) |
 | r8 | r8d | r8w | r8b | General Purpose |
 | ... | ... | ... | ... | General Purpose |
 | r15 | r15d | r15w | r15b | General Purpose |
@@ -94,24 +94,51 @@ section .bss
 | cmp _Op1, Op2_ | Set condition codes according to Op1-Op2 |
 | test _Op1, Op2_ | Set condition codes according to Op1 & Op2 |
 
+#### Arithmetic Instructions
+---
+| Instruction | Description | Opcode | Instruction Size |
+|-------------|-------------|--------|------------------|
+| add _op1, op2_ |
+| sub _op1, op2_ |
+| inc _op1_ |
+| dec _op1_ |
+
+#### Scan Compare Strings
+---
+| Instruction | Description | Opcode | Instruction Size |
+|-------------|-------------|--------|------------------|
+| scasb / scasw / scasd / scasq | Compares al/ax/eax/rax 
+                                  with memory pointed by rdi. 
+				  If equals ZF = 1 |
+|
+|
+
 #### Jump Instructions
 ---
 
 | Instruction | Description | Condition Code | Opcode | Instruction Size |
 |-------------|-------------|----------------|--------|------------------|
-| jmp _label_ | Jump to label |
-| je / jz _label_ | Jump if equal/zero | ZF |
-| jne / jnz _label_ | Jump if not equal/nonzero | ~ZF |
-| js _label_ | Jump if negative | SF |
-| jns _label_ | Jump if nonnegative | ~SF |
-| jg / jnle _label_ | Jump if greater (signed) |
-| jge / jnl _label_ | Jump if greater or equal (signed) |
-| jl / jnge _label_ | Jump if less (signed) |
-| jle / jng _label_ | Jump if less or equal |
-| ja / jnbe _label_ |Jump if above (unsigned) |
-| jae / jnb _label_ | Jump if above or equal (unsigned) | ~CF |
-| jb / jnae _label_ | Jump if below (unsigned) | CF |
-| jbe / jna _label_ | Jump if below or equal (unsigned) | CF \| ZF |
+| jmp _label_ | Jump to label | 
+| je / jz _label_ | Jump if equal/zero | ZF = 0 |
+| jne / jnz _label_ | Jump if not equal/nonzero | ZF = 1 |
+| js _label_ | Jump if negative | SF = 1 |
+| jns _label_ | Jump if nonnegative | SF = 0 |
+| jg / jnle _label_ | Jump if greater (signed) | ZF = 0 and SF = OF |
+| jge / jnl _label_ | Jump if greater or equal (signed) | SF = OF |
+| jl / jnge _label_ | Jump if less (signed) | SF <> OF |
+| jle / jng _label_ | Jump if less or equal | ZF = 1 or SF <> OF |
+| ja / jnbe _label_ |Jump if above (unsigned) | CF = 0 and ZF = 0|
+| jae / jnb _label_ | Jump if above or equal (unsigned) | CF = 0 |
+| jb / jnae _label_ | Jump if below (unsigned) | CF = 1 |
+| jbe / jna _label_ | Jump if below or equal (unsigned) | CF = 1 or ZF = 1 |
+
+#### Loop Instructions
+---
+| Instruction | Description | Opcode | Instruction Size |
+|-------------|-------------|--------|------------------|
+| loop _label_ | Decrements CX and jumps to label if CX <> 0 |
+| loope / loopz _label_ | Decrements CX and jumps to label if CX <> 0 and ZF = 1 |
+| loopne / loopnx _label_ |Decrements CX and jumps to label if CX <> 0 and ZF = 0
 
 #### Procedure Call instructions
 ---
@@ -132,6 +159,14 @@ section .bss
 | rcr | Shift Right._ bit_64_ <- CF, then CF <- _bit_0_ |
 | shl / sal |
 | shr / sar |
+
+#### Misc Instructions
+---
+| Instruction | Description | Opcode | Instruction Size | 
+|-------------|-------------|--------|------------------|
+| sti / cli | Sets IF to 1 or 0 |
+| std / cld | Sets DF to 1 or 0 |
+| stc / cls / cmc | Sets CF to 1, 0 or inverts it |
 
 #### Loop Instruction
 ---
@@ -189,9 +224,24 @@ real_start:
        lea rsi, [rel hello_world]
 ```
 
+### View / Create Shellcode from `.o`
+---
+```bash
+# objdump -M intel -d FILE.o
+```
+```bash
+# echo “\"$(objdump -d FILE.o | grep '[0-9a-f]:' | 
+              cut -d$'\t' -f2 | grep -v 'file' | tr -d " \n" | sed 's/../\\x&/g')\"""
+```
+
 ### Linux x64 Syscalls
 ---
-
-
+```c
+exit( int)
+fork( pointer)
+read( uint, char*, int)
+write( uint, char*, int)
+open( char *, int, int)
+``` 
 
 
