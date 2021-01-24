@@ -2,7 +2,7 @@
 ---
 ---
 
-```markdown
+```
 **MsfVenom - a Metasploit standalone payload generator.**
 Also a replacement for msfpayload and msfencode.
 Usage: `/opt/metasploit-framework/bin/../embedded/framework/msfvenom [options] <var=val>`
