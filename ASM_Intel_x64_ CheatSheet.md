@@ -2,7 +2,7 @@
 ---
 ---
 
-### Template
+### Program Template
 ---
 ```asm
 global _start
