@@ -20,13 +20,22 @@ section .bss
 
    Uninitialized Variables
 ```
-#### Compile and Link
+### Compile, Link, Shellcode
 ```bash
 # nasm -f elf64 file.nasm -o file.o
 # ld file.o -o file
 # ld -N file.o -o file     <== Option -N allows program to read/write in .text
 ```
-
+#### View 
+---
+```bash
+# objdump -M intel -d FILE.o
+```
+#### Generate Shellcode One Liner
+```bash
+# echo “\"$(objdump -d FILE.o | grep '[0-9a-f]:' | 
+              cut -d$'\t' -f2 | grep -v 'file' | tr -d " \n" | sed 's/../\\x&/g')\"""
+```
 ### Registers
 ---
 
@@ -85,7 +94,7 @@ section .bss
 |-------------|-------------|--------|------------------|
 | mov _op1, op2_ | Mov _op2_ into _op1_ |
 | lea _op1, op2_ | Load Effective Address of _op2_ into _op1_ |
-| xchg _op1, op2_ | 
+| xchg _op1, op2_ | _op1_ <- _op2_ and _op2_ <- _op1_ |
 
 #### Comparison and Test Instructions
 ---
@@ -98,20 +107,19 @@ section .bss
 ---
 | Instruction | Description | Opcode | Instruction Size |
 |-------------|-------------|--------|------------------|
-| add _op1, op2_ |
-| sub _op1, op2_ |
-| inc _op1_ |
-| dec _op1_ |
+| add _op1, op2_ | _op1_ <- (_op1_ + _op2_) |
+| sub _op1, op2_ | _op1_ <- (_op1_ - _op2_) |
+| inc _op1_ | _op1_ <- (_op1_ + 1) |
+| dec _op1_ | _op1_ <- (_op1_ + 1) |
 
-#### Scan Compare Strings
+#### Scan / Compare / Copy Strings
 ---
 | Instruction | Description | Opcode | Instruction Size |
 |-------------|-------------|--------|------------------|
-| scasb / scasw / scasd / scasq | Compares al/ax/eax/rax 
-                                  with memory pointed by rdi. 
-				  If equals ZF = 1 |
-|
-|
+| scasb / scasw / scasd / scasq | Compares al/ax/eax/rax with memory pointed by rdi. If equals ZF = 1 |
+| cmpsb / cmpsw / cmpsd / cmpsq | [rsi] <- [rdi] |
+| lodsb / lodsw / lodsd / lodsq | rax <- [rsi] |
+| movsb / movsw / movsd / movsq | [rdi] <- [rsi] |
 
 #### Jump Instructions
 ---
@@ -222,16 +230,6 @@ _start:
 
 real_start:
        lea rsi, [rel hello_world]
-```
-
-### View / Create Shellcode from `.o`
----
-```bash
-# objdump -M intel -d FILE.o
-```
-```bash
-# echo “\"$(objdump -d FILE.o | grep '[0-9a-f]:' | 
-              cut -d$'\t' -f2 | grep -v 'file' | tr -d " \n" | sed 's/../\\x&/g')\"""
 ```
 
 ### Linux x64 Syscalls
