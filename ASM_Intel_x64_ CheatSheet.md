@@ -1,7 +1,32 @@
 ## Intel x64 CheatSheet
 ---
+- [Intel x64 CheatSheet](#intel-x64-cheatsheet)
+  * [Program Template](#program-template)
+  * [Compile, Link, Shellcode](#compile--link--shellcode)
+    + [View](#view)
+    + [Generate Shellcode One Liner](#generate-shellcode-one-liner)
+  * [Registers](#registers)
+    + [RFLAGS Register](#rflags-register)
+  * [Instructions](#instructions)
+    + [Moving Data Instructions](#moving-data-instructions)
+    + [Comparison and Test Instructions](#comparison-and-test-instructions)
+    + [Arithmetic Instructions](#arithmetic-instructions)
+    + [Scan / Compare / Copy Strings](#scan---compare---copy-strings)
+    + [Jump Instructions](#jump-instructions)
+    + [Loop Instructions](#loop-instructions)
+    + [Procedure Call instructions](#procedure-call-instructions)
+    + [Bit Shift Instructions](#bit-shift-instructions)
+    + [Misc Instructions](#misc-instructions)
+    + [Loop Instruction](#loop-instruction)
+  * [System Calls](#system-calls)
+  * [Referencing Variables](#referencing-variables)
+    + [JMP-CALL-POP Technique](#jmp-call-pop-technique)
+    + [Stack Technique](#stack-technique)
+    + [Relative Addressing](#relative-addressing)
+  * [Linux x64 Syscalls](#linux-x64-syscalls)
+  * [Calling Assembly Function from C](#calling-assembly-function-from-c)
+  * [Calling C Function from Assembly](#calling-c-function-from-assembly)
 ---
-
 ### Program Template
 ---
 ```asm
