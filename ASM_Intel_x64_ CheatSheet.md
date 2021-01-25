@@ -10,7 +10,7 @@
   * [Moving Data Instructions](#moving-data-instructions)
   * [Comparison and Test Instructions](#comparison-and-test-instructions)
   * [Arithmetic Instructions](#arithmetic-instructions)
-  * [Scan / Compare / Copy Strings](#scan---compare---copy-strings)
+  * [Scan / Compare / Copy Strings](#scan--compare--copy-strings)
   * [Jump Instructions](#jump-instructions)
   * [Loop Instructions](#loop-instructions)
   * [Procedure Call instructions](#procedure-call-instructions)
