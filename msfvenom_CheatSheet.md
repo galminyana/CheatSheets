@@ -1,5 +1,32 @@
 ## msfvenom CheatSheet
 ---
+- [msfvenom CheatSheet](#msfvenom-cheatsheet)
+  * [List](#list)
+  * [Show Payload Options](#show-payload-options)
+  * [Commonly Used Parameters](#commonly-used-parameters)
+  * [Windows Payloads](#windows-payloads)
+    + [Reverse Shell](#reverse-shell)
+    + [Bind Shell](#bind-shell)
+    + [CMD Shell](#cmd-shell)
+    + [Enoder](#enoder)
+    + [Into Executable](#into-executable)
+  * [Linux Payloads](#linux-payloads)
+    + [Reverse Shell](#reverse-shell-1)
+    + [Bind Shell](#bind-shell-1)
+  * [MAC Payloads](#mac-payloads)
+    + [Reverse Shell](#reverse-shell-2)
+    + [Bind Shell](#bind-shell-2)
+  * [Scripting Payloads](#scripting-payloads)
+    + [Python Reverse Shell](#python-reverse-shell)
+    + [Bash Reverse](#bash-reverse)
+  * [Web Payloads](#web-payloads)
+    + [PHP](#php)
+      - [Reverse Shell](#reverse-shell-3)
+    + [ASP](#asp)
+      - [Reverse Shell](#reverse-shell-4)
+    + [WAR](#war)
+      - [Reverse Shell](#reverse-shell-5)
+  * [Metasploit Handler](#metasploit-handler)
 ---
 
 ```markdown
