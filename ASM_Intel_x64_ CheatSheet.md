@@ -262,3 +262,44 @@ add:
   mov eax, [esp + 8]
   ret
 ```
+```bash
+# nasm -f elf add.nasm -o add.o
+# gcc -Wall main.c add.o -o main
+```
+### Calling C Function from Assembly
+---
+```c
+int add (int op1, int op2) {
+	return a+b;
+}
+```
+```asm
+extern add
+extern printf
+extern exit
+
+global start
+
+section .data
+	format: db "%d", 10, 0
+
+section .text
+	push 2
+	push 1
+	call add
+	
+	push eax
+	push format
+	call printf
+	
+	push 0
+	call exit
+```
+```bash
+# gcc -Wall -c add.c -o add
+# nasm -f main.asm -o main.o
+# ld main.o add.o -lc -I /lib/ld-linux.so.2
+```
+
+
+
