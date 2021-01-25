@@ -242,4 +242,23 @@ write( uint, char*, int)
 open( char *, int, int)
 ``` 
 
+### Calling Assembly Function from C
+---
+```c
+#include <stdio.h>
 
+int add(int op1, int op2);
+
+void(main(void) {
+	printf("%d", add(1,2));
+}
+```
+```asm
+global add
+section data
+section .text
+add: 
+  mov eax, [esp + 4]
+  mov eax, [esp + 8]
+  ret
+```
