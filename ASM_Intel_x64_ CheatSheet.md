@@ -207,7 +207,7 @@ section .bss
 | Instruction | Description | Opcode | Instruction Size | 
 |-------------|-------------|--------|------------------|
 | loop _label_ | rcx -= rcx, if rcx != 0 jumps to _label_. If rcx == 0 continues |
-| red _instruction_ | if rcx != 0 execs _instruction_, then decrements rcx. If rcx == 0 continues |
+| rep _instruction_ | if rcx != 0 execs _instruction_, then decrements rcx. If rcx == 0 continues |
 
 
 ### System Calls
