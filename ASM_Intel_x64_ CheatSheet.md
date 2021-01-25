@@ -1,7 +1,7 @@
 ## Intel x64 CheatSheet
 ---
 - [Program Template](#program-template)
-- [Compile, Link, Shellcode](#compile--link--shellcode)
+- [Compile, Link, Shellcode](#compile-link-shellcode)
   * [View](#view)
   * [Generate Shellcode One Liner](#generate-shellcode-one-liner)
 - [Registers](#registers)
