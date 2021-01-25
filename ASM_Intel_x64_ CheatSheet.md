@@ -57,6 +57,7 @@ section .bss
 # objdump -M intel -d FILE.o
 ```
 #### Generate Shellcode One Liner
+---
 ```bash
 # echo “\"$(objdump -d FILE.o | grep '[0-9a-f]:' | 
               cut -d$'\t' -f2 | grep -v 'file' | tr -d " \n" | sed 's/../\\x&/g')\"""
