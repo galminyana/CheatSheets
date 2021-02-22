@@ -10,7 +10,33 @@
 | `logging IP` | Sends syslogs to the IP address |
 | `logging command` | Enables local command logging |
 
-
+#### Time
+```markup
+timesync sntp
+sntp unicast
+sntp server priority 1 10.1.0.12 --> oobm si aplica
+time daylight-time-rule western-europe
+time timezone 60
+```
+#### SNMPv3
+```markup
+snmpv3 enable 
+snmpv3 user SNMP_USER auth sha PASSWD priv aes PASSWD
+snmpv3 group operatorauth user "SNMP_USER" sec-model ver3
+no snmpv3 user initial
+snmpv3 only
+no snmp-server community public
+snmp-server response-source dst-ip-of-request
+snmp-server contact "EMAIL" location "LOCATION" 
+ip authorized-managers 10.1.0.0 255.255.0.0 access manager
+```
+### Firmware
+---
+#### From USB 
+```markup
+copy usb flash WC_16_08_0001.swi primary
+boot system flash primary
+```
 
 ### Information
 ---
