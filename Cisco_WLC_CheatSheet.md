@@ -25,7 +25,7 @@
 ### WLC Upgrade
 ---
 ```markup
-transfer download datatype code
+(Cisco Controller) >transfer download datatype code
 
 (Cisco Controller) >transfer download filename AIR-CT5500-K9-8-3-143-0.aes
 
@@ -50,58 +50,32 @@ This may take some time.
 Are you sure you want to start? (y/N) y
 
 FTP Code transfer starting.
-
 FTP receive complete... extracting components.
-
 Checking Version Built.
-
 Image version check passed.
-
 Informing the standby to start the transfer download process
-
 Waiting for the Transfer & Validation result from Standby.
-
 Standby - Standby receive complete... extracting components.
-
 Standby - Checking Version Built.
-
 Standby - Image version check passed.
-
 Executing backup script.
-
 Writing new RTOS to flash disk.
-
 Standby - Writing new FP to flash disk.
-
 Writing new FP to flash disk.
-
 Standby - Writing new AP Image Bundle to flash disk.
-
 Writing new AP Image Bundle to flash disk.
-
 Writing AVC Files to flash disk.
-
 Standby - Writing AVC Files to flash disk.
-
 Executing fini script.
-
 Reading AP IMAGE version info.
-
 FTP File transfer successful on Active Controller
-
 Standby - Executing fini script.
-
 File transfer is successful 
-
 Reboot the controller for update to complete 
-
 Optionally, pre-download the image to APs before rebooting to reduce network downtime.
-
 Transfer Download complete on Active & Standby
-(Cisco Controller) >
 (Cisco Controller) >config ap image predownload primary all
 (Cisco Controller) >show ap image all
-
 Total number of APs.............................. 42
 Number of APs
 	Initiated....................................... 0
@@ -110,17 +84,12 @@ Number of APs
 	Completed predownloading........................ 42
 	Not Supported................................... 0
 	Failed to Predownload........................... 0
-
                                                  Predownload     Predownload                                  Flexconnect
 AP Name            Primary Image  Backup Image   Status          Version        Next Retry Time  Retry Count  Predownload
 ------------------ -------------- -------------- --------------- -------------- ---------------- ------------ ---------
 AP_XXX             8.0.152.0      8.3.143.0      Complete        8.3.143.0      NA               NA          
-
---More-- or (q)uit
 (Cisco Controller) >config ap image swap all
-
 (Cisco Controller) >show ap image all
-
 Total number of APs.............................. 42
 Number of APs
 	Initiated....................................... 0
@@ -129,21 +98,16 @@ Number of APs
 	Completed predownloading........................ 42
 	Not Supported................................... 0
 	Failed to Predownload........................... 0
-
                                                  Predownload     Predownload                                  Flexconnect
 AP Name            Primary Image  Backup Image   Status          Version        Next Retry Time  Retry Count  Predownload
 ------------------ -------------- -------------- --------------- -------------- ---------------- ------------ ---------
 AP_XXX             8.3.143.0      8.0.152.0      Complete        8.3.143.0      NA               NA          
-
 (Cisco Controller) >show boot
 Primary Boot Image............................... 8.3.143.0 (default)
 Backup Boot Image................................ 8.0.152.0 (active)
-
 (Cisco Controller) >reset system both 
-
 The system has unsaved changes.
 Would you like to save them now? (y/N) y
-
 Configuration Saved!
 System will now restart! 
 ```
