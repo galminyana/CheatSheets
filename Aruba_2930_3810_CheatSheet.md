@@ -1,7 +1,18 @@
 ## Aruba CheatSheet (HP Procurve)
 ---
 ---
-### Informative
+
+### Various Configs
+---
+| Command | Description |
+|---------|-------------|
+| `hostname NAME` | Sets the switch hostname |
+| `logging IP` | Sends syslogs to the IP address |
+| `logging command` | Enables local command logging |
+
+
+
+### Information
 ---
 
 | Command | Description |
@@ -18,9 +29,14 @@
 | `encrypt-credentials` | Encrypts the included credentials |
 | `password non-plaintext-sha2`| Credentils are encrypted using SHA256 |
 
-### Hardening
+### Console Timeouts
 ---
-#### DHCP- Snooping
+| Command | Description |
+|---------|-------------|
+| `console idle-timeout SECS` | Disconects iddle session after SECS seconds |
+| `console idle-timeout serial-usb SECS` | |
+
+### DHCP- Snooping
 ---
 | Command | Description |
 |---------|-------------|
@@ -31,7 +47,7 @@
 | `sh dhcp-snooping binding` | Shows dhcp snooping bindings information |
 | `sh dhcp-snooping server-details` | DHCP snooping server details |
 
-#### Loop-Protect
+### Loop-Protect
 ---
 | Command | Description |
 |---------|-------------|
@@ -41,9 +57,23 @@
 | `loop-protect trap loop-detected` | Sends a Trap when loop detected |
 | `sh loop-protect [PORT]` | Shows loop protction info [for the port] |
 
-#### Client Tracker
+### Client Tracker
 ---
 | Command | Description |
 |---------|-------------|
 | `ip client-tracker`| |
 | `ip client-tracker probe-delay SEC` | Delays ARP probes by SEC seconds | 
+
+### Drop IPv6 Traffic
+---
+1- Create access list to DROP IPv6:
+```markup
+ipv6 access-list "DROP-ALL-V6"
+  10 deny ipv6 ::/0 ::/0
+ exit
+ ```
+ 2- Apply ACL to interfaces
+ ```markup
+ipv6 access-group "DROP-ALL-V6" in
+ipv6 access-group "DROP-ALL-V6" out
+``` 
