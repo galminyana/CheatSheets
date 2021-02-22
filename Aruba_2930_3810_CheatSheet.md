@@ -14,7 +14,7 @@
 ```markup
 timesync sntp
 sntp unicast
-sntp server priority 1 10.1.0.12 --> oobm si aplica
+sntp server priority 1 IP
 time daylight-time-rule western-europe
 time timezone 60
 ```
@@ -101,5 +101,4 @@ ipv6 access-list "DROP-ALL-V6"
  2- Apply ACL to interfaces
  ```markup
 ipv6 access-group "DROP-ALL-V6" in
-ipv6 access-group "DROP-ALL-V6" out
 ``` 
