@@ -62,7 +62,7 @@
 ```markup
 (gdb$) define hook-stop
 > _COMMAND_
-< end
+> end
 (gdb$)
 ```
 
