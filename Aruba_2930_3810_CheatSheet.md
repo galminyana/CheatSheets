@@ -41,3 +41,9 @@
 | `loop-protect trap loop-detected` | Sends a Trap when loop detected |
 | `sh loop-protect [PORT]` | Shows loop protction info [for the port] |
 
+#### Client Tracker
+---
+| Command | Description |
+|---------|-------------|
+| `ip client-tracker`| |
+| `ip client-tracker probe-delay SEC` | Delays ARP probes by SEC seconds | 
