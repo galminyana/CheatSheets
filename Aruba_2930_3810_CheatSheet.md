@@ -123,6 +123,7 @@ Can mirror per switch port, VLAN, or mac addresses.
 ```
  - SESSION: ID for the session, value 1-4
  - PORT: Switch port to send mirrored traffic
+
 2- Assign the monitored ports, vlans or mac addresses to the created mirroring session. This will send the traffic to the PORT assigned in previous step:
  - By port: The traffic from a switch port sent to the mirror session
 ```markup
