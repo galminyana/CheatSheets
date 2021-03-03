@@ -121,17 +121,17 @@ Can mirror per switch port, VLAN, or mac addresses.
 - Create the mirror and assign the local mirroring port:
 
 ```markup
-(Switch)# mirror SESSION port PORT [name NAME]
+(Switch)# mirror SESSION_ID port PORT [name NAME]
 ```
 
-Where SESSION stands for ID for the session, value 1-4, and PORT stands for Switch port to send mirrored traffic
+Where SESSION_ID stands for ID for the session, value 1-4, and PORT stands for Switch port to send mirrored traffic
 
 - Assign the monitored ports, vlans or mac addresses to the created mirroring session. This will send the traffic to the PORT assigned in previous step:
 
   - By port: The traffic from a switch port sent to the mirror session
   - By VLAN: Traffic from a VLAN sent to the mirror session
   - By mac-address: All traffic from the mac address sent to the session
-  -     
+
 ```markup
 (Switch)# interface {port | trunk | mesh} monitor all {in | out | both} mirror {session-# | name-str} [{session-# | name-str}] [{session-# | name-str}] | [{session-# | name-str}] [no-tag-added]
 
@@ -140,3 +140,18 @@ Where SESSION stands for ID for the session, value 1-4, and PORT stands for Swit
 (switch)# monitor mac mac-addr [src | dest | both] mirror {session-# | name-str} [{session-# | name-str}] [{session-# | name-str}] [{session-# | name-str}]
 ```
 #### Remote Mirroring
+
+- Source Switch
+
+  - Create the session, assign the source ip address and source udp port used in the source switch and assign the destination ip address of the remote switch:
+```markup
+mirror SESSION_ID [name name-str] remote ip src-ip src-udp-port dst-ip [truncation]
+``` 
+
+  - Assign the monitored ports, vlans or mac addresses to any of the created remote port mirroring sessions:
+```markup
+interface {port | trunk | mesh} monitor all {in | out | both} mirror {session-# | name-str} [{session-# | name-str}] [{session-# | name-str}] | [{session-# | name-str}] [no-tag-added]
+```
+
+- Destination Switch
+  - 
