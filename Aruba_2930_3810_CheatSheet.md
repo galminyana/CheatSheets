@@ -117,14 +117,15 @@ ipv6 access-group "DROP-ALL-V6" in
 ---
 #### Local Mirroring
 Can mirror per switch port, VLAN, or mac addresses.
-1.- Create he mirror and assign the local mirroring port:
+
+1) Create he mirror and assign the local mirroring port:
 ```markup
 (Switch)# mirror SESSION port PORT [name NAME]
 ```
  - SESSION: ID for the session, value 1-4
  - PORT: Switch port to send mirrored traffic
 
-2.- Assign the monitored ports, vlans or mac addresses to the created mirroring session. This will send the traffic to the PORT assigned in previous step:
+2) Assign the monitored ports, vlans or mac addresses to the created mirroring session. This will send the traffic to the PORT assigned in previous step:
  - By port: The traffic from a switch port sent to the mirror session
 ```markup
 (Switch)# interface {port | trunk | mesh} monitor all {in | out | both} mirror {session-# | name-str} [{session-# | name-str}] [{session-# | name-str}] | [{session-# | name-str}] [no-tag-added]
