@@ -116,7 +116,6 @@ ipv6 access-group "DROP-ALL-V6" in
 ### Port Mirroring
 ---
 #### Local Mirroring
-Can mirror per switch port, VLAN, or mac addresses.
 
 - Create the mirror and assign the local mirroring port:
 
@@ -149,6 +148,10 @@ Where SESSION_ID stands for ID for the session, value 1-4, and PORT stands for S
 mirror SESSION_ID [name name-str] remote ip src-ip src-udp-port dst-ip [truncation]
 
 interface {port | trunk | mesh} monitor all {in | out | both} mirror {session-# | name-str} [{session-# | name-str}] [{session-# | name-str}] | [{session-# | name-str}] [no-tag-added]
+
+vlan vid-# monitor all {in | out | both} mirror {session-# | name-str} [{session-# | name-str}] [{session-# | name-str}] [{session-# | name-str}]
+
+monitor mac mac-addr [src | dest | both] mirror {session-# | name-str} [{session-# | name-str}] [{session-# | name-str}] [{session-# | name-str}]
 ```
 
 - Destination Switch
