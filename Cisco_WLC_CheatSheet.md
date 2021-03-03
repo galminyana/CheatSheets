@@ -18,9 +18,15 @@
 # show client detail MAC
 # debug client MAC
 ```
-
-
-
+### Add/Remove/Description Disabled clients
+---
+```c
+(Cisco Controller) >config exclusionlist
+add            Creates a local exclusion-list entry.
+delete         Deletes a local exclusion-list entry.
+description    Sets the description for an exclusion-list entry.
+(Cisco Controller) config exclusionlist delete MAC		<== Removes MAC from exclusion list
+```
 
 ### WLC Upgrade
 ---
