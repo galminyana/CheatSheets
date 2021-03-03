@@ -12,6 +12,9 @@
   * [Loop-Protect](#loop-protect)
   * [Client Tracker](#client-tracker)
   * [Drop IPv6 Traffic](#drop-ipv6-traffic)
+  * [Port Mirroring](#port-mirroring)
+    + [Local Mirror](#local-mirroring)
+    + [Remote Mirror](#remote-mirroring)
   
 ### Various Configs
 ---
