@@ -145,6 +145,7 @@ Where SESSION_ID stands for ID for the session, value 1-4, and PORT stands for S
 
   - Create the session, assign the source ip address and source udp port used in the source switch and assign the destination ip address of the remote switch
   - Assign the monitored ports, vlans or mac addresses to any of the created remote port mirroring sessions
+  
 ```markup
 mirror SESSION_ID [name name-str] remote ip src-ip src-udp-port dst-ip [truncation]
 
@@ -152,4 +153,10 @@ interface {port | trunk | mesh} monitor all {in | out | both} mirror {session-# 
 ```
 
 - Destination Switch
-  - 
+  - Use the same parameters (source ip address, source udp port, destination ip address) employed in the source switch configuration, and assign the mirroring port:
+
+```markup
+mirror endpoint ip src-ip src-udp-port dst-ip port exit-port-#
+```
+
+
