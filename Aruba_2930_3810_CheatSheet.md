@@ -122,19 +122,19 @@ Can mirror per switch port, VLAN, or mac addresses.
 ```markup
 (Switch)# mirror SESSION port PORT [name NAME]
 ```
- - SESSION: ID for the session, value 1-4
- - PORT: Switch port to send mirrored traffic
+  - SESSION: ID for the session, value 1-4
+  - PORT: Switch port to send mirrored traffic
 
 2) Assign the monitored ports, vlans or mac addresses to the created mirroring session. This will send the traffic to the PORT assigned in previous step:
- - By port: The traffic from a switch port sent to the mirror session
+  - By port: The traffic from a switch port sent to the mirror session
 ```markup
 (Switch)# interface {port | trunk | mesh} monitor all {in | out | both} mirror {session-# | name-str} [{session-# | name-str}] [{session-# | name-str}] | [{session-# | name-str}] [no-tag-added]
 ```
- - By VLAN: Traffic from a VLAN sent to the mirror session
+  - By VLAN: Traffic from a VLAN sent to the mirror session
 ```markup
 (switch) vlan vid-# monitor all {in | out | both} mirror {session-# | name-str} [{session-# | name-str}] [{session-# | name-str}] [{session-# | name-str}]
 ```
- - By mac-address: All traffic from the mac address sent to the session
+  - By mac-address: All traffic from the mac address sent to the session
 ```markup
 (switch)# monitor mac mac-addr [src | dest | both] mirror {session-# | name-str} [{session-# | name-str}] [{session-# | name-str}] [{session-# | name-str}]
 ```
