@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TipsContents xmlns="http://www.avendasys.com/tipsapiDefs/1.0">
+  <TipsHeader exportTime="Fri Apr 09 11:55:46 CEST 2021" version="6.8"/>
+  <TacacsServiceDictionaries>
+    <TacacsServiceDictionary dispName="AMP:https" name="AMP:https">
+      <ServiceAttribute allowedValuesCsv="Admin,Read-Only Monitoring &amp; Auditing" dataType="String" dispName="role" name="role"/>
+    </TacacsServiceDictionary>
+  </TacacsServiceDictionaries>
+</TipsContents>

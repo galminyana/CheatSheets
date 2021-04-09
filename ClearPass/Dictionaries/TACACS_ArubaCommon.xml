@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TipsContents xmlns="http://www.avendasys.com/tipsapiDefs/1.0">
+  <TipsHeader exportTime="Fri Apr 09 11:58:22 CEST 2021" version="6.8"/>
+  <TacacsServiceDictionaries>
+    <TacacsServiceDictionary dispName="Aruba:Common" name="Aruba:common">
+      <ServiceAttribute allowedValuesCsv="root,read-only,location-api-mgmt,network-operations,guest-provisioning,nbapi-mgmt,ap-provisioning,standard,tacacs-authz,no-access" dataType="String" dispName="Aruba-Admin-Role" name="Aruba-Admin-Role"/>
+    </TacacsServiceDictionary>
+  </TacacsServiceDictionaries>
+</TipsContents>

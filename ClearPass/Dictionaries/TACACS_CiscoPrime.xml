@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TipsContents xmlns="http://www.avendasys.com/tipsapiDefs/1.0">
+  <TipsHeader exportTime="Fri Apr 09 11:56:51 CEST 2021" version="6.8"/>
+  <TacacsServiceDictionaries>
+    <TacacsServiceDictionary dispName="NCS:HTTP" name="NCS:HTTP">
+      <ServiceAttribute dataType="String" dispName="Role0" name="role0"/>
+      <ServiceAttribute dataType="String" dispName="task0" name="task0"/>
+      <ServiceAttribute dataType="String" dispName="task1" name="task1"/>
+      <ServiceAttribute dataType="String" dispName="task2" name="task2"/>
+      <ServiceAttribute dataType="String" dispName="task3" name="task3"/>
+      <ServiceAttribute dataType="String" dispName="task4" name="task4"/>
+      <ServiceAttribute dataType="String" dispName="task5" name="task5"/>
+      <ServiceAttribute dataType="String" dispName="task6" name="task6"/>
+      <ServiceAttribute dataType="String" dispName="task7" name="task7"/>
+      <ServiceAttribute dataType="String" dispName="task8" name="task8"/>
+      <ServiceAttribute dataType="String" dispName="task9" name="task9"/>
+      <ServiceAttribute dataType="String" dispName="task10" name="task10"/>
+      <ServiceAttribute dataType="String" dispName="task11" name="task11"/>
+      <ServiceAttribute dataType="String" dispName="task12" name="task12"/>
+      <ServiceAttribute dataType="String" dispName="task13" name="task13"/>
+      <ServiceAttribute dataType="String" dispName="task14" name="task14"/>
+      <ServiceAttribute dataType="String" dispName="task15" name="task15"/>
+      <ServiceAttribute dataType="String" dispName="task16" name="task16"/>
+      <ServiceAttribute dataType="String" dispName="task17" name="task17"/>
+      <ServiceAttribute dataType="String" dispName="task18" name="task18"/>
+      <ServiceAttribute dataType="String" dispName="task19" name="task19"/>
+      <ServiceAttribute dataType="String" dispName="task20" name="task20"/>
+      <ServiceAttribute dataType="String" dispName="task21" name="task21"/>
+      <ServiceAttribute dataType="String" dispName="task22" name="task22"/>
+      <ServiceAttribute dataType="String" dispName="task23" name="task23"/>
+      <ServiceAttribute dataType="String" dispName="task24" name="task24"/>
+      <ServiceAttribute dataType="String" dispName="task25" name="task25"/>
+      <ServiceAttribute dataType="String" dispName="task26" name="task26"/>
+      <ServiceAttribute dataType="String" dispName="task27" name="task27"/>
+      <ServiceAttribute dataType="String" dispName="task28" name="task28"/>
+      <ServiceAttribute dataType="String" dispName="task29" name="task29"/>
+      <ServiceAttribute dataType="String" dispName="task30" name="task30"/>
+      <ServiceAttribute dataType="String" dispName="task31" name="task31"/>
+      <ServiceAttribute dataType="String" dispName="task32" name="task32"/>
+      <ServiceAttribute dataType="String" dispName="task33" name="task33"/>
+      <ServiceAttribute dataType="String" dispName="task34" name="task34"/>
+      <ServiceAttribute dataType="String" dispName="task35" name="task35"/>
+      <ServiceAttribute dataType="String" dispName="task36" name="task36"/>
+      <ServiceAttribute dataType="String" dispName="task37" name="task37"/>
+      <ServiceAttribute dataType="String" dispName="task38" name="task38"/>
+      <ServiceAttribute dataType="String" dispName="task39" name="task39"/>
+      <ServiceAttribute dataType="String" dispName="task40" name="task40"/>
+      <ServiceAttribute dataType="String" dispName="task41" name="task41"/>
+      <ServiceAttribute dataType="String" dispName="task42" name="task42"/>
+      <ServiceAttribute dataType="String" dispName="task43" name="task43"/>
+      <ServiceAttribute dataType="String" dispName="task44" name="task44"/>
+      <ServiceAttribute dataType="String" dispName="task45" name="task45"/>
+      <ServiceAttribute dataType="String" dispName="task46" name="task46"/>
+      <ServiceAttribute dataType="String" dispName="task47" name="task47"/>
+      <ServiceAttribute dataType="String" dispName="task48" name="task48"/>
+      <ServiceAttribute dataType="String" dispName="task49" name="task49"/>
+      <ServiceAttribute dataType="String" dispName="task50" name="task50"/>
+      <ServiceAttribute dataType="String" dispName="task51" name="task51"/>
+      <ServiceAttribute dataType="String" dispName="task52" name="task52"/>
+      <ServiceAttribute dataType="String" dispName="task53" name="task53"/>
+      <ServiceAttribute dataType="String" dispName="task54" name="task54"/>
+      <ServiceAttribute dataType="String" dispName="task55" name="task55"/>
+      <ServiceAttribute dataType="String" dispName="task56" name="task56"/>
+      <ServiceAttribute dataType="String" dispName="task57" name="task57"/>
+      <ServiceAttribute dataType="String" dispName="task58" name="task58"/>
+      <ServiceAttribute dataType="String" dispName="task59" name="task59"/>
+      <ServiceAttribute dataType="String" dispName="task60" name="task60"/>
+      <ServiceAttribute dataType="String" dispName="task61" name="task61"/>
+      <ServiceAttribute dataType="String" dispName="task62" name="task62"/>
+      <ServiceAttribute dataType="String" dispName="task63" name="task63"/>
+      <ServiceAttribute dataType="String" dispName="task64" name="task64"/>
+      <ServiceAttribute dataType="String" dispName="task65" name="task65"/>
+      <ServiceAttribute dataType="String" dispName="task66" name="task66"/>
+      <ServiceAttribute dataType="String" dispName="task67" name="task67"/>
+      <ServiceAttribute dataType="String" dispName="task68" name="task68"/>
+      <ServiceAttribute dataType="String" dispName="task69" name="task69"/>
+    </TacacsServiceDictionary>
+  </TacacsServiceDictionaries>
+</TipsContents>

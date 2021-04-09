@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TipsContents xmlns="http://www.avendasys.com/tipsapiDefs/1.0">
+  <TipsHeader exportTime="Fri Apr 09 11:55:58 CEST 2021" version="6.8"/>
+  <TacacsServiceDictionaries>
+    <TacacsServiceDictionary dispName="CiscoWLC:Common" name="ciscowlc:common">
+      <ServiceAttribute dataType="String" dispName="Role1" name="role1"/>
+      <ServiceAttribute dataType="String" dispName="Role2" name="role2"/>
+      <ServiceAttribute dataType="String" dispName="Role3" name="role3"/>
+      <ServiceAttribute dataType="String" dispName="Role4" name="role4"/>
+      <ServiceAttribute dataType="String" dispName="Role5" name="role5"/>
+      <ServiceAttribute dataType="String" dispName="Role6" name="role6"/>
+      <ServiceAttribute dataType="String" dispName="Role7" name="role7"/>
+      <ServiceAttribute dataType="String" dispName="Role8" name="role8"/>
+      <ServiceAttribute dataType="String" dispName="Role9" name="role9"/>
+    </TacacsServiceDictionary>
+  </TacacsServiceDictionaries>
+</TipsContents>
