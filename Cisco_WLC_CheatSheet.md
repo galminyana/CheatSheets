@@ -32,17 +32,11 @@ description    Sets the description for an exclusion-list entry.
 ---
 ```markup
 (Cisco Controller) >transfer download datatype code
-
 (Cisco Controller) >transfer download filename AIR-CT5500-K9-8-3-143-0.aes
-
 (Cisco Controller) >transfer download path .
-
 (Cisco Controller) >transfer download serverip 10.240.40.250
-
 (Cisco Controller) >transfer download mode ftp 
-
 (Cisco Controller) >transfer download start
-
 Mode............................................. FTP   
 Data Type........................................ Code          
 FTP Server IP.................................... 10.240.40.250
