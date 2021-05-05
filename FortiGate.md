@@ -32,3 +32,24 @@ set protocol SOCKS-TCP
 set tcp-portrange 3450-3490
 end    
 ```
+### Revert Images
+---
+#### list Flash Partitions
+```markup
+Fortigate# diag sys flash list
+Partition  Image                                     TotalSize(KB)  Used(KB)  Use%  Active
+1          FGT3KD-6.02-FW-build1175-201110                  253871     82125   32%  No
+2          FGT3KD-6.02-FW-build1190-201216                  253871     84802   33%  Yes
+3          EXDB-1.00000                                   14866900    163192    1%  No
+Image build at Dec 16 2020 22:40:34 for b1190
+```
+
+#### Set Boot Partition
+```markup
+FortiGate # exec set-next-reboot primary
+Default image is changed to image# 1
+```
+```markup
+FortiGate # exec set-next-reboot secondary
+Image# 2 is already the default image.
+```
