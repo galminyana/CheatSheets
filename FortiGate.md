@@ -34,7 +34,7 @@ end
 ```
 ### Revert Images
 ---
-#### list Flash Partitions
+#### List Flash Partitions
 ```markup
 Fortigate# diag sys flash list
 Partition  Image                                     TotalSize(KB)  Used(KB)  Use%  Active
