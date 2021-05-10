@@ -53,3 +53,10 @@ Default image is changed to image# 1
 FortiGate # exec set-next-reboot secondary
 Image# 2 is already the default image.
 ```
+### Prevent TCP Timestamp Response
+---
+```markup
+config system global
+    set tcp-option disable    <-- Default value is enable
+end
+```
