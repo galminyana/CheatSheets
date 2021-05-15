@@ -60,3 +60,20 @@ config system global
     set tcp-option disable    <-- Default value is enable
 end
 ```
+
+### VIP Troubleshoot
+---
+#### Check if traffic reaches Forti
+```markup
+# diagnose sniffer packet (portname) 'ORIG_IP and port PORT' 4 0 a
+```
+Results like this:
+```markup
+interfaces=[wan1]
+filters=[host ORIG_IP and port PORT]
+2019-08-16 06:50:11.124423 wan1 -- ORIG_IP.53178 -> DEST_IP.23: syn 3664790935
+```
+#### Verify that Forti accepts traffic and which policy hits
+```markup
+# diagnose debug flow filter saddr ORIG_IP
+```
