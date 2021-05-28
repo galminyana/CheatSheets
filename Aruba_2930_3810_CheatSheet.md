@@ -163,5 +163,43 @@ monitor mac mac-addr [src | dest | both] mirror {session-# | name-str} [{session
 ```markup
 mirror endpoint ip src-ip src-udp-port dst-ip port exit-port-#
 ```
-
-
+### IGMP
+---
+#### Enable / Disable IGMP
+```markup
+(config) [no] vlan VLAN_ID ip igmp
+```
+By default, enables IGMP Querier
+#### Enable / Disable Querier
+```markup
+[no] vlan <vid> ip igmp querier
+```
+#### Per Port IGMP traffic filters
+```markup
+vlan <vid> ip igmp [ auto <port-list> | blocked <port-list> | forward <port-list> ]
+```
+#### View IGMP Config per VLAN
+```markup
+show ip igmp [vlan VLAN_ID]
+```
+#### View IGMP Config
+```markup
+show ip igmp config
+show ip igmp vlan VLANID config
+```
+#### IGMP Statistics
+```markup
+show ip igmp statistics
+```
+#### IGMP Storical Counters
+```markup
+show ip igmp statistics
+```
+#### IGMP Groups Address Information
+```markup
+show ip igmp groups
+```
+To view for specific VLAN with specified address:
+```markup
+show ip igmp vlan VLAN_ID group IP_ADDR
+```
