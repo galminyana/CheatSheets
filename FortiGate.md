@@ -77,3 +77,25 @@ filters=[host ORIG_IP and port PORT]
 ```markup
 # diagnose debug flow filter saddr ORIG_IP
 ```
+    
+### Disk Quota Management
+---
+#### HD Disk Usage
+```markup
+# diagnose sys logdisk usage
+Total HD usage: 270560MB/472564MB
+Total HD logging space: 354422MB
+HD logging space usage for vdom "root": 268600MB/354422MB
+```    
+#### Set Log Disk Settings
+```markup
+# config log disk setting
+```    
+#### Enable/Disable IPS Packet Logging to Disk
+```markup
+# set ips-archive [enable|disable]
+```      
+#### Define Log File Size for Rolling
+```markup
+# set max-log-file-size	[value 1-100 Mb]
+```     
