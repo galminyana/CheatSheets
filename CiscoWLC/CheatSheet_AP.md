@@ -9,20 +9,21 @@
 # term mon
 ```
 Where:
+
 |Flag|Description|
 ------------------
-|d0	|2.4 GHz radio (slot 0)
-|d1	|5 GHz radio (slot 1)
-|mgmt|	Trace management packets
-|ba|	Trace Block ACK information
-|rcv|	Trace received packets
-|keys|	Trace set keys
-|rxev|	Trace received events
-|txev|	Trace transmit events
-|txrad|	Trace transmit to radio
-|xmt|	Trace transmit packets
-|txfail|	Trace transmit failures
-|rates|	Trace rate changes
+|d0	|2.4 GHz radio (slot 0)|
+|d1	|5 GHz radio (slot 1)|
+|mgmt|	Trace management packets|
+|ba|	Trace Block ACK information|
+|rcv|	Trace received packets|
+|keys|	Trace set keys|
+|rxev|	Trace received events|
+|txev|	Trace transmit events|
+|txrad|	Trace transmit to radio|
+|xmt|	Trace transmit packets|
+|txfail|	Trace transmit failures|
+|rates|	Trace rate changes|
 
 Disable:
 ```markup
