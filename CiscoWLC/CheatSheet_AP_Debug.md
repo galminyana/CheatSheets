@@ -4,6 +4,16 @@
 #### Lightweight AP
 ---
 ```markup
+# debug capwap console cli
+# config t
+# line console 0    
+# line vty 0 4             
+# exec-timeout 0
+# session-timeout 0
+# term length 0 
+# show run
+# show tech
+# show logging
 # debug dot11 {d0|d1} monitor addr <client_MAC-address>
 # debug dot11 {d0|d1} trace print clients mgmt keys rxev txev rcv xmt txfail ba
 # term mon
@@ -11,7 +21,7 @@
 Where:
 
 |Flag|Description|
-------------------
+|----|--------------|
 |d0	|2.4 GHz radio (slot 0)|
 |d1	|5 GHz radio (slot 1)|
 |mgmt|	Trace management packets|
