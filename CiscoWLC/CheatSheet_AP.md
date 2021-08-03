@@ -1,7 +1,7 @@
 ### Debug Commands
 ---
 
-#### Lightwaight AP
+#### Lightweight AP
 ---
 ```markup
 # debug dot11 {d0|d1} monitor addr <client_MAC-address>
@@ -23,3 +23,22 @@ Where:
 |xmt|	Trace transmit packets
 |txfail|	Trace transmit failures
 |rates|	Trace rate changes
+
+Disable:
+```markup
+# u all
+```
+
+#### COS AP: 2800/3800 Series
+---
+```markup
+# config ap client-trace address add <client_MAC-address>
+# config ap client-trace filter all enable 
+# config ap client-trace output console-log enable 
+# config ap client-trace start 
+# term mon
+```
+Disable
+```markup
+config ap client-trace stop
+```
