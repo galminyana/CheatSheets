@@ -15,7 +15,7 @@
 
 #### DNS Names Requirements
 |---|--|--|
-|www.example.com|
+|www.example.com|||
 |label|label|label|
 
 1. Maximum 255 characters total, including dots
