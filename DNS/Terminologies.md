@@ -72,9 +72,13 @@ _sip._tcp.example.com.     300   IN   SRV   0   5   5060   voip1.example.com.
         - Target: the canonical hostname of the machine providing the service
 
 - **TXT Record**: Can store any text to a max of 255 chars.
-
-
-
+```markup
+example.com.    3600    IN    TXT    "v=spf1 -all"
+```
+- **CAA Record:**
+- **TSIG (Transaction Signature) Record:** 
+- **NAPTR (Naming Authority Pointer) Record:** 
+- **
 
 
 
