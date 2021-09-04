@@ -15,12 +15,12 @@
 
 #### DNS Names Requirements
 
-1. Maximum 255 characters total, including dots
-2. Maximum 127 labels, each label separated by a dot
-3. Each label has maximum 63 characters
-4. Legal characters are alphanumeric and the dash (-) symbol
-5. Underscore (_) cannot be used as hostname
-6. Case insensitive
+- Maximum 255 characters total, including dots
+- Maximum 127 labels, each label separated by a dot
+- Each label has maximum 63 characters
+- Legal characters are alphanumeric and the dash (-) symbol
+- Underscore (_) cannot be used as hostname
+- Case insensitive
 
 In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 
@@ -57,7 +57,26 @@ example.com.   86400   IN   NS   ns2.example.com.
 example.com.   86400   IN   NS   ns3.example.com.
 example.com.   86400   IN   NS   ns1.example.com.
 ```
-- **SRV (Service) Record:** 
+- **SRV (Service) Record:** Helps to locate services for a domain. For example, an SRV entry for SIP service will look like:
+```markup
+_sip._tcp.example.com.     300   IN   SRV   0   5   5060   voip1.example.com.
+```
+  - Where each field for the record name, in order, stands for:
+    - Service: the name of the service, SIP in this case on `_sip`.
+    - Protocol: the transport protocol of the desired service, TCP or UDP. TCP in this example `_tcp`.
+    - Name: the domain name where the service is provided.
+  - Where the 4 values after `SRV` are:
+    - Priority: lower value means more preferred.
+    - Weight: used after priority, higher value means more probable.
+    - Port: the TCP or UDP port on which the service is to be found.
+    - Target: the canonical hostname of the machine providing the service
+
+- **TXT Record**: Can store any text to a max of 255 chars.
+
+
+
+
+
 
 ### DNS Message Format
 ---
