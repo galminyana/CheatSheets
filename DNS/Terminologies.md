@@ -7,8 +7,8 @@
 - **Recursive Query:** Initiated by the client stub, asking for a name resolution to DNS server and if it does not know, to check other DNS servers.
 - **Iterative Query:** Same as before, but client stubs must be able to follow referrals.
 - **Recursive Name Server:** DNS Server receives the query, and:
- - Checks it's cache for the answer.
- - If not in cache, asks other DNS Servers (Root, Autoritative).
+  - Checks it's cache for the answer.
+  - If not in cache, asks other DNS Servers (Root, Autoritative).
 - **Authoritative Name Server:** 
 - **RR (Resource Record):** Piece of information out of DNS. Examples are A, MX, CNAME...
 - **Zone:** Collection of Resource Records for the same domain name suffix.
