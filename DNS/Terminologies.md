@@ -15,7 +15,7 @@
 
 #### DNS Names Requirements
 |---|--|--|
------------
+|-----------|
 |www.example.com|
 |label|label|label|
 
