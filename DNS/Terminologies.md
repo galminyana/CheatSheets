@@ -14,6 +14,10 @@
 - **Zone:** Collection of Resource Records for the same domain name suffix.
 
 #### DNS Names Requirements
+
+|www.example.com|
+|label|label|label|
+
 1. Maximum 255 characters total, including dots
 2. Maximum 127 labels, each label separated by a dot
 3. Each label has maximum 63 characters
