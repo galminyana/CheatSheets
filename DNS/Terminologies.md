@@ -14,7 +14,7 @@
 - **Zone:** Collection of Resource Records for the same domain name suffix.
 
 #### DNS Names Requirements
-
+|---|--|--|
 |www.example.com|
 |label|label|label|
 
