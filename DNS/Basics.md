@@ -78,11 +78,6 @@ example.com.    3600    IN    TXT    "v=spf1 -all"
 - **CAA Record:**
 - **TSIG (Transaction Signature) Record:** 
 - **NAPTR (Naming Authority Pointer) Record:** 
-- **
 
-
-
-### DNS Message Format
----
 
 
