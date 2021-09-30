@@ -26,8 +26,8 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 
 ### Resource Records Format
 ---
+|NAME  |TTL  |TYPE |RDATA|
 |------|-----|-----|-----|
-|NAME|TTL|TYPE|RDATA|
 |Domain name to witch this RR pertains|32bit int for the time a RR should be cached|Specifies what data is in RDATA|A variable lenght string to describe the resource|
 
 ### Common Resource Records
