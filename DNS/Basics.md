@@ -62,10 +62,6 @@ example.com.   86400   IN   NS   ns1.example.com.
 _sip._tcp.example.com.     300   IN   SRV   0   5   5060   voip1.example.com.
 ```
 
-- **Recursive Name Server:** DNS Server receives the query, and:
-  - Checks it's cache for the answer.
-  - If not in cache, asks other DNS Servers (Root, Autoritative).
-
 - Where each field for the record name, in order, stands for:
   - Service: the name of the service, SIP in this case on `_sip`.
   - Protocol: the transport protocol of the desired service, TCP or UDP. TCP in this example `_tcp`.
