@@ -27,7 +27,7 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 ### Resource Records
 ---
 
-- **A Record:** Maps a host name to an IP address.
+#### **A Record:** Maps a host name to an IP address.
 ```markup
 www.example.com.    3600    IN    A        93.184.216.34
 ```
