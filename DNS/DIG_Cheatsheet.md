@@ -3,6 +3,7 @@
 Command-line tool for querying Domain Name System (DNS) name servers. Is part of the BIND domain name server software suite.
 
 ### Type of Queries
+---
 |Operation|	Command|	Example|
 |----|---|---|
 |Name to Address|dig -x HOST|	dig example.com|
