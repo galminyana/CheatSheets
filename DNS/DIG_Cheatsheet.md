@@ -60,20 +60,24 @@ The output:
 ```bash
 # dig -x 8.8.8.8
 ```
-#### Query With Only Answer Section
-```bash
-# dig example.com +nocomments +noquestion +noauthority +noadditional +nostats
-# dig example.com +noall +answer
-```
-#### Return Only IP Address
-```bash
-# dig example.com +short
-```
 #### Query Authoritative NS for the Zone and Display SOA
 ```bash
 # dig +nssearch example.com
 ```
-### Trace the delegation path from the root name servers for the name being looked up
+### Query With Only Answer Section
+---
+```bash
+# dig example.com +nocomments +noquestion +noauthority +noadditional +nostats
+# dig example.com +noall +answer
+```
+### Return Only IP Address
+---
+```bash
+# dig example.com +short
+```
+
+### Trace Delegation Path
+---
 ```bash
 # dig +trace @8.8.8.8 google.com
 ```
