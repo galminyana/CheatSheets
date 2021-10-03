@@ -2,6 +2,22 @@
 ---
 Command-line tool for querying Domain Name System (DNS) name servers. Is part of the BIND domain name server software suite.
 
+### Type of Queries
+|Operation|	Command|	Example|
+|----|---|---|
+|Name to Address|dig -x HOST|	dig example.com|
+|Reverse lookups|	dig -x IP_ADDRESS|	dig -x 192.168.0.10|
+|lookups at DNS Server|	dig @SERVER HOST|	dig @8.8.8.8 example.com|
+|lookups at DNS Server|	dig @SERVER -x IP|	dig @8.8.8.8 -x 74.125.235.101|
+|lookup for an any record|	dig HOST any|	dig example.com any|
+|lookup for an soa record|	dig HOST soa|	dig example.com soa|
+|lookup for an ns record|	dig HOST ns|	dig example.com ns|
+|lookup for an a record|	dig HOST a|	dig google.com a|
+|lookup for an mx record|	dig HOST mx|	dig example.com mx|
+|lookup for an txt record|	dig HOST txt|	dig example.com txt|
+|lookup with trace|	dig +trace HOST|	dig +trace google.com|
+
+
 ### Examples
 ---
 The following command searches for the A record for `example.com` domain:
