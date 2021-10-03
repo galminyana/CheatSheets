@@ -2,7 +2,9 @@
 ---
 Command-line tool for querying Domain Name System (DNS) name servers. Is part of the BIND domain name server software suite.
 
-The following command, searches for the A record of the `example.com` domain:
+## Examples
+---
+The following command searches for the A record for `example.com` domain:
 
 ```bash
 #dig example.com
@@ -33,6 +35,23 @@ The output:
 - Next the ANSWER section tells us that `example.com` has the IP address 72.30.38.140
 - Next some statistics about the query.
 - Lines starting with `;` are comments
+
+### Query SOA Record
+```bash
+# dig example.com SOA
+```
+### Query MX Record
+```bash
+# dig example.com MX
+```
+### Query TTL
+```bash
+# dig example.com TTL
+```
+### Query ANY of the above
+```bash
+#dig example.com ANY
+```
 
 
 
