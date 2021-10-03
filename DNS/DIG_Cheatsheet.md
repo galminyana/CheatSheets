@@ -1,8 +1,8 @@
-# Domain Information Groper (`dig`) CheatSheet
+## Domain Information Groper (`dig`) CheatSheet
 ---
 Command-line tool for querying Domain Name System (DNS) name servers. Is part of the BIND domain name server software suite.
 
-## Examples
+### Examples
 ---
 The following command searches for the A record for `example.com` domain:
 
@@ -36,26 +36,36 @@ The output:
 - Next some statistics about the query.
 - Lines starting with `;` are comments
 
-### Query SOA Record
+#### Query SOA Record
 ```bash
 # dig example.com SOA
 ```
-### Query MX Record
+#### Query MX Record
 ```bash
 # dig example.com MX
 ```
-### Query TTL
+#### Query TTL
 ```bash
 # dig example.com TTL
 ```
-### Query ANY of the above
+#### Query ANY of the above
 ```bash
 #dig example.com ANY
 ```
+#### AXFR Zone Transfer
+```bash
+#dig @Domain_NS example.com AXFR
+``` 
+#### Reverse Lookup
+```bash
+# dig -x 8.8.8.8
+```
+#### Query With Only Answer Section
+```bash
+# dig yahoo.com +nocomments +noquestion +noauthority +noadditional +nostats
+```
 
-
-
-## Command Help
+### Command Help
 ---
 ```bash
 # dig -h
