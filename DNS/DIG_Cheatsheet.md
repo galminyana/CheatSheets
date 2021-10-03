@@ -62,7 +62,16 @@ The output:
 ```
 #### Query With Only Answer Section
 ```bash
-# dig yahoo.com +nocomments +noquestion +noauthority +noadditional +nostats
+# dig example.com +nocomments +noquestion +noauthority +noadditional +nostats
+# dig example.com +noall +answer
+```
+#### Return Only IP Address
+```bash
+# dig example.com +short
+```
+#### Query Authoritative NS for the Zone and Display SOA
+```bash
+# dig +nssearch example.com
 ```
 
 ### Command Help
