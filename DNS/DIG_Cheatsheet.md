@@ -73,7 +73,11 @@ The output:
 ```bash
 # dig +nssearch example.com
 ```
-
+### Trace the delegation path from the root name servers for the name being looked up
+```bash
+# dig +trace @8.8.8.8 google.com
+```
+The NS must be the one for the Zone
 ### Command Help
 ---
 ```bash
