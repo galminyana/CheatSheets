@@ -6,10 +6,10 @@
 - **FQDN (Fully Qualified Domain Name):** Complete domain name for a host. Two parts, host name and domain name. For `www.example.com`, host name is `www` and domain `example.com`.
 - **Recursive Query:** Initiated by the client stub, asking for a name resolution to DNS server and if it does not know, to check other DNS servers.
 - **Iterative Query:** Same as before, but client stubs must be able to follow referrals.
-- **Recursive Name Server:** DNS Server receives the query, and:
+- **Recursive Name Server:** A recursive nameserver is one that answers queries by asking other nameservers for the answer. DNS Server receives the query, and:
   - Checks it's cache for the answer.
   - If not in cache, asks other DNS Servers (Root, Autoritative).
-- **Authoritative Name Server:** 
+- **Authoritative Name Server:** Provides answers to DNS queries. It does not provides just cached answers that were obtained from another name server, it only returns answers to queries about domain names that are installed in its config­uration system.
 - **RR (Resource Record):** Piece of information out of DNS. Examples are A, MX, CNAME...
 - **Zone:** Collection of Resource Records for the same domain name suffix.
 
@@ -32,7 +32,16 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 
 ### Common Resource Records
 ---
-
+#### SOA, Start of Authority
+Indicates the basic properties of the domain name server and the zone that the domain is in. Each zone file can contain only one SOA record. 
+```markup
+google.es.         60      IN      SOA     ns1.google.com. dns-admin.google.com. 
+                                           403574256   ;Serial
+                                           900         ;Refresh
+                                           900         ; 
+                                           1800        ; 
+                                           60          ;
+```
 #### A Record
 Maps a host name to an IP address.
 ```markup
@@ -88,6 +97,11 @@ _sip._tcp.example.com.     300   IN   SRV   0   5   5060   voip1.example.com.
 Can store any text to a max of 255 chars.
 ```markup
 example.com.    3600    IN    TXT    "v=spf1 -all"
+```
+#### HINFO: 
+Host information about the CPU type and operating system of subject of the query.
+```markup
+
 ```
 #### CAA Record
 #### TSIG (Transaction Signature) Record 
