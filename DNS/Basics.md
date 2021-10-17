@@ -67,9 +67,9 @@ Indicates the basic properties of the domain name server and the zone that the d
 google.es.         60      IN      SOA     ns1.google.com. dns-admin.google.com. 
                                            403574256   ;Serial
                                            900         ;Refresh
-                                           900         ; 
-                                           1800        ; 
-                                           60          ;
+                                           900         ;Retry
+                                           1800        ;Expire
+                                           60          ;Minimum
 ```
 #### A Record
 Maps a host name to an IP address.
