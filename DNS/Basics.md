@@ -1,4 +1,22 @@
 
+### Root Servers
+---
+
+|Letter|Name|IPv4|IPv6|Operated By|
+|-|-|-|-|-|
+|A| a.root-servers.net| 198.41.0.4| 2001:503:ba3e::2:30 |Verisign|
+|B| b.root-servers.net| 192.228.79.201 |2001:478:65::53| University of Southern California - ISi|
+|C| c.root-servers.net| 192.33.4.12| 2001:500:2::c| Cognet Communications|
+|D| d.root-servers.net| 199.7.91.13| 2001:500:2d::d| University of Maryland|
+|E| e.root-servers.net| 192.203.230.10| N/A |NASA|
+|F| f.root-servers.net| 192.5.5.241| 2001:500:21::f| Internet Systems Consortium|
+|G| g.root-servers.net| 192.112.36.4| N/A| Defense Information Systems Agency|
+|H| h.root-servers.net| 128.63.2.53| 2001:500:1:8031:235| U.S. Army Research Lab|
+|I| i.root-servers.net| 192.36.148.17| 2001:7fe::53 |Netnod|
+|J| j.root-servers.net| 192.58.128.30| 2001:503:c27::2:30 |Verisign|
+|K| k.root-servers.net| 193.0.14.129| 2001:7fd::1| RIPE NCC|
+|L| I.root-servers.net| 199.7.83.42| 2001:500:3::42| ICANN|
+|M| m.root-servers.net| 202.12.27.33| 2001:dc3::35| WIDE Project|
 
 ### Terminology
 ---
@@ -52,37 +70,63 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
                         ;; WHEN: Sun Oct 17 10:46:11 Hora de verano romance 2021
                         ;; MSG SIZE  rcvd: 104
 ```
+
+### DNS Header
+---
+```markup
+1 1 1 1 1 1
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    ID                         |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|QR|   Opcode  |AA|TC|RD|RA|     Z  |   RCODE   |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                   QDCOUNT                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                   ANCOUNT                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                   NSCOUNT                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                   ARCOUNT                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+```
+- **ID**: A 16 bit identifier assigned by the program that generates any kind of query. This identifier is copied the corresponding reply and can be used by the requester to match up replies to outstanding queries. 
+- **QR**: A one bit field that specifies whether this message is a query (0), or a response (1).
+- **OPCODE**: A four bit field that specifies kind of query in this message. You should use 0, representing a standard query.
+- **AA**: Authoritative Answer. This bit is only meaningful in responses, and specifies that the responding name server is an authority for the domain name in question section.
+- **TC**: Truncation.Specifies that this message was truncated. 
+- **RD**: Recursion Desired. This bit directs the name server to pursue the query recursively. 
+- **RA**: Recursion Available. This bit is set or cleared in a response, and denotes whether recursive query support is available in the name server. Recursive query support is optional. 
+- **Z**: Reserved for future use. 
+- **RCODE**: Response code. This 4 bit field is set as part of responses. The values have the following interpretation:
+  - 0 No error condition
+  - 1 Format error - The name server was unable to interpret the query.
+  - 2 Server failure - The name server was unable to process this query due to a problem with the name server.
+  - 3 Name Error - Meaningful only for responses from an authoritative name server, this code signifies that the domain name referenced in the query does not exist.
+  - 4 Not Implemented - The name server does not support the requested kind of query.
+  - 5 Refused - The name server refuses to perform the specified operation for policy reasons
+- **QDCOUNT**: Unsigned 16 bit integer specifying the number of entries in the question section. 
+- **ANCOUNT**: Unsigned 16 bit integer specifying the number of resource records in the answer section. You should set this field to 0, indicating you are not providing any answers.
+- **NSCOUNT**: Unsigned 16 bit integer specifying the number of name server resource records in the authority records section. 
+- **ARCOUNT**: Unsigned 16 bit integer specifying the number of resource records in the additional records se
+
 ### Resource Records Format
 ---
 |NAME  |TTL  |TYPE |RDATA|
 |------|-----|-----|-----|
 |Domain name to witch this RR pertains|32bit int for the time a RR should be cached|Specifies what data is in RDATA|A variable lenght string to describe the resource|
 
-### Root Servers
----
 
-
-|Letter|Name|IPv4|IPv6|Operated By|
-|-|-|-|-|-|
-|A| a.root-servers.net| 198.41.0.4| 2001:503:ba3e::2:30 |Verisign|
-|B| b.root-servers.net| 192.228.79.201 |2001:478:65::53| University of Southern California - ISi|
-|C| c.root-servers.net| 192.33.4.12| 2001:500:2::c| Cognet Communications|
-|D| d.root-servers.net| 199.7.91.13| 2001:500:2d::d| University of Maryland|
-|E| e.root-servers.net| 192.203.230.10| N/A |NASA|
-|F| f.root-servers.net| 192.5.5.241| 2001:500:21::f| Internet Systems Consortium|
-|G| g.root-servers.net| 192.112.36.4| N/A| Defense Information Systems Agency|
-|H| h.root-servers.net| 128.63.2.53| 2001:500:1:8031:235| U.S. Army Research Lab|
-|I| i.root-servers.net| 192.36.148.17| 2001:7fe::53 |Netnod|
-|J| j.root-servers.net| 192.58.128.30| 2001:503:c27::2:30 |Verisign|
-|K| k.root-servers.net| 193.0.14.129| 2001:7fd::1| RIPE NCC|
-|L| I.root-servers.net| 199.7.83.42| 2001:500:3::42| ICANN|
-|M| m.root-servers.net| 202.12.27.33| 2001:dc3::35| WIDE Project|
 
 ### Common Resource Records
 ---
 #### SOA, Start of Authority
 Indicates the basic properties of the domain name server and the zone that the domain is in. Each zone file can contain only one SOA record
-- Serial is the serial number of the zone
+- REFRESH: how often a secondary should contact primary for update
+- RETRY: how often a secondary should try contacting primary should it fail to reach primary the previous attempt
+- EXPIRE: how long a secondary can hold on to the zone data when it cannot reach primary
+- MINIMUM: how long recursive name servers can cache a negative answer such as
+
 ```markup
 google.es.         60      IN      SOA     ns1.google.com. dns-admin.google.com. 
                                            403574256   ;Serial
@@ -152,9 +196,7 @@ Host information about the CPU type and operating system of subject of the query
 ```markup
 
 ```
-#### CAA Record
-#### TSIG (Transaction Signature) Record 
-#### NAPTR (Naming Authority Pointer) Record 
+
 
 
 
