@@ -161,6 +161,22 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 | EXCHANGE   |
 +--+--+--+---+
 ```
+#### Header Examples
+---
+In `dig` responses, we can see the header, with the most representative fields like `id`, `status` and `flags`.
+```markup
+;; ->>HEADER<<-opcode: QUERY, status: NOERROR, id: 40105
+;; flags: qr aa, QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL:
+```
+#### Status Codes
+---
+|Code |Name |Description|
+|-|-|-|
+|0| NOERROR| No error|
+|1| FORMERR| Format error, usually indicates client sending malformed query|
+|2| SERVFAIL| Server failure, generic error message indicating error occured on server side|
+|3| NXDOMAIN| Non-existent domain, indicates the domain name queried does not exist|
+|5| REFUSED| Server configuration does not allow it to respond to client|
 
 ### Resource Records Format
 ---
