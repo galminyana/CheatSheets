@@ -74,8 +74,8 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 ### DNS Header
 ---
 ```markup
-1 1 1 1 1 1
-0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+                                1  1  1  1  1  1
+  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
 +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 |                    ID                         |
 +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
@@ -109,6 +109,58 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 - **ANCOUNT**: Unsigned 16 bit integer specifying the number of resource records in the answer section. You should set this field to 0, indicating you are not providing any answers.
 - **NSCOUNT**: Unsigned 16 bit integer specifying the number of name server resource records in the authority records section. 
 - **ARCOUNT**: Unsigned 16 bit integer specifying the number of resource records in the additional records se
+
+#### DNS Questions
+---
+```markup
+                                1  1  1  1  1  1
+  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                     QNAME                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                     QTYPE                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                     QCLASS                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+```
+- **QNAME**: A domain name represented as a sequence of labels, where each label consists of a lengt octet followed by that number of octets. The domain name terminates with the zero length octet for the null label of the root. 
+- **QTYPE**: A two octet code which specifies the type of the query. 
+- **QCLASS**: A two octet code that specifies the class of the query. 
+#### DNS Answers
+---
+```markup
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                 NAME                          |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|
+|                 TYPE                          |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                 CLASS                         |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                 TTL                           |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                 RDLENGTH                      |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                 RDATA                         |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+```
+- **NAME**: The domain name that was queried, in the same format as the QNAME in the questions.
+- **TYPE**: Two octets containing one of th type codes. This field specifies the meaning of the data in the RDATA field. 
+- **CLASS**: Two octets which specify the class of the data in the RDATA field. 
+- **TTL**: The number of seconds the results can be cached.
+- **RDLENGTH**: The length of the RDATA field.
+- **RDATA**: The data of the response. The format is dependent on the TYPE field: 
+  - If the TYPE is 0x0001 for A records, then this is the IP address (4 octets). 
+  - If the type is 0x0005 for CNAMEs, then this is the name of the alias. 
+  - If the type is 0x0002 for name servers, then this is the name of the server. 
+  - If the type is 0x000f for mail servers, the format is.
+
+```markup
++--+--+--+---+
+| PREFERENCE |
++--+--+--+---+
+| EXCHANGE   |
++--+--+--+---+
+```
 
 ### Resource Records Format
 ---
