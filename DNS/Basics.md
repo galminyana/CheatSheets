@@ -60,10 +60,10 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 
 ### Root Servers
 ---
-reserved. 43
 
+
+|Letter|Name|IPv4|IPv6|Operated By|
 |-|-|-|-|-|
-|---------|
 |A| a.root-servers. net| 198.41.0.4| 2001:503:ba3e::2:30 |Verisign|
 B b.root-servers.net 192.228. 79.201 2001 :478:65::53 University of Southern California - ISi
 C c.root-servers. net 192.33.4.12 2001 :500:2::c Cognet Communications
