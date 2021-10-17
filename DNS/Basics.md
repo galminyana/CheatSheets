@@ -24,6 +24,34 @@
 
 In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 
+### DNS Message Anatomy
+---
+```markup
+
+                        C:\dig>dig example.com A
+
+                        ; <<>> DiG 9.16.21 <<>> example.com A
+                        ;; global options: +cmd
++--------------+        ;; Got answer:
+|    Header    |        ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 55320
++--------------+        ;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1
+|    Question  |        ;; OPT PSEUDOSECTION:
++--------------+        ; EDNS: version: 0, flags:; udp: 1460
+|    Answer    |        ;; QUESTION SECTION:
++--------------+        ;example.com.                   IN      A
+|   Authority  |
++--------------+        ;; ANSWER SECTION:
+|  Additional  |        example.com.            77941   IN      A       93.184.216.34
++--------------+
+                         ;; AUTHORITY SECTION:
+                        example.com.            77941   IN      NS      a.iana-servers.net.
+                        example.com.            77941   IN      NS      b.iana-servers.net.
+
+                        ;; Query time: 46 msec
+                        ;; SERVER: 80.58.61.250#53(80.58.61.250)
+                        ;; WHEN: Sun Oct 17 10:46:11 Hora de verano romance 2021
+                        ;; MSG SIZE  rcvd: 104
+```
 ### Resource Records Format
 ---
 |NAME  |TTL  |TYPE |RDATA|
@@ -33,7 +61,8 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 ### Common Resource Records
 ---
 #### SOA, Start of Authority
-Indicates the basic properties of the domain name server and the zone that the domain is in. Each zone file can contain only one SOA record. 
+Indicates the basic properties of the domain name server and the zone that the domain is in. Each zone file can contain only one SOA record
+- Serial is the serial number of the zone
 ```markup
 google.es.         60      IN      SOA     ns1.google.com. dns-admin.google.com. 
                                            403574256   ;Serial
