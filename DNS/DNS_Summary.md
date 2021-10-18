@@ -208,6 +208,8 @@ In `dig` responses, we can see the header, with the most representative fields l
 
 ### Common Resource Records
 ---
+
+Check Wikipedia for a full list of all existing records, including NULL ones: [https://en.wikipedia.org/wiki/List_of_DNS_record_types](https://en.wikipedia.org/wiki/List_of_DNS_record_types)
 #### SOA, Start of Authority
 Indicates the basic properties of the domain name server and the zone that the domain is in. Each zone file can contain only one SOA record
 - REFRESH: how often a secondary should contact primary for update
@@ -284,6 +286,7 @@ Host information about the CPU type and operating system of subject of the query
 
 ### Name Resolution Process
 ---
+More information here: [http://www.tcpipguide.com/free/t_DNSNameResolutionProcess-2.htm](http://www.tcpipguide.com/free/t_DNSNameResolutionProcess-2.htm)
 Steps for resolving `www.example.com`would be:
 1) Recursive Query: Stub resolver, afer not having cached the information, reaches to a recursive resolver, according to local configuration. Sends a recursive query (RD flag to 1)
 2) Iterative Query: Recursive resolver can have the answer in the cache, then responds with it to the stub. IF not cached, asks to other name servers, defaults to root name servers
