@@ -1,22 +1,4 @@
 
-### Root Servers
----
-
-|Letter|Name|IPv4|IPv6|Operated By|
-|-|-|-|-|-|
-|A| a.root-servers.net| 198.41.0.4| 2001:503:ba3e::2:30 |Verisign|
-|B| b.root-servers.net| 192.228.79.201 |2001:478:65::53| University of Southern California - ISi|
-|C| c.root-servers.net| 192.33.4.12| 2001:500:2::c| Cognet Communications|
-|D| d.root-servers.net| 199.7.91.13| 2001:500:2d::d| University of Maryland|
-|E| e.root-servers.net| 192.203.230.10| N/A |NASA|
-|F| f.root-servers.net| 192.5.5.241| 2001:500:21::f| Internet Systems Consortium|
-|G| g.root-servers.net| 192.112.36.4| N/A| Defense Information Systems Agency|
-|H| h.root-servers.net| 128.63.2.53| 2001:500:1:8031:235| U.S. Army Research Lab|
-|I| i.root-servers.net| 192.36.148.17| 2001:7fe::53 |Netnod|
-|J| j.root-servers.net| 192.58.128.30| 2001:503:c27::2:30 |Verisign|
-|K| k.root-servers.net| 193.0.14.129| 2001:7fd::1| RIPE NCC|
-|L| I.root-servers.net| 199.7.83.42| 2001:500:3::42| ICANN|
-|M| m.root-servers.net| 202.12.27.33| 2001:dc3::35| WIDE Project|
 
 ### Terminology
 ---
@@ -27,7 +9,8 @@
 - **Recursive Name Server:** A recursive nameserver is one that answers queries by asking other nameservers for the answer. DNS Server receives the query, and:
   - Checks it's cache for the answer.
   - If not in cache, asks other DNS Servers (Root, Autoritative).
-- **Authoritative Name Server:** Provides answers to DNS queries. It does not provides just cached answers that were obtained from another name server, it only returns answers to queries about domain names that are installed in its config­uration system.
+- **Authoritative Name Server:** Provides answers to DNS queries. It does not provides just cached answers that were obtained from another name server, it only returns answers to queries about domain names that are installed in its configuration system.
+- **Caching Name Server:** Store DNS query results for a period of time determined in the config­uration (TTL) of each domain name record. Caching name servers are often also recursive name servers, as they perform every step necessary to answer any DNS query they receive.
 - **RR (Resource Record):** Piece of information out of DNS. Examples are A, MX, CNAME...
 - **Zone:** Collection of Resource Records for the same domain name suffix.
 
@@ -37,10 +20,10 @@
 - Maximum 127 labels, each label separated by a dot
 - Each label has maximum 63 characters
 - Legal characters are alphanumeric and the dash (-) symbol
-- Underscore (_) cannot be used as hostname
+- Underscore (`_`) cannot be used as hostname
 - Case insensitive
 
-In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
+In the case of `www.example.com` there are 3 labels: `www`, `example`, `com`.
 
 ### DNS Message Anatomy
 ---
@@ -92,19 +75,19 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 ```
 - **ID**: A 16 bit identifier assigned by the program that generates any kind of query. This identifier is copied the corresponding reply and can be used by the requester to match up replies to outstanding queries. 
 - **QR**: A one bit field that specifies whether this message is a query (0), or a response (1).
-- **OPCODE**: A four bit field that specifies kind of query in this message. You should use 0, representing a standard query.
+- **OPCODE**: A four bit field that specifies kind of query in this message. 
 - **AA**: Authoritative Answer. This bit is only meaningful in responses, and specifies that the responding name server is an authority for the domain name in question section.
 - **TC**: Truncation.Specifies that this message was truncated. 
 - **RD**: Recursion Desired. This bit directs the name server to pursue the query recursively. 
 - **RA**: Recursion Available. This bit is set or cleared in a response, and denotes whether recursive query support is available in the name server. Recursive query support is optional. 
 - **Z**: Reserved for future use. 
 - **RCODE**: Response code. This 4 bit field is set as part of responses. The values have the following interpretation:
-  - 0 No error condition
-  - 1 Format error - The name server was unable to interpret the query.
-  - 2 Server failure - The name server was unable to process this query due to a problem with the name server.
-  - 3 Name Error - Meaningful only for responses from an authoritative name server, this code signifies that the domain name referenced in the query does not exist.
-  - 4 Not Implemented - The name server does not support the requested kind of query.
-  - 5 Refused - The name server refuses to perform the specified operation for policy reasons
+  - **0**: No error condition
+  - **1**: Format error - The name server was unable to interpret the query.
+  - **2**: Server failure - The name server was unable to process this query due to a problem with the name server.
+  - **3**: Name Error - Meaningful only for responses from an authoritative name server, this code signifies that the domain name referenced in the query does not exist.
+  - **4**: Not Implemented - The name server does not support the requested kind of query.
+  - **5**: Refused - The name server refuses to perform the specified operation for policy reasons
 - **QDCOUNT**: Unsigned 16 bit integer specifying the number of entries in the question section. 
 - **ANCOUNT**: Unsigned 16 bit integer specifying the number of resource records in the answer section. You should set this field to 0, indicating you are not providing any answers.
 - **NSCOUNT**: Unsigned 16 bit integer specifying the number of name server resource records in the authority records section. 
@@ -129,6 +112,8 @@ In the case of `www.example.com` there is 3 labels: `www`, `example`, `com`.
 #### DNS Answers
 ---
 ```markup
+                                1  1  1  1  1  1
+  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
 +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 |                 NAME                          |
 +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|
@@ -168,7 +153,7 @@ In `dig` responses, we can see the header, with the most representative fields l
 ;; ->>HEADER<<-opcode: QUERY, status: NOERROR, id: 40105
 ;; flags: qr aa, QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL:
 ```
-#### Status Codes
+##### Response Codes
 ---
 |Code |Name |Description|
 |-|-|-|
@@ -177,6 +162,17 @@ In `dig` responses, we can see the header, with the most representative fields l
 |2| SERVFAIL| Server failure, generic error message indicating error occured on server side|
 |3| NXDOMAIN| Non-existent domain, indicates the domain name queried does not exist|
 |5| REFUSED| Server configuration does not allow it to respond to client|
+
+##### Header Flags
+---
+|Flag|Name|"0"|"1"|
+|-|-|-|-|
+|qr|Query Response|mMssage is a Question|Message is an Answer|
+|aa|Authoritative Answer|Not Authoritative|Authoritative|
+|tc|Trucation|Message Not Truncated|Message Truncated, retry on TPC|
+|rd|Recursion Desired|Iterative Query|Recursive Query|
+|ra|Recursion Available|Not Available|Available|
+|ad|Authenticated Data|Not Auth|Authenticated|
 
 ### Resource Records Format
 ---
@@ -265,6 +261,34 @@ Host information about the CPU type and operating system of subject of the query
 
 ```
 
+### Name Resolution Process
+---
+Steps for resolving `www.example.com`would be:
+1- Recursive Query: Stub resolver, afer not having cached the information, reaches to a recursive resolver, according to local configuration. Sends a recursive query (RD flag to 1)
+2- Iterative Query: Recursive resolver can have the answer in the cache, then responds with it to the stub. IF not cached, asks to other name servers, defaults to root name servers
+3- Referral: Root servers responds with a referral, pointing the recursive resolver with the name servers where to ask. Root servers are authoritative for the first level domain, the dot (.).
+4- Iterative Query: Resolver keeps the lists of name servers obtained from previous step. Then chooses a server from the list, and sends an iterative query for the domain.
+5- Referral: Delegated domain responds with another referral to the next level of the FQDN. As it's an authoritative server for the TLD domain (Second level)
+6- Iterative Query: Recursive resolvers caches answers from previous step, and asks to one of the servers. Those servers, will be authooritative servers for the 'example.com` domain.
+7- Authoritative Answer: The authoritative name server sends the authoritative answer to the recursive resolver (AA field to "1").
+8- Non-Authoritative Answer: Recursive resolvers caches the answer, and sends it to the stub resolver, but with the AA field changed to "0" (non-authoritative).
 
+### Root Servers
+---
 
+|Letter|Name|IPv4|IPv6|Operated By|
+|-|-|-|-|-|
+|A| a.root-servers.net| 198.41.0.4| 2001:503:ba3e::2:30 |Verisign|
+|B| b.root-servers.net| 192.228.79.201 |2001:478:65::53| University of Southern California - ISi|
+|C| c.root-servers.net| 192.33.4.12| 2001:500:2::c| Cognet Communications|
+|D| d.root-servers.net| 199.7.91.13| 2001:500:2d::d| University of Maryland|
+|E| e.root-servers.net| 192.203.230.10| N/A |NASA|
+|F| f.root-servers.net| 192.5.5.241| 2001:500:21::f| Internet Systems Consortium|
+|G| g.root-servers.net| 192.112.36.4| N/A| Defense Information Systems Agency|
+|H| h.root-servers.net| 128.63.2.53| 2001:500:1:8031:235| U.S. Army Research Lab|
+|I| i.root-servers.net| 192.36.148.17| 2001:7fe::53 |Netnod|
+|J| j.root-servers.net| 192.58.128.30| 2001:503:c27::2:30 |Verisign|
+|K| k.root-servers.net| 193.0.14.129| 2001:7fd::1| RIPE NCC|
+|L| I.root-servers.net| 199.7.83.42| 2001:500:3::42| ICANN|
+|M| m.root-servers.net| 202.12.27.33| 2001:dc3::35| WIDE Project|
 
