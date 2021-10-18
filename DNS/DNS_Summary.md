@@ -316,3 +316,9 @@ Steps for resolving `www.example.com`would be:
 |L| I.root-servers.net| 199.7.83.42| 2001:500:3::42| ICANN|
 |M| m.root-servers.net| 202.12.27.33| 2001:dc3::35| WIDE Project|
 
+### References
+---
+
+- [https://notes.shichao.io/tcpv1/ch11/](https://notes.shichao.io/tcpv1/ch11/)
+- [http://www.tcpipguide.com/free/t_DNSNameResolutionProcess-2.htm](http://www.tcpipguide.com/free/t_DNSNameResolutionProcess-2.htm)
+- [https://en.wikipedia.org/wiki/List_of_DNS_record_types](https://en.wikipedia.org/wiki/List_of_DNS_record_types)
