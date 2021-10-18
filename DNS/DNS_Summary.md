@@ -285,14 +285,14 @@ Host information about the CPU type and operating system of subject of the query
 ### Name Resolution Process
 ---
 Steps for resolving `www.example.com`would be:
-1- Recursive Query: Stub resolver, afer not having cached the information, reaches to a recursive resolver, according to local configuration. Sends a recursive query (RD flag to 1)
-2- Iterative Query: Recursive resolver can have the answer in the cache, then responds with it to the stub. IF not cached, asks to other name servers, defaults to root name servers
-3- Referral: Root servers responds with a referral, pointing the recursive resolver with the name servers where to ask. Root servers are authoritative for the first level domain, the dot (.).
-4- Iterative Query: Resolver keeps the lists of name servers obtained from previous step. Then chooses a server from the list, and sends an iterative query for the domain.
-5- Referral: Delegated domain responds with another referral to the next level of the FQDN. As it's an authoritative server for the TLD domain (Second level)
-6- Iterative Query: Recursive resolvers caches answers from previous step, and asks to one of the servers. Those servers, will be authooritative servers for the 'example.com` domain.
-7- Authoritative Answer: The authoritative name server sends the authoritative answer to the recursive resolver (AA field to "1").
-8- Non-Authoritative Answer: Recursive resolvers caches the answer, and sends it to the stub resolver, but with the AA field changed to "0" (non-authoritative).
+1) Recursive Query: Stub resolver, afer not having cached the information, reaches to a recursive resolver, according to local configuration. Sends a recursive query (RD flag to 1)
+2) Iterative Query: Recursive resolver can have the answer in the cache, then responds with it to the stub. IF not cached, asks to other name servers, defaults to root name servers
+3) Referral: Root servers responds with a referral, pointing the recursive resolver with the name servers where to ask. Root servers are authoritative for the first level domain, the dot (.).
+4) Iterative Query: Resolver keeps the lists of name servers obtained from previous step. Then chooses a server from the list, and sends an iterative query for the domain.
+5) Referral: Delegated domain responds with another referral to the next level of the FQDN. As it's an authoritative server for the TLD domain (Second level)
+6) Iterative Query: Recursive resolvers caches answers from previous step, and asks to one of the servers. Those servers, will be authooritative servers for the 'example.com` domain.
+7) Authoritative Answer: The authoritative name server sends the authoritative answer to the recursive resolver (AA field to "1").
+8) Non-Authoritative Answer: Recursive resolvers caches the answer, and sends it to the stub resolver, but with the AA field changed to "0" (non-authoritative).
 
 ### Root Servers
 ---
