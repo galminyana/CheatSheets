@@ -1,4 +1,28 @@
-
+# DNS Notes
+---
+- [Terminology](#terminology)
+  * [DNS Names Requirements](#dns-names-requirements)
+- [DNS Message Anatomy](#dns-message-anatomy)
+- [DNS Header](#dns-header)
+  * [DNS Questions](#dns-questions)
+  * [DNS Answers](#dns-answers)
+  * [Header Examples](#header-examples)
+    + [Response Codes](#response-codes)
+    + [Header Flags](#header-flags)
+- [Resource Records Format](#resource-records-format)
+- [Common Resource Records](#common-resource-records)
+  * [SOA, Start of Authority](#soa--start-of-authority)
+  * [A Record](#a-record)
+  * [AAAA Record](#aaaa-record)
+  * [PTR Record](#ptr-record)
+  * [CNAME (Canonical Name) Record](#cname--canonical-name--record)
+  * [MX (Mail Exchange) Record](#mx--mail-exchange--record)
+  * [NS (Name Server) Record](#ns--name-server--record)
+  * [SRV (Service) Record](#srv--service--record)
+  * [TXT Record](#txt-record)
+  * [HINFO:](#hinfo-)
+- [Name Resolution Process](#name-resolution-process)
+- [Root Servers](#root-servers)
 
 ### Terminology
 ---
@@ -257,9 +281,6 @@ example.com.    3600    IN    TXT    "v=spf1 -all"
 ```
 #### HINFO: 
 Host information about the CPU type and operating system of subject of the query.
-```markup
-
-```
 
 ### Name Resolution Process
 ---
