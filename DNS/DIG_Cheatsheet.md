@@ -2,6 +2,21 @@
 ---
 Command-line tool for querying Domain Name System (DNS) name servers. Is part of the BIND domain name server software suite.
 
+- [Domain Information Groper (`dig`) CheatSheet](#domain-information-groper---dig---cheatsheet)
+  * [Type of Queries](#type-of-queries)
+  * [Examples](#examples)
+    + [Query SOA Record](#query-soa-record)
+    + [Query MX Record](#query-mx-record)
+    + [Query TTL](#query-ttl)
+    + [Query ANY of the above](#query-any-of-the-above)
+    + [AXFR Zone Transfer](#axfr-zone-transfer)
+    + [Reverse Lookup](#reverse-lookup)
+    + [Query Authoritative NS for the Zone and Display SOA](#query-authoritative-ns-for-the-zone-and-display-soa)
+  * [Query With Only Answer Section](#query-with-only-answer-section)
+  * [Return Only IP Address](#return-only-ip-address)
+  * [Trace Delegation Path](#trace-delegation-path)
+  * [Command Help](#command-help)
+
 ### Type of Queries
 ---
 |Operation|	Command|	Example|
