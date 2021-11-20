@@ -1,8 +1,8 @@
 ## AD Enumeration
-
-c:> pwershell.exe -nop -exec bypass
-
-No Admin PRivileges required:
+```powershell
+c:> powershell.exe -nop -exec bypass
+```
+No Admin Privileges required:
 ```powershell
 c:> whoami /priv
 ```
