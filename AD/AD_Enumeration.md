@@ -232,12 +232,55 @@ C:> Find-InterestingDomainAcl -ResolveGUIDs
 ```
 #### Get ACL Associated With Specified Path
 ```powershell
-Get-PathAcl -Path "\\dcorp-dc.dollarcorp.moneycorp.local\sysvol"
+C:> Get-PathAcl -Path "\\dcorp-dc.dollarcorp.moneycorp.local\sysvol"
 ```
 
+### Domain Trusts Enumeration
+---
+#### Domain Trust Mapping
+```powershell
+C:> Get-DomainTrust
+C:> Get-DomainTrust -Domain us.dollarcorp.moneycorp.local
+C:> Get-ADTrust
+C:> Get-ADTrust -Identity us.dollarcorp.moneycorp.local
+```
+#### Forest Mapping
+- Get All Global Catalogs for Current Forest
+```powershell
+C:> Get-ForestGlobalCatalog
+C:> Get-ForestGlobalCatalog -Forest eurocorp.local
+C:> Get-ADForest @ select -ExpandProperty GlobalCatalogs
+```
 
+- Map Trusts of a Forest
+```powershell
+C:> Get-ForestTrust
+C:> Get-ForestTrust -Forest eurocorp.local
+C:> Get-ADTrust -Filter 'msDS-TrustForestTrustInfo -ne "$null"'
+```
+### USer Hunting
+---
+#### Find Machines Where Current User has Local Admin Access
+```powershell
+C:> Find-LocalAdminAccess -Verbose
+```
+This queries de DC for a list of computers using `Get-NetComputer` and then runs `Invoke-CheckLocalAdminAccess` on each machine.
+Check the Scripts:
+- Find WMILocalAdminAccess.ps1
+- Find PSRemotingLocalAdminAccess.ps1
 
+#### Find Computers were Domain Admin (or specified user/group) has Sessions
+```powershell
+C:> Find-DomainUserLocation -Verbose
+C:> Find-DomainUserLocation -UserGroupIdentity "RDPUsers"
+```
+This queries DC for the current or provided domain for members of the given group using `Get-DomainGroupMember`, then gets a list of computers with `Get-DomainComputer` and list sessions of logged on users using `Get-NetSession` or `Get-NetLoggedOn` from each machine.
 
-
-
-
+#### Computers Where a Domain Admin Session is Available and Current User has Admin Access
+```powrshell
+C:> Find-DomainUserLocation -CheckAccess
+```
+#### Find Computers Where a Domain Admin Session is Available (File Servers and Distributed File Servers)
+```powershell
+C:> Find-DomainUserLocation -Stealth
+```
