@@ -115,5 +115,5 @@ C:> Get-ADComputer -Filter * -Properties *
 C:> Get-ADComputer -Filter * 'OperatingSystem -like "*Server 2016*"' -Properties OperatingSystem | select Name,OperatingSystem
 C:> Get-ADComputer -Filter * -Properties DNSHostName | %{Test-Connection -Count 1 -ComputerName $_.DNSHostName}  
 ```
-| `%{}` Iteration for the results before the pipe. `$_` Variabe for the iterated value
+>> `%{}` Iteration for the results before the pipe. `$_` Variabe for the iterated value
 
