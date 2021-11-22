@@ -327,9 +327,16 @@ C:> Find-LocalAdminAccess -Verbose
 ```
 This queries de DC for a list of computers using `Get-NetComputer` and then runs `Invoke-CheckLocalAdminAccess` on each machine.
 Check the Scripts:
-- Find WMILocalAdminAccess.ps1
-- Find PSRemotingLocalAdminAccess.ps1
-
+- Find-WMILocalAdminAccess.ps1
+- Find-PSRemotingLocalAdminAccess.ps1: 
+```powershell
+C:> . .Find-PSRemotingLocalAdminAccess.ps1
+C:> Find-PSRemotingLocalAdminAccess 
+computer-name
+C:> Enter-PSessiom -ComputerName computer-name
+[computer-name]: C:>
+```
+- Enter-PSession: Function from Powershell Core to log into a remote session as the current user.
 #### Find Computers were Domain Admin (or specified user/group) has Sessions
 ```powershell
 C:> Find-DomainUserLocation -Verbose
