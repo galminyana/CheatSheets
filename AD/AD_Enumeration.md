@@ -21,7 +21,7 @@ C:> Import-Module C:\AD Tools\ADModule-master\ActiveDirectory\ActiveDirectory.ps
 ```
 - [BloodHound](https://github.com/BloodHoundAD/BloodHound)
 
-### Domain (or subdomain) ENumeration
+### Domain (or subdomain) Enumeration
 ---
 ```powershell
 C:> $ADClass = [System.DirectoryServices.ActiveDirectory.Domain]
@@ -181,6 +181,63 @@ C:> Invoke-FileFinder -Verbose
 ```powershell
 C:> Get-NetFileServer
 ```
+### GPO Enumeration
+---
+#### List of GPO in Current Domain
+```powershell
+C:> Get-DomainGPO
+C:> Get-DomainGPO -ComputerIdentity computer
+```
+#### Get GPO who use Restricted Groups or groups.xml for Interesting Users
+```powershell
+C:> Get-DomainGPOLocalGroup
+```
+#### Users Which are in Local Group of a Machine using GPO
+```powershell
+C:> Get-DomainGPOComputerLocalGroupMapping -ComputerIdentity computer
+```
+#### Get Machines where the Usert is Member of a Specific Group
+```powershell
+C:> Get-DomainGPOUserLocalGroupMapping -Identity user -Verbose
+```
+### OU Enumeration
+---
+#### Get Domain OUs
+```powershell
+C:> Get-DomainOU
+C:> Get-ADOrganizationalUnit -Filter * -Properties *
+```
+#### Get GPO Applied to an OU
+Read GPOname from gplink attribute from `Get-NetOU`
+```powershell
+C:> Get-DomainGPO -Identity "{AB306569-220D-43FF-B03B-83E8F4EF8081}"
+```
+### ACL Enumeration
+---
+#### ACL Associated to Specified Object
+```powershell
+C:> Get-DomainObjectAcl -SamAccountName user -ResolveGUIDs
+```
+#### Get ACL Associated with the Specified PRefix to Use for Search
+```powershell
+C:> Get-DomainObjectAcl -SearchBase "LDAP://CN=Domain Admins,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local" -ResolveGUIDs -Verbose
+```
+#### Enumerate ACL using AD Module. Without Resolving GUIDs
+```powershell
+C:> (Get-Acl 'AD:\CN=Administrator,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local').Access
+```
+#### Search for interesting ACEs
+```powershell
+C:> Find-InterestingDomainAcl -ResolveGUIDs
+```
+#### Get ACL Associated With Specified Path
+```powershell
+Get-PathAcl -Path "\\dcorp-dc.dollarcorp.moneycorp.local\sysvol"
+```
+
+
+
+
 
 
 
