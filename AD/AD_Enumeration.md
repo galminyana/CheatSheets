@@ -16,16 +16,16 @@ C:> . PowerView.ps1
 - [Active Directory PowerShell Module](https://docs.microsoft.com/en-us/powershell/module/addsadministration/?view=win10-ps):
 
 ```powershell
-Import-Module C:\AD Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll
-Import-Module C:\AD Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1
+C:> Import-Module C:\AD Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll
+C:> Import-Module C:\AD Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1
 ```
 - [BloodHound](https://github.com/BloodHoundAD/BloodHound)
 
 ### Domain (or subdomain) ENumeration
 ---
 ```powershell
-c:> $ADClass = [System.DirectoryServices.ActiveDirectory.Domain]
-c:> $ADClass::GetCurrentDomain()
+C:> $ADClass = [System.DirectoryServices.ActiveDirectory.Domain]
+C:> $ADClass::GetCurrentDomain()
 
 Forest                  : homelab.local
 DomainControllers       : {w2019-DC.homelab.local}
@@ -41,55 +41,55 @@ Name                    : homelab.local
 
 #### Get Current Domain
 ```powershell
-c:> Get-NetDomain
-c:> Get-ADDomain
+C:> Get-NetDomain
+C:> Get-ADDomain
 ```
 #### Get Object of Another Domain
 ```powershell
-Get-NetDomain -Domain domain.local
-Get-ADDomain -Identity donain.local
+C:> Get-NetDomain -Domain domain.local
+C:> Get-ADDomain -Identity donain.local
 ```
 #### Get Domain SID for Current Domain
 ```powershell
-Get-DomainSID
-(Get-ADDDomain).DomainSID
+C:> Get-DomainSID
+C:> (Get-ADDDomain).DomainSID
 ```
 #### Get Domain Controllers for Current Domain
 ```powershell
-Get-NetDomainController
-Get-ADDomainController
+C:> Get-NetDomainController
+C:> Get-ADDomainController
 ```
 #### Get Domain Controllers for Another Domain
 ```powershell
-Get-NetDomainController -Domain domain.local
-Get-ADDomainController -DomainName domain.local -Discover
+C:> Get-NetDomainController -Domain domain.local
+C:> Get-ADDomainController -DomainName domain.local -Discover
 ```
 #### Get Domain Policy for Current Domain
 ```powershell
-Get-DomainPolicy
-(Get-DomainPolicy)."system access"
-                  ."Kerberos Policy"
+C:> Get-DomainPolicy
+C:> (Get-DomainPolicy)."system access"
+                      ."Kerberos Policy"
 ```				  
 [PASTE RESULTS AND DESCRIPTION]
 
 #### Get Domain Policy for Another Domain
 ```powershell
-(Get-DomainPolicy -domain domain.local)."system access"
+C:> (Get-DomainPolicy -domain domain.local)."system access"
 ```
 ### Domain Users Enumeration
 ---
 
 #### List of Users in the Domain
 ```powershell
-Get-NetUser
-Get-NetUser -Username user
-Get-ADUser -Filter * -Properties *
-Get-ADUser -Identity user -Properties *
+C:> Get-NetUser
+C:> Get-NetUser -Username user
+C:> Get-ADUser -Filter * -Properties *
+C:> Get-ADUser -Identity user -Properties *
 ```
 #### List of properties for users in the current domain
 ```powershell
-Get-UserProperty
-GetUserProperty -Properties pwdlastset
-Get-ADUser -Filter * -Properties * | select -First 1 | Get-Member -MemberType *Property | select Name
-Get-ADUser -Filter * .PRoperties * | select name,@{expression={[datetime]::fromFileTime($_.pwdlastset)}}
+C:> Get-UserProperty
+C:> GetUserProperty -Properties pwdlastset
+C:> Get-ADUser -Filter * -Properties * | select -First 1 | Get-Member -MemberType *Property | select Name
+C:> Get-ADUser -Filter * .PRoperties * | select name,@{expression={[datetime]::fromFileTime($_.pwdlastset)}}
 ```
