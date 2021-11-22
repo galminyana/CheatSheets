@@ -1,7 +1,4 @@
 ## AD Enumeration
-```powershell
-c:> powershell.exe -nop -exec bypass
-```
 No Admin Privileges required:
 ```powershell
 c:> whoami /priv
@@ -11,7 +8,18 @@ c:> whoami /priv
 
 - [PowerView](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)
 
-- Active Directory PowerShell Module:
+```powershell
+C:> Import-Module PowerView.ps1
+C:> . PowerView.ps1
+```
+
+- [Active Directory PowerShell Module](https://docs.microsoft.com/en-us/powershell/module/addsadministration/?view=win10-ps):
+
+```powershell
+Import-Module C:\AD Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll
+Import-Module C:\AD Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1
+```
+- [BloodHound](https://github.com/BloodHoundAD/BloodHound)
 
 ### Domain (or subdomain) ENumeration
 ---
