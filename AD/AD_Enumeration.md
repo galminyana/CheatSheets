@@ -102,6 +102,42 @@ C:> Get-ADUser -Filter * .PRoperties * | select name,@{expression={[datetime]::f
 C:> Get-DomainUser -LDAPFilter "Description=*built*" | select name Description      # Returns Users with the *built* text in description
 C:> Get-ADUser -Filter 'Description -like "*built*"' -Properties Description | select name,Description
 ```
+### Groups Enumeration
+---
+#### Get All Groups in Current Domain
+```powershell
+C:> Get-DomainGroup | select Name
+C:> Get-DomainGroup -Domain <targetdomain>
+C:> Get-ADGroup -Filter * | select Name
+C:> Get-ADGroup -Filter * -Properties *
+```
+#### Get all Groups Containing "admin" in the Group Name
+```powershell
+C:> Get-DomainGroup *admin*
+C:> Get-ADGroup -Filter 'Name -like "*admin*"' | select Name
+```
+#### Get Members of Domain Admins Group
+```powershell
+C:> Get-DomainGroupMember -Identity "Domain Admins" -Recurse
+C:> Get-ADGroupMember -Identity "Domain Admins" -Recursive
+```
+#### Get Group Membership of a User
+```powershell
+C:> Get-DomainGroup UserName "user"
+C:> Get-ADPrincipalGroupMembership -Identity user
+```
+#### List Local Groups on Machine (Requires Admin Privs on non-dc Machines)
+```powershell
+C:> Get-NetLocalGroup -ComputerName computer -ListGroups
+```
+#### Get Members of Local Groups on a Machine (Requires Admin Privs on non-dc Machines)
+```powershell
+C:> Get-NetLocalGroup -ComputerName computer -Recurse
+```
+#### Get Members of Local Group "Administrators" on Machine (Requires Admin Privs on non-dc Machines)
+```powershell
+C:> Get-NetLocalGroupMember -ComputerName computer -GroupName Administrators
+```
 
 ### Computers Enumeration
 ---
@@ -115,5 +151,36 @@ C:> Get-ADComputer -Filter * -Properties *
 C:> Get-ADComputer -Filter * 'OperatingSystem -like "*Server 2016*"' -Properties OperatingSystem | select Name,OperatingSystem
 C:> Get-ADComputer -Filter * -Properties DNSHostName | %{Test-Connection -Count 1 -ComputerName $_.DNSHostName}  
 ```
->> `%{}` Iteration for the results before the pipe. `$_` Variabe for the iterated value
+> `%{}` Iteration for the results before the pipe. `$_` Variabe for the iterated value
+
+### Misc Enumeration
+---
+#### Active Users Logged on Computer (Requires Local Admin Rights)
+```powershell
+C:> Get-NetLoggedon -ComputerName servername
+```
+#### Locally Logged Users on Computer (Requires Remote Registry in the Target)
+```powershell
+C:> Get-LoggedonLocal -ComputerName computer
+```
+#### Get Last Logged User on Computer  (Requires Local Admin Rights and Remote Registry)
+```powershell
+C:> Get-LastLoggedOn -ComputerName servername
+```
+### Shares and Files Enum
+---
+#### Find Shares on Hosts in Current Domain
+```powershell
+C:> Invoke-ShareFinder -Verbose
+```
+#### Find Sensitive Files on Computers in the Domain
+```powershell
+C:> Invoke-FileFinder -Verbose
+```
+#### Get Fileservers on Domain
+```powershell
+C:> Get-NetFileServer
+```
+
+
 
