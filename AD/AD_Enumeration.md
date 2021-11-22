@@ -83,13 +83,37 @@ C:> (Get-DomainPolicy -domain domain.local)."system access"
 ```powershell
 C:> Get-NetUser
 C:> Get-NetUser -Username user
+C:> Get-DomainUser 
+C:> Get-DomainUser -Identity user
 C:> Get-ADUser -Filter * -Properties *
 C:> Get-ADUser -Identity user -Properties *
 ```
 #### List of properties for users in the current domain
 ```powershell
+C:> Get-DomainUser -Identity user Properties *
+C:> Get-DomainUser -Properties samaccountname,logonCount
 C:> Get-UserProperty
-C:> GetUserProperty -Properties pwdlastset
+C:> Get-UserProperty -Properties pwdlastset
 C:> Get-ADUser -Filter * -Properties * | select -First 1 | Get-Member -MemberType *Property | select Name
 C:> Get-ADUser -Filter * .PRoperties * | select name,@{expression={[datetime]::fromFileTime($_.pwdlastset)}}
 ```
+#### Search Strings in Users Attributes
+```powershell
+C:> Get-DomainUser -LDAPFilter "Description=*built*" | select name Description      # Returns Users with the *built* text in description
+C:> Get-ADUser -Filter 'Description -like "*built*"' -Properties Description | select name,Description
+```
+
+### Computers Enumeration
+---
+#### List of Computers in Current Domain
+```powershell
+C:> Get-DomainComputer | select Name
+C:> Get-DomainComputer -OperatingSystem "*Server 2016*"             # Computers whose OS is "Server 2016"
+C:> Get-DomainComputer -Ping                                        # Computers Online from the Domain
+C:> Get-ADComputer -Filter * | select Name
+C:> Get-ADComputer -Filter * -Properties *
+C:> Get-ADComputer -Filter * 'OperatingSystem -like "*Server 2016*"' -Properties OperatingSystem | select Name,OperatingSystem
+C:> Get-ADComputer -Filter * -Properties DNSHostName | %{Test-Connection -Count 1 -ComputerName $_.DNSHostName}  
+```
+| `%{}` Iteration for the results before the pipe. `$_` Variabe for the iterated value
+
