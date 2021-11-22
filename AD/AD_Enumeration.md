@@ -291,7 +291,11 @@ C:> Find-InterestingDomainAcl -ResolveGUIDs
 ```powershell
 C:> Get-PathAcl -Path "\\dcorp-dc.dollarcorp.moneycorp.local\sysvol"
 ```
-
+#### Use Invoke-ACLScanner
+To get the ActiveDirectory Rights for a defined group on user:
+```powershell
+C:> Invoke-ACLScanner -ResolveGUIDs | ?{$_.IdentityReferenceName -match "GROUPNAME"} | select Objectdn,identityreferencename,activedirectoryrights
+```
 ### Domain Trusts Enumeration
 ---
 #### Domain Trust Mapping
@@ -315,7 +319,7 @@ C:> Get-ForestTrust
 C:> Get-ForestTrust -Forest eurocorp.local
 C:> Get-ADTrust -Filter 'msDS-TrustForestTrustInfo -ne "$null"'
 ```
-### USer Hunting
+### User Hunting
 ---
 #### Find Machines Where Current User has Local Admin Access
 ```powershell
