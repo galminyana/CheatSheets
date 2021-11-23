@@ -53,3 +53,25 @@ Version         : 10.0.14393
 The current user has Local Admin access on: COMPUTER.domain.local
 PS C:>
 ```
+
+### BloodHound
+---
+
+Setup:
+- Install and run neo4j:
+```powershell
+C:> neo4j.bat install-service
+C:> neo4j.bat start
+```
+- Go to http://localhost:7474 and log using `neo4j` and `neo4j`.
+- Change the password for `neo4j` user to the desireed one
+- Run `BloodHound.exe` from `BloodHound-win32-x64`
+- Will ask for credentials: bolt://localhost:7687  -  neo4j  -  PASSWORD
+
+Run Collectors:
+
+- Powershell:
+```powershell
+C:> . .\SharpHound.ps1
+C:> Invoke-BloodHound -CollectionMethod All -Verbose
+```
