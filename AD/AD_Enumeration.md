@@ -210,6 +210,8 @@ C:> Get-ADComputer -Filter * -Properties DNSHostName | %{Test-Connection -Count 
 ```
 > `%{}` Iteration for the results before the pipe. `$_` Variabe for the iterated value
 
+> `Get-DomainComputer` has a filter flag, `-SearchBase`, that filters by  the `distinguishedname`:
+
 ### Misc Enumeration
 ---
 #### Active Users Logged on Computer (Requires Local Admin Rights)
