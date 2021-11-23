@@ -43,13 +43,13 @@ BuildNumber     : 14393
 RegisteredUser  : Windows User
 SerialNumber    : 00377-80000-00000-AA544
 Version         : 10.0.14393
-The current user has Local Admin access on: dcorp-adminsrv.dollarcorp.moneycorp.local
+The current user has Local Admin access on: SERVER.domain.local
 SystemDirectory : C:\Windows\system32
 Organization    :
 BuildNumber     : 14393
 RegisteredUser  : Windows User
 SerialNumber    : 00377-80000-00000-AA549
 Version         : 10.0.14393
-The current user has Local Admin access on: dcorp-student76.dollarcorp.moneycorp.local
+The current user has Local Admin access on: COMPUTER.domain.local
 PS C:>
 ```
