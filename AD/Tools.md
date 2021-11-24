@@ -53,6 +53,19 @@ Version         : 10.0.14393
 The current user has Local Admin access on: COMPUTER.domain.local
 PS C:>
 ```
+### Enter-PSSession (cmdlet)
+---
+Starts an interactive session with a single remote computer. During the session, the commands that you type run on the remote computer, just as though you were typing directly on the remote computer. You can have only one interactive session at a time.
+```powershell
+C:> Enter-PSSession -ComputerName COMPUTER
+```
+### Invoke-Command (cmdlet)
+---
+Runs commands on a local or remote computer and returns all output from the commands, including errors.
+```powershell
+C:> invoke-command -ComputerName WCOMPUTER -ScriptBlock {whoami}
+
+```
 
 ### BloodHound
 ---
