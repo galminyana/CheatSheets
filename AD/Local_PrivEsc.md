@@ -25,7 +25,11 @@ This will make user member of the Admins group. Just need to relog session and t
 
 ### PrivescCheck
 ---
+Syntax:
+```powerview
 Invoke-PrivescCheck [[-Report] <string>] [[-Format] {TXT | HTML | CSV | XML}] [-Extended] [-Experimental] [-Force] [-Audit] [-Silent]  [<CommonParameters>]
+```
+Usage:
 ```powershell
 C:> . PrivescCheck.ps1
 C:> Invoke-PrivescCheck
