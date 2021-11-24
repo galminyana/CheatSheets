@@ -23,6 +23,13 @@ C:> Invoke-ServiceAbuse -Name 'AbyssWebServer' -UserName 'dcorp\studentx'
 ```
 This will make user member of the Admins group. Just need to relog session and that's it.
 
-
+### PrivescCheck
+---
+Invoke-PrivescCheck [[-Report] <string>] [[-Format] {TXT | HTML | CSV | XML}] [-Extended] [-Experimental] [-Force] [-Audit] [-Silent]  [<CommonParameters>]
+```powershell
+C:> . PrivescCheck.ps1
+C:> Invoke-PrivescCheck
+```
+  
 
 
