@@ -92,7 +92,7 @@ Steps:
 ---
 - [Pentest Laboratories](https://pentestlaboratories.com/2021/05/17/amsi-bypass-methods/): Ways to Bypass AMSI
 - [AMSI Trigger](https://github.com/RythmStick/AMSITrigger)
-- [Invoke Obfuscation](https://github.com/danielbohannon/Invoke Obfuscation)
+- [Invoke-Obfuscation](https://github.com/danielbohannon/Invoke-Obfuscation)
 - [S3cur3Th1sSh1t](https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell)
 
 
