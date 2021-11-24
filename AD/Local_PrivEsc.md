@@ -4,7 +4,7 @@
 ---
 
 #### Find Vulnerable Services
-- Get Services with Unquoted PAths and Spaces in Name
+- Get Services with Unquoted Paths and Spaces in Name
 ```powershell
 C:> Get-ServiceUnquoted -vebose
 ```
@@ -14,7 +14,7 @@ C:> Get-ModifiableServiceFile
 ```
 - Get Services that Current User can Modify Configuration
 ```powershell
-C:> Get-ModifiableSrvice
+C:> Get-ModifiableService
 ```
 ##### Abuse Found Vulnerable Services
 In the three cmdlets, a `AbuseFunction` field is returned with the command to run to gain privileges. To make the user member of Local Administrators, can use:
