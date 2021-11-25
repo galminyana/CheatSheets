@@ -66,7 +66,11 @@ Runs commands on a local or remote computer and returns all output from the comm
 C:> invoke-command -ComputerName WCOMPUTER -ScriptBlock {whoami}
 
 ```
-
+### WinRS.exe
+---
+```powershell
+C:> winrs.exe -r:COMPUTER cmd
+```
 ### BloodHound
 ---
 
