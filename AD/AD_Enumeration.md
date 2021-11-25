@@ -271,6 +271,11 @@ Read GPOname from gplink attribute from `Get-NetOU`
 ```powershell
 C:> Get-DomainGPO -Identity "{AB306569-220D-43FF-B03B-83E8F4EF8081}"
 ```
+#### List Computers in a OU
+List the OU by the name, and then  get the computers searching on the distinguished name of the AD tree:
+```powershell
+C:>  Get-DomainOU -Identity "StudentMachines"| %{Get-DomainComputer -SearchBase $_.distinguishedname}
+```
 ### ACL Enumeration
 ---
 #### ACL Associated to Specified Object
