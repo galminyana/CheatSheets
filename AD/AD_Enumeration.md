@@ -312,6 +312,11 @@ C:> Get-DomainTrust -Domain us.dollarcorp.moneycorp.local
 C:> Get-ADTrust
 C:> Get-ADTrust -Identity us.dollarcorp.moneycorp.local
 ```
+#### External Trust for Domain
+Are those domains whose `TrustAttributes` equals to `"FILTER_SIDS"`
+```powershell
+C:> Get-ForestDomain | %{Get-DomainTrust -Domain $_.Name} | ?{$_.TrustAttributes -eq "FILTER_SIDS"}
+```
 #### Forest Mapping
 - Get All Global Catalogs for Current Forest
 ```powershell
