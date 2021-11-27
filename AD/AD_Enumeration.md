@@ -307,6 +307,11 @@ To get the ActiveDirectory Rights for a defined group on user:
 ```powershell
 C:> Invoke-ACLScanner -ResolveGUIDs | ?{$_.IdentityReferenceName -match "GROUPNAME"} | select Objectdn,identityreferencename,activedirectoryrights
 ```
+#### Check if Current User has GenericAll Rights on the AD Object for USER
+Interestig to see the chance to change password for USER3
+```powershell
+C:> Get-ObjectAcl -SamAccountName USER -ResolveGUIDs | ? {$_.ActiveDirectoryRights -eq "GenericAll"}  
+```
 ### Domain Trusts Enumeration
 ---
 #### Enumerate Domain Trust Relationships of the Current User
@@ -389,4 +394,15 @@ C:> Find-DomainUserLocation -Stealth
 #### Get running processes for a given remote machine
 ```powershell
 C:> Get-NetProcess -ComputerName COMPUTERNAME -RemoteUserName DOMAIN\USER -RemotePassword PASSWORD | ft
+```
+### Misc
+---
+#### Check if USER can add someone to Admins Group
+Get the Distinguished Name of Domain Admins Group
+```powershell
+C:> Get-NetGroup "domain admins" -FullData
+```
+Check Permissions over that ACL
+```powershell
+C:> Get-ObjectAcl -ResolveGUIDs | ? {$_.objectdn -eq "CN=Domain Admins,CN=Users,DC=offense,DC=local" -and $_.IdentityReference -eq "DOMAIN\USER"}
 ```
