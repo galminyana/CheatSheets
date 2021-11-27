@@ -1,15 +1,15 @@
 
 - [AD Enumeration](#ad-enumeration)
-  * [Tools:](#tools-)
-  * [Domain (or subdomain) Enumeration](#domain--or-subdomain--enumeration)
-    + **[Get Current Domain](#get-current-domain)**
+  * **[Tools:](#tools-)**
+  * **[Domain (or subdomain) Enumeration](#domain--or-subdomain--enumeration)**
+    + [Get Current Domain](#get-current-domain)
     + [Get Object of Another Domain](#get-object-of-another-domain)
     + [Get Domain SID for Current Domain](#get-domain-sid-for-current-domain)
     + [Get Domain Controllers for Current Domain](#get-domain-controllers-for-current-domain)
     + [Get Domain Controllers for Another Domain](#get-domain-controllers-for-another-domain)
     + [Get Domain Policy for Current Domain](#get-domain-policy-for-current-domain)
     + [Get Domain Policy for Another Domain](#get-domain-policy-for-another-domain)
-  * [Domain Users Enumeration](#domain-users-enumeration)
+  * **[Domain Users Enumeration](#domain-users-enumeration)**
     + [List of Users in the Domain](#list-of-users-in-the-domain)
     + [List of properties for users in the current domain](#list-of-properties-for-users-in-the-current-domain)
     + [Search Strings in Users Attributes](#search-strings-in-users-attributes)
