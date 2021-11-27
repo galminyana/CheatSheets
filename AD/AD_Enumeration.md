@@ -173,6 +173,10 @@ C:> Get-ADGroup -Filter * -Properties *
 C:> Get-DomainGroup *admin*
 C:> Get-ADGroup -Filter 'Name -like "*admin*"' | select Name
 ```
+#### Domain Members That Belong to a Given Group
+```powershell
+C:> Get-NetGroupMember -GroupName "Domain Users"
+```
 #### Get Members of Domain Admins Group
 ```powershell
 C:> Get-DomainGroupMember -Identity "Domain Admins" -Recurse
@@ -305,6 +309,10 @@ C:> Invoke-ACLScanner -ResolveGUIDs | ?{$_.IdentityReferenceName -match "GROUPNA
 ```
 ### Domain Trusts Enumeration
 ---
+#### Enumerate Domain Trust Relationships of the Current User
+```powershell
+C:> Get-NetDomainTrust
+```
 #### Domain Trust Mapping
 ```powershell
 C:> Get-DomainTrust
@@ -322,6 +330,10 @@ C:> Get-ForestDomain | %{Get-DomainTrust -Domain $_.Name} | ?{$_.TrustAttributes
 C:> Get-NetForestDomain
 ```
 #### Forest Mapping
+```powershell
+C:> Get-NetForestTrust
+```
+
 - Get All Global Catalogs for Current Forest
 ```powershell
 C:> Get-ForestGlobalCatalog
@@ -343,8 +355,8 @@ C:> Find-LocalAdminAccess -Verbose
 ```
 This queries de DC for a list of computers using `Get-NetComputer` and then runs `Invoke-CheckLocalAdminAccess` on each machine.
 Check the Scripts:
-- Find-WMILocalAdminAccess.ps1
-- Find-PSRemotingLocalAdminAccess.ps1: 
+- `Find-WMILocalAdminAccess.ps1`
+- `Find-PSRemotingLocalAdminAccess.ps1`: 
 ```powershell
 C:> . .Find-PSRemotingLocalAdminAccess.ps1
 C:> Find-PSRemotingLocalAdminAccess 
@@ -367,4 +379,10 @@ C:> Find-DomainUserLocation -CheckAccess
 #### Find Computers Where a Domain Admin Session is Available (File Servers and Distributed File Servers)
 ```powershell
 C:> Find-DomainUserLocation -Stealth
+```
+### Processes Enumeration
+---
+#### Get running processes for a given remote machine
+```powershell
+C:> Get-NetProcess -ComputerName COMPUTERNAME -RemoteUserName DOMAIN\USER -RemotePassword PASSWORD | ft
 ```
