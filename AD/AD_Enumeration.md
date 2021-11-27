@@ -317,6 +317,10 @@ Are those domains whose `TrustAttributes` equals to `"FILTER_SIDS"`
 ```powershell
 C:> Get-ForestDomain | %{Get-DomainTrust -Domain $_.Name} | ?{$_.TrustAttributes -eq "FILTER_SIDS"}
 ```
+#### Get All Domains of the Forest for Current User
+```powerview
+C:> Get-NetForestDomain
+```
 #### Forest Mapping
 - Get All Global Catalogs for Current Forest
 ```powershell
