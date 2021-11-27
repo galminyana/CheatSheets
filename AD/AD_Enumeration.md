@@ -1,5 +1,4 @@
-
-- <small>[AD Enumeration](#ad-enumeration)</small>
+## [AD Enumeration](#ad-enumeration)
   * **[Tools:](#tools-)**
   * **[Domain (or subdomain) Enumeration](#domain--or-subdomain--enumeration)**
     + [Get Current Domain](#get-current-domain)
