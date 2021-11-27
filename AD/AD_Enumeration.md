@@ -1,3 +1,4 @@
+
 - [AD Enumeration](#ad-enumeration)
   * [Tools:](#tools-)
   * [Domain (or subdomain) Enumeration](#domain--or-subdomain--enumeration)
@@ -15,6 +16,7 @@
   * [Groups Enumeration](#groups-enumeration)
     + [Get All Groups in Current Domain](#get-all-groups-in-current-domain)
     + [Get all Groups Containing "admin" in the Group Name](#get-all-groups-containing--admin--in-the-group-name)
+    + [Domain Members That Belong to a Given Group](#domain-members-that-belong-to-a-given-group)
     + [Get Members of Domain Admins Group](#get-members-of-domain-admins-group)
     + [Get Group Membership of a User](#get-group-membership-of-a-user)
     + [List Local Groups on Machine (Requires Admin Privs on non-dc Machines)](#list-local-groups-on-machine--requires-admin-privs-on-non-dc-machines-)
@@ -38,22 +40,34 @@
   * [OU Enumeration](#ou-enumeration)
     + [Get Domain OUs](#get-domain-ous)
     + [Get GPO Applied to an OU](#get-gpo-applied-to-an-ou)
+    + [List Computers in a OU](#list-computers-in-a-ou)
   * [ACL Enumeration](#acl-enumeration)
     + [ACL Associated to Specified Object](#acl-associated-to-specified-object)
     + [Get ACL Associated with the Specified PRefix to Use for Search](#get-acl-associated-with-the-specified-prefix-to-use-for-search)
     + [Enumerate ACL using AD Module. Without Resolving GUIDs](#enumerate-acl-using-ad-module-without-resolving-guids)
     + [Search for interesting ACEs](#search-for-interesting-aces)
     + [Get ACL Associated With Specified Path](#get-acl-associated-with-specified-path)
+    + [Use Invoke-ACLScanner](#use-invoke-aclscanner)
+    + [Check if Current User has GenericAll Rights on the AD Object for USER](#check-if-current-user-has-genericall-rights-on-the-ad-object-for-user)
+    + [Check if USER can Force Password Change on USER2](#check-if-user-can-force-password-change-on-user2)
   * [Domain Trusts Enumeration](#domain-trusts-enumeration)
+    + [Enumerate Domain Trust Relationships of the Current User](#enumerate-domain-trust-relationships-of-the-current-user)
     + [Domain Trust Mapping](#domain-trust-mapping)
+    + [External Trust for Domain](#external-trust-for-domain)
+    + [Get All Domains of the Forest for Current User](#get-all-domains-of-the-forest-for-current-user)
     + [Forest Mapping](#forest-mapping)
-  * [USer Hunting](#user-hunting)
+  * [User Hunting](#user-hunting)
+    + [Find machines on a domain or users on a given machine that are logged on](#find-machines-on-a-domain-or-users-on-a-given-machine-that-are-logged-on)
     + [Find Machines Where Current User has Local Admin Access](#find-machines-where-current-user-has-local-admin-access)
     + [Find Computers were Domain Admin (or specified user/group) has Sessions](#find-computers-were-domain-admin--or-specified-user-group--has-sessions)
     + [Computers Where a Domain Admin Session is Available and Current User has Admin Access](#computers-where-a-domain-admin-session-is-available-and-current-user-has-admin-access)
     + [Find Computers Where a Domain Admin Session is Available (File Servers and Distributed File Servers)](#find-computers-where-a-domain-admin-session-is-available--file-servers-and-distributed-file-servers-)
+  * [Processes Enumeration](#processes-enumeration)
+    + [Get running processes for a given remote machine](#get-running-processes-for-a-given-remote-machine)
+  * [Misc](#misc)
+    + [Check if USER can add someone to Admins Group](#check-if-user-can-add-someone-to-admins-group)
 
-
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 ## AD Enumeration
 No Admin Privileges required:
