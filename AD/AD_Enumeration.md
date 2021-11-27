@@ -349,6 +349,10 @@ C:> Get-ADTrust -Filter 'msDS-TrustForestTrustInfo -ne "$null"'
 ```
 ### User Hunting
 ---
+#### Find machines on a domain or users on a given machine that are logged on
+```powershell
+C:> Invoke-UserHunter -ComputerName COMPUTERNAME -Username *
+```
 #### Find Machines Where Current User has Local Admin Access
 ```powershell
 C:> Find-LocalAdminAccess -Verbose
