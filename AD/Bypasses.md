@@ -1,4 +1,6 @@
-- [Tricks to Bypass protections](#tricks-to-bypass-protections)
+
+
+## Tricks to Bypass protections
   * [Execution Policy Protection](#execution-policy-protection)
   * [AMSI Bypass](#amsi-bypass)
   * [Memory Execution](#memory-execution)
@@ -6,9 +8,6 @@
   * [Invisi Shell](#invisi-shell)
   * [AMSI Trigger](#amsi-trigger)
   * [References](#references)
-
-
-## Tricks to Bypass protections
 
 ### Execution Policy Protection
 ---
