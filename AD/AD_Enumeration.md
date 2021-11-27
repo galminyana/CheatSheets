@@ -2,7 +2,7 @@
 - [AD Enumeration](#ad-enumeration)
   * [Tools:](#tools-)
   * [Domain (or subdomain) Enumeration](#domain--or-subdomain--enumeration)
-    + [Get Current Domain](#get-current-domain)
+    <sub>+ [Get Current Domain](#get-current-domain)</sub>
     + [Get Object of Another Domain](#get-object-of-another-domain)
     + [Get Domain SID for Current Domain](#get-domain-sid-for-current-domain)
     + [Get Domain Controllers for Current Domain](#get-domain-controllers-for-current-domain)
