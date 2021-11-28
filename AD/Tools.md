@@ -86,9 +86,12 @@ C:> neo4j.bat start
 - Will ask for credentials: bolt://localhost:7687  -  neo4j  -  PASSWORD
 
 Run Collectors:
-
 - Powershell:
 ```powershell
 C:> . .\SharpHound.ps1
 C:> Invoke-BloodHound -CollectionMethod All -Verbose
+```
+To avoid asking DC, use:
+```powershell
+C:> Invoke-BloodHound -CollectionMethod All -ExcludeDC
 ```
