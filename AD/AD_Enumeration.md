@@ -1,5 +1,5 @@
-## Active Directory Enumeration
----
+# Active Directory Enumeration
+
 - [AD Enumeration](#ad-enumeration)
 - [Tools](#tools)
 - [Domain (or subdomain) Enumeration](#domain--or-subdomain--enumeration)
