@@ -386,10 +386,10 @@ C:> (Get-ADForest).Domains
 ---
 - Setup:
   - Install and run neo4j:
-```powershell
-C:> neo4j.bat install-service
-C:> neo4j.bat start
-```
+   ```powershell
+   C:> neo4j.bat install-service
+   C:> neo4j.bat start
+   ```
   - Go to http://localhost:7474 and log using `neo4j` and `neo4j`.
   - Change the password for `neo4j` user to the desireed one
   - Run `BloodHound.exe` from `BloodHound-win32-x64`
