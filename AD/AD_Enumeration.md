@@ -289,6 +289,12 @@ C:> Find-DomainUserLocation -CheckAccess
 
 # Find Computers Where a Domain Admin Session is Available (File Servers and Distributed File Servers)
 C:> Find-DomainUserLocation -Stealth
+
+# Test if user has access to computer
+C:> Test-AdminAccess -ComputerName <computer>
+
+# List domain Computers and user access
+C:> Get-DomainComputer | Test-AdminAccess
 ```
 - **Processes Enumeration**
 ```powershell
