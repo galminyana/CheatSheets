@@ -217,9 +217,6 @@ C:> Get-DomainObjectAcl -SamAccountName user -ResolveGUIDs
 # Get ACL Associated with the Specified PRefix to Use for Search
 C:> Get-DomainObjectAcl -SearchBase "LDAP://CN=Domain Admins,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local" -ResolveGUIDs -Verbose
 
-# Enumerate ACL using AD Module. Without Resolving GUIDs
-C:> (Get-Acl 'AD:\CN=Administrator,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local').Access
-
 # Search for interesting ACEs
 C:> Find-InterestingDomainAcl -ResolveGUIDs
 
@@ -385,6 +382,11 @@ C:> Get-ADForest -Identity <ForestName>
 
 #Domains of Forest Enumeration
 C:> (Get-ADForest).Domains
+```
+- **ACL**
+```powerview
+# Enumerate ACL using AD Module. Without Resolving GUIDs
+C:> (Get-Acl 'AD:\CN=Administrator,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local').Access
 ```
 ### BloodHound Enumeration
 ---
