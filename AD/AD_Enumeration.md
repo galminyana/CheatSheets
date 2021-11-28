@@ -109,6 +109,15 @@ C:> Get-DomainComputer -Properties OperatingSystem, Name, DnsHostName | Sort-Obj
 
 #Enumerate Live machines 
 C:> Get-DomainComputer -Ping -Properties OperatingSystem, Name, DnsHostName | Sort-Object -Property DnsHostName
+
+# Active Users Logged on Computer (Requires Local Admin Rights)
+C:> Get-NetLoggedon -ComputerName <computer>
+
+# Locally Logged Users on Computer (Requires Remote Registry in the Target)
+C:> Get-LoggedonLocal -ComputerName <computer>
+
+# Get Last Logged User on Computer  (Requires Local Admin Rights and Remote Registry)
+C:> Get-LastLoggedOn -ComputerName <computer>
 ```
 > `Get-DomainComputer` has a filter flag, `-SearchBase`, that filters by  the `distinguishedname`.
 
@@ -131,108 +140,74 @@ C:> Get-DomainGroupMember -Identity "Domain Admins" -Recurse
 # Return members of Specific Group (eg. Domain Admins & Enterprise Admins)
 C:> Get-DomainGroup -Identity <GroupName> | Select-Object -ExpandProperty Member 
 C:> Get-DomainGroupMember -Identity <GroupName> | Select-Object MemberDistinguishedName
-```
-### Groups Enumeration
----
-#### Get All Groups in Current Domain
-```powershell
-C:> Get-ADGroup -Filter * | select Name
-C:> Get-ADGroup -Filter * -Properties *
-```
-#### Get all Groups Containing "admin" in the Group Name
-```powershell
-C:> Get-ADGroup -Filter 'Name -like "*admin*"' | select Name
-```
 
-#### Get Members of Domain Admins Group
-```powershell
-C:> Get-ADGroupMember -Identity "Domain Admins" -Recursive
-```
-#### Get Group Membership of a User
-```powershell
-C:> Get-ADPrincipalGroupMembership -Identity user
-```
-#### List Local Groups on Machine (Requires Admin Privs on non-dc Machines)
-```powershell
-C:> Get-NetLocalGroup -ComputerName computer -ListGroups
-```
-#### Get Members of Local Groups on a Machine (Requires Admin Privs on non-dc Machines)
-```powershell
-C:> Get-NetLocalGroup -ComputerName computer -Recurse
-```
-#### Get Members of Local Group "Administrators" on Machine (Requires Admin Privs on non-dc Machines)
-```powershell
+# List Local Groups on Machine (Requires Admin Privs on non-dc Machines)
+C:> Get-NetLocalGroup 
+C:> Get-NetLocalGroup -ComputerName <computer> -Recurse
+
+# Enumerate members of a specific local group on the local (or remote) machine. Requires local admin rights on the remote machine
+C:> Get-NetLocalGroupMember -GroupName Administrators | Select-Object MemberName, IsGroup, IsDomain
 C:> Get-NetLocalGroupMember -ComputerName computer -GroupName Administrators
 ```
-
-> `%{}` Iteration for the results before the pipe. `$_` Variabe for the iterated value
-
-
-
-### Misc Enumeration
----
-#### Active Users Logged on Computer (Requires Local Admin Rights)
+- Shares
 ```powershell
-C:> Get-NetLoggedon -ComputerName servername
-```
-#### Locally Logged Users on Computer (Requires Remote Registry in the Target)
-```powershell
-C:> Get-LoggedonLocal -ComputerName computer
-```
-#### Get Last Logged User on Computer  (Requires Local Admin Rights and Remote Registry)
-```powershell
-C:> Get-LastLoggedOn -ComputerName servername
-```
-### Shares and Files Enum
----
-#### Find Shares on Hosts in Current Domain
-```powershell
+# Enumerate Domain Shares
+C:> Find-DomainShare
+
+# Enumerate Domain Shares the current user has access
+C:> Find-DomainShare -CheckShareAccess
+
+# Enumerate "Interesting" Files on accessible shares
+C:> Find-InterestingDomainShareFile -Include *passwords*
+
+# Find Shares on Hosts in Current Domain
 C:> Invoke-ShareFinder -Verbose
-```
-#### Find Sensitive Files on Computers in the Domain
-```powershell
+
+# Find Sensitive Files on Computers in the Domain
 C:> Invoke-FileFinder -Verbose
-```
-#### Get Fileservers on Domain
-```powershell
+
+# Get Fileservers on Domain
 C:> Get-NetFileServer
+
 ```
-### GPO Enumeration
+- GPO Enumeration
 ---
-#### List of GPO in Current Domain
 ```powershell
+# GPO List in the Current Domain
 C:> Get-DomainGPO
-C:> Get-DomainGPO -ComputerIdentity computer
-```
-#### Get GPO who use Restricted Groups or groups.xml for Interesting Users
-```powershell
+C:> Get-DomainGPO -ComputerIdentity <computer>
+
+C:> Get-DomainGPO -Properties DisplayName | Sort-Object -Property DisplayName
+
+# Enumerate all GPOs to a specific computer
+C:> Get-DomainGPO -ComputerIdentity <computer> -Properties DisplayName | Sort-Object -Property DisplayName
+
+# Users that are part of a Machine's local Admin group
+C:> Get-DomainGPOComputerLocalGroupMapping -ComputerName <computer>
+
+# Get GPO who use Restricted Groups or groups.xml for Interesting Users
 C:> Get-DomainGPOLocalGroup
+
+# Users Which are in Local Group of a Machine using GPO
+C:> Get-DomainGPOComputerLocalGroupMapping -ComputerIdentity <computer>
+
+## Get Machines where the Usert is Member of a Specific Group
+C:> Get-DomainGPOUserLocalGroupMapping -Identity <user> -Verbose
 ```
-#### Users Which are in Local Group of a Machine using GPO
+- OU Enumeration
 ```powershell
-C:> Get-DomainGPOComputerLocalGroupMapping -ComputerIdentity computer
-```
-#### Get Machines where the Usert is Member of a Specific Group
-```powershell
-C:> Get-DomainGPOUserLocalGroupMapping -Identity user -Verbose
-```
-### OU Enumeration
----
-#### Get Domain OUs
-```powershell
+# Get Domain OUs
 C:> Get-DomainOU
-C:> Get-ADOrganizationalUnit -Filter * -Properties *
-```
-#### Get GPO Applied to an OU
-Read GPOname from gplink attribute from `Get-NetOU`
-```powershell
+
+# Get GPO Applied to an OU
+#    Read GPOname from gplink attribute from `Get-NetOU`
 C:> Get-DomainGPO -Identity "{AB306569-220D-43FF-B03B-83E8F4EF8081}"
-```
-#### List Computers in a OU
-List the OU by the name, and then  get the computers searching on the distinguished name of the AD tree:
-```powershell
+
+# List Computers in a OU. List the OU by the name, and then  get the computers searching on the distinguished name of the AD tree:
 C:>  Get-DomainOU -Identity "StudentMachines"| %{Get-DomainComputer -SearchBase $_.distinguishedname}
 ```
+
+
 ### ACL Enumeration
 ---
 #### ACL Associated to Specified Object
