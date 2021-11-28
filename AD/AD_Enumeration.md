@@ -6,7 +6,7 @@ No Admin Privileges required:
 ```powershell
 c:> whoami /priv
 ```
-### Tools:
+### Tools
 ---
 
 - [PowerView](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)
@@ -43,20 +43,20 @@ Name                    : homelab.local
 ```
 ### PowerView Enumeration
 ---
-- Get Current Domain
+- **Get Current Domain**
 ```powershell
 C:> Get-NetDomain
 C:> Get-Domain
 ```
-- Get Other Domains
+- **Get Other Domains**
 ```powershell
 C:> Get-NetDomain -Domain domain.local
 ```
-- Get Domain SID
+- **Get Domain SID**
 ```powershell
 C:> Get-DomainSID
 ```
-- Get Domain Policy for Current Domain
+- **Get Domain Policy for Current Domain**
 ```powershell
 C:> Get-DomainPolicy
 C:> (Get-DomainPolicy)."system access"
@@ -71,7 +71,7 @@ C:> (Get-DomainPolicy -domain domain.local)."system access"
 C:> Get-NetDomainController
 C:> Get-NetDomainController -Domain domain.local
 ```
-- Domain Users
+- **Domain Users**
 ```powershell
 C:> Get-NetUser
 C:> Get-NetUser -Username <user>
@@ -81,7 +81,7 @@ C:> Get-DomainUser -Identity <user>
 # Save results to File
 C:> Get-DomainUser | Out-File -FilePath .\DomainUsers.txt
 ```
-- Users Properties 
+- **Users Properties** 
 ```powershell
 C:> Get-DomainUser -Identity <user> Properties *
 C:> Get-UserProperty
@@ -99,7 +99,7 @@ C:> Get-NetSession -ComputerName <ComputerName>
 # Search string in user attributes
 C:> Get-DomainUser -LDAPFilter "Description=*built*" | select name,Description      
 ```
-- Computers in Current Domain
+- **Computers in Current Domain**
 ```powershell
 C:> Get-DomainComputer | select Name
 C:> Get-DomainComputer -OperatingSystem "*Server 2016*"             # Computers whose OS is "Server 2016"
@@ -121,7 +121,7 @@ C:> Get-LastLoggedOn -ComputerName <computer>
 ```
 > `Get-DomainComputer` has a filter flag, `-SearchBase`, that filters by  the `distinguishedname`.
 
-- Group and Group Members
+- **Group and Group Members**
 ```powershell
 # List Domain Groups
 C:> Get-DomainGroup | select Name
@@ -149,7 +149,7 @@ C:> Get-NetLocalGroup -ComputerName <computer> -Recurse
 C:> Get-NetLocalGroupMember -GroupName Administrators | Select-Object MemberName, IsGroup, IsDomain
 C:> Get-NetLocalGroupMember -ComputerName computer -GroupName Administrators
 ```
-- Shares
+- **Shares**
 ```powershell
 # Enumerate Domain Shares
 C:> Find-DomainShare
@@ -169,7 +169,7 @@ C:> Invoke-FileFinder -Verbose
 # Get Fileservers on Domain
 C:> Get-NetFileServer
 ```
-- GPO Enumeration
+- **GPO Enumeration**
 ```powershell
 # GPO List in the Current Domain
 C:> Get-DomainGPO
@@ -192,7 +192,7 @@ C:> Get-DomainGPOComputerLocalGroupMapping -ComputerIdentity <computer>
 ## Get Machines where the Usert is Member of a Specific Group
 C:> Get-DomainGPOUserLocalGroupMapping -Identity <user> -Verbose
 ```
-- OU Enumeration
+- **OU Enumeration**
 ```powershell
 # Get Domain OUs
 C:> Get-DomainOU
@@ -205,7 +205,7 @@ C:> Get-DomainGPO -Identity "{AB306569-220D-43FF-B03B-83E8F4EF8081}"
 C:>  Get-DomainOU -Identity "StudentMachines"| %{Get-DomainComputer -SearchBase $_.distinguishedname}
 ```
 
-- ACL Enumeration
+- **ACL Enumeration**
 ```powershell
 # ACL Associated to Specified Object
 C:> Get-DomainObjectAcl -SamAccountName user -ResolveGUIDs
@@ -237,7 +237,7 @@ C:> Get-ObjectAcl -SamAccountName USER2 -ResolveGUIDs | ? {$_.IdentityReference 
 ###  Also password can be changed like this
      C:> Set-DomainUserPassword -Identity USER2 -AccountPassword (ConvertTo-SecureString 'PASSWORD' -AsPlainText -Force) -Verbose
 ```
-- Domain Trusts Enumeration
+- **Domain Trusts Enumeration**
 ```powershell
 # Enumerate Domain Trust Relationships of the Current User
 C:> Get-NetDomainTrust
@@ -263,7 +263,7 @@ C:> Get-ForestGlobalCatalog -Forest eurocorp.local
 C:> Get-ForestTrust
 C:> Get-ForestTrust -Forest eurocorp.local
 ```
-- User Hunting
+- **User Hunting**
 ```powershell
 # Find machines on a domain or users on a given machine that are logged on
 C:> Invoke-UserHunter -ComputerName COMPUTERNAME -Username *
@@ -289,7 +289,7 @@ C:> Find-DomainUserLocation -CheckAccess
 # Find Computers Where a Domain Admin Session is Available (File Servers and Distributed File Servers)
 C:> Find-DomainUserLocation -Stealth
 ```
-- Processes Enumeration
+- **Processes Enumeration**
 ```powershell
 # Get running processes for a given remote machine
 C:> Get-NetProcess -ComputerName COMPUTERNAME -RemoteUserName DOMAIN\USER -RemotePassword PASSWORD | ft
