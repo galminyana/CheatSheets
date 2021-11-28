@@ -1,72 +1,5 @@
 ## [AD Enumeration](#ad-enumeration)
-  * **[Tools:](#tools-)**
-  * **[Domain (or subdomain) Enumeration](#domain--or-subdomain--enumeration)**
-    + [Get Current Domain](#get-current-domain)
-    + [Get Object of Another Domain](#get-object-of-another-domain)
-    + [Get Domain SID for Current Domain](#get-domain-sid-for-current-domain)
-    + [Get Domain Controllers for Current Domain](#get-domain-controllers-for-current-domain)
-    + [Get Domain Controllers for Another Domain](#get-domain-controllers-for-another-domain)
-    + [Get Domain Policy for Current Domain](#get-domain-policy-for-current-domain)
-    + [Get Domain Policy for Another Domain](#get-domain-policy-for-another-domain)
-  * **[Domain Users Enumeration](#domain-users-enumeration)**
-    + [List of Users in the Domain](#list-of-users-in-the-domain)
-    + [List of properties for users in the current domain](#list-of-properties-for-users-in-the-current-domain)
-    + [Search Strings in Users Attributes](#search-strings-in-users-attributes)
-  * **[Groups Enumeration](#groups-enumeration)**
-    + [Get All Groups in Current Domain](#get-all-groups-in-current-domain)
-    + [Get all Groups Containing "admin" in the Group Name](#get-all-groups-containing--admin--in-the-group-name)
-    + [Domain Members That Belong to a Given Group](#domain-members-that-belong-to-a-given-group)
-    + [Get Members of Domain Admins Group](#get-members-of-domain-admins-group)
-    + [Get Group Membership of a User](#get-group-membership-of-a-user)
-    + [List Local Groups on Machine (Requires Admin Privs on non-dc Machines)](#list-local-groups-on-machine--requires-admin-privs-on-non-dc-machines-)
-    + [Get Members of Local Groups on a Machine (Requires Admin Privs on non-dc Machines)](#get-members-of-local-groups-on-a-machine--requires-admin-privs-on-non-dc-machines-)
-    + [Get Members of Local Group "Administrators" on Machine (Requires Admin Privs on non-dc Machines)](#get-members-of-local-group--administrators--on-machine--requires-admin-privs-on-non-dc-machines-)
-  * **[Computers Enumeration](#computers-enumeration)**
-    + [List of Computers in Current Domain](#list-of-computers-in-current-domain)
-  * **[Misc Enumeration](#misc-enumeration)**
-    + [Active Users Logged on Computer (Requires Local Admin Rights)](#active-users-logged-on-computer--requires-local-admin-rights-)
-    + [Locally Logged Users on Computer (Requires Remote Registry in the Target)](#locally-logged-users-on-computer--requires-remote-registry-in-the-target-)
-    + [Get Last Logged User on Computer  (Requires Local Admin Rights and Remote Registry)](#get-last-logged-user-on-computer---requires-local-admin-rights-and-remote-registry-)
-  * **[Shares and Files Enum](#shares-and-files-enum)**
-    + [Find Shares on Hosts in Current Domain](#find-shares-on-hosts-in-current-domain)
-    + [Find Sensitive Files on Computers in the Domain](#find-sensitive-files-on-computers-in-the-domain)
-    + [Get Fileservers on Domain](#get-fileservers-on-domain)
-  * **[GPO Enumeration](#gpo-enumeration)**
-    + [List of GPO in Current Domain](#list-of-gpo-in-current-domain)
-    + [Get GPO who use Restricted Groups or groups.xml for Interesting Users](#get-gpo-who-use-restricted-groups-or-groupsxml-for-interesting-users)
-    + [Users Which are in Local Group of a Machine using GPO](#users-which-are-in-local-group-of-a-machine-using-gpo)
-    + [Get Machines where the Usert is Member of a Specific Group](#get-machines-where-the-usert-is-member-of-a-specific-group)
-  * **[OU Enumeration](#ou-enumeration)**
-    + [Get Domain OUs](#get-domain-ous)
-    + [Get GPO Applied to an OU](#get-gpo-applied-to-an-ou)
-    + [List Computers in a OU](#list-computers-in-a-ou)
-  * **[ACL Enumeration](#acl-enumeration)**
-    + [ACL Associated to Specified Object](#acl-associated-to-specified-object)
-    + [Get ACL Associated with the Specified PRefix to Use for Search](#get-acl-associated-with-the-specified-prefix-to-use-for-search)
-    + [Enumerate ACL using AD Module. Without Resolving GUIDs](#enumerate-acl-using-ad-module-without-resolving-guids)
-    + [Search for interesting ACEs](#search-for-interesting-aces)
-    + [Get ACL Associated With Specified Path](#get-acl-associated-with-specified-path)
-    + [Use Invoke-ACLScanner](#use-invoke-aclscanner)
-    + [Check if Current User has GenericAll Rights on the AD Object for USER](#check-if-current-user-has-genericall-rights-on-the-ad-object-for-user)
-    + [Check if USER can Force Password Change on USER2](#check-if-user-can-force-password-change-on-user2)
-  * **[Domain Trusts Enumeration](#domain-trusts-enumeration)**
-    + [Enumerate Domain Trust Relationships of the Current User](#enumerate-domain-trust-relationships-of-the-current-user)
-    + [Domain Trust Mapping](#domain-trust-mapping)
-    + [External Trust for Domain](#external-trust-for-domain)
-    + [Get All Domains of the Forest for Current User](#get-all-domains-of-the-forest-for-current-user)
-    + [Forest Mapping](#forest-mapping)
-  * **[User Hunting](#user-hunting)**
-    + [Find machines on a domain or users on a given machine that are logged on](#find-machines-on-a-domain-or-users-on-a-given-machine-that-are-logged-on)
-    + [Find Machines Where Current User has Local Admin Access](#find-machines-where-current-user-has-local-admin-access)
-    + [Find Computers were Domain Admin (or specified user/group) has Sessions](#find-computers-were-domain-admin--or-specified-user-group--has-sessions)
-    + [Computers Where a Domain Admin Session is Available and Current User has Admin Access](#computers-where-a-domain-admin-session-is-available-and-current-user-has-admin-access)
-    + [Find Computers Where a Domain Admin Session is Available (File Servers and Distributed File Servers)](#find-computers-where-a-domain-admin-session-is-available--file-servers-and-distributed-file-servers-)
-  * **[Processes Enumeration](#processes-enumeration)**
-    + [Get running processes for a given remote machine](#get-running-processes-for-a-given-remote-machine)
-  * **[Misc](#misc)**
-    + [Check if USER can add someone to Admins Group](#check-if-user-can-add-someone-to-admins-group)
-
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+ 
 
 ## AD Enumeration
 No Admin Privileges required:
@@ -108,44 +41,60 @@ RidRoleOwner            : w2019-DC.homelab.local
 InfrastructureRoleOwner : w2019-DC.homelab.local
 Name                    : homelab.local
 ```
+### PowerView Enumeration
+---
+- Get Current Domain
 
-#### Get Current Domain
 ```powershell
 C:> Get-NetDomain
-C:> Get-ADDomain
+C:> Get-Domain
 ```
-#### Get Object of Another Domain
+- Get Other Domains
 ```powershell
 C:> Get-NetDomain -Domain domain.local
-C:> Get-ADDomain -Identity donain.local
 ```
-#### Get Domain SID for Current Domain
+- Get Domain SID
 ```powershell
 C:> Get-DomainSID
-C:> (Get-ADDDomain).DomainSID
 ```
-#### Get Domain Controllers for Current Domain
-```powershell
-C:> Get-NetDomainController
-C:> Get-ADDomainController
-```
-#### Get Domain Controllers for Another Domain
-```powershell
-C:> Get-NetDomainController -Domain domain.local
-C:> Get-ADDomainController -DomainName domain.local -Discover
-```
-#### Get Domain Policy for Current Domain
+- Get Domain Policy for Current Domain
 ```powershell
 C:> Get-DomainPolicy
 C:> (Get-DomainPolicy)."system access"
                       ."Kerberos Policy"
 ```				  
-[PASTE RESULTS AND DESCRIPTION]
-
-#### Get Domain Policy for Another Domain
+- Get Domain Policy for Another Domain
 ```powershell
 C:> (Get-DomainPolicy -domain domain.local)."system access"
 ```
+- Get Domain Controllers for Current Domain
+```powershell
+C:> Get-NetDomainController
+C:> Get-NetDomainController -Domain domain.local
+```
+
+
+#### Get Current Domain
+```powershell
+C:> Get-ADDomain
+```
+#### Get Object of Another Domain
+```powershell
+C:> Get-ADDomain -Identity donain.local
+```
+#### Get Domain SID for Current Domain
+```powershell
+C:> (Get-ADDDomain).DomainSID
+```
+#### Get Domain Controllers for Current Domain
+```powershell
+C:> Get-ADDomainController
+```
+#### Get Domain Controllers for Another Domain
+```powershell
+C:> Get-ADDomainController -DomainName domain.local -Discover
+```
+
 ### Domain Users Enumeration
 ---
 
