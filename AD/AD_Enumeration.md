@@ -397,11 +397,11 @@ C:> (Get-ADForest).Domains
 
 - Run Collectors:
   - Powershell:
-```powershell
-C:> . .\SharpHound.ps1
-C:> Invoke-BloodHound -CollectionMethod All -Verbose
-```
+   ```powershell
+   C:> . .\SharpHound.ps1
+   C:> Invoke-BloodHound -CollectionMethod All -Verbose
+   ```
   - Exe Collector
-```powershell
-C:> .\SharpHound.exe --CollectionMethod All --LdapUsername <UserName> --LdapPassword <Password> --domain <Domain> --domaincontroller <Domain Controller's Ip> --OutputDirectory <PathToFile>
- ```
+   ```powershell
+   C:> .\SharpHound.exe --CollectionMethod All --LdapUsername <UserName> --LdapPassword <Password> --domain <Domain> --domaincontroller <Domain Controller's Ip> --OutputDirectory <PathToFile>
+    ```
