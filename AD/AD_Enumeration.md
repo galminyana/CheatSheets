@@ -44,7 +44,6 @@ Name                    : homelab.local
 ### PowerView Enumeration
 ---
 - Get Current Domain
-
 ```powershell
 C:> Get-NetDomain
 C:> Get-Domain
@@ -67,13 +66,30 @@ C:> (Get-DomainPolicy)."system access"
 ```powershell
 C:> (Get-DomainPolicy -domain domain.local)."system access"
 ```
-- Get Domain Controllers for Current Domain
+- Get Domain Controllers
 ```powershell
 C:> Get-NetDomainController
 C:> Get-NetDomainController -Domain domain.local
 ```
+- Enumerate Domain Users
+```powershell
+C:> Get-NetUser
+C:> Get-NetUser -Username user
+C:> Get-DomainUser 
+C:> Get-DomainUser -Identity user
 
+# Save results to File
+C:> Get-DomainUser | Out-File -FilePath .\DomainUsers.txt
+```
+- Users Properties 
+```powershell
+C:> Get-DomainUser -Identity user Properties *
+C:> Get-UserProperty
 
+# List specific properties
+C:> Get-UserProperty -Properties pwdlastset
+C:> Get-DomainUser -Properties samaccountname,logonCount
+```
 #### Get Current Domain
 ```powershell
 C:> Get-ADDomain
@@ -94,25 +110,15 @@ C:> Get-ADDomainController
 ```powershell
 C:> Get-ADDomainController -DomainName domain.local -Discover
 ```
-
 ### Domain Users Enumeration
 ---
-
 #### List of Users in the Domain
 ```powershell
-C:> Get-NetUser
-C:> Get-NetUser -Username user
-C:> Get-DomainUser 
-C:> Get-DomainUser -Identity user
 C:> Get-ADUser -Filter * -Properties *
 C:> Get-ADUser -Identity user -Properties *
 ```
 #### List of properties for users in the current domain
 ```powershell
-C:> Get-DomainUser -Identity user Properties *
-C:> Get-DomainUser -Properties samaccountname,logonCount
-C:> Get-UserProperty
-C:> Get-UserProperty -Properties pwdlastset
 C:> Get-ADUser -Filter * -Properties * | select -First 1 | Get-Member -MemberType *Property | select Name
 C:> Get-ADUser -Filter * .PRoperties * | select name,@{expression={[datetime]::fromFileTime($_.pwdlastset)}}
 ```
