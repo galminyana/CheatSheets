@@ -302,3 +302,106 @@ C:> Get-NetProcess -ComputerName COMPUTERNAME -RemoteUserName DOMAIN\USER -Remot
 ### Check Permissions over that ACL
     C:> Get-ObjectAcl -ResolveGUIDs | ? {$_.objectdn -eq "CN=Domain Admins,CN=Users,DC=offense,DC=local" -and $_.IdentityReference -eq "DOMAIN\USER"}
 ```
+
+### AD Module Enumeration
+---
+- **Get Current Domain**
+```powershell
+C:> Get-ADDomain
+```
+- **Get Other Domains**
+```powershell
+C:> Get-ADDomain -Identity domain.local
+```
+- **Get Domain SID**
+```powershell
+C:> (Get-ADDDomain).DomainSID
+```
+- **Get Domain Controllers**
+```powershell
+C:> Get-ADDomainController
+C:> Get-ADDomainController -DomainName domain.local -Discover
+```
+- **Domain Users**
+```powershell
+C:> Get-ADUser -Filter * -Properties *
+C:> Get-ADUser -Identity <user> -Properties *
+C:> Get-ADUser -Filter * -Identity <user> -Properties *
+```
+- **Users Properties** 
+```powershell
+C:> Get-ADUser -Filter * -Properties * | select -First 1 | Get-Member -MemberType *Property | select Name
+C:> Get-ADUser -Filter * .PRoperties * | select name,@{expression={[datetime]::fromFileTime($_.pwdlastset)}}
+
+# Search in user properties
+C:> Get-ADUser -Filter 'Description -like "*built*"' -Properties Description | select name,Description
+```
+- **Computers in Current Domain**
+```powershell
+C:> Get-ADComputer -Filter * | select Name
+C:> Get-ADComputer -Filter * -Properties *
+C:> Get-ADComputer -Filter * 'OperatingSystem -like "*Server 2016*"' -Properties OperatingSystem | select Name,OperatingSystem
+C:> Get-ADComputer -Filter * -Properties DNSHostName | %{Test-Connection -Count 1 -ComputerName $_.DNSHostName} 
+```
+
+- **Group and Group Members**
+```powershell
+C:> Get-ADGroup -Filter * | select Name
+C:> Get-ADGroup -Filter * -Properties *
+
+# Groups containing "Admin"
+C:> Get-ADGroup -Filter 'Name -like "*admin*"' | select Name
+
+# Get Members of Domain Admins Group
+C:> Get-ADGroupMember -Identity "Domain Admins" -Recursive
+
+# Get Group Membership for a User
+C:> Get-ADPrincipalGroupMembership -Identity user
+```
+- **OU Enumeration**
+```powershell
+# Get domain OU
+C:> Get-ADOrganizationalUnit -Filter * -Properties *
+```
+- **Domain and Forests Trusts Enumeration**
+```powershell
+# Domain Trust Mapping
+C:> Get-ADTrust
+C:> Get-ADTrust -Identity us.dollarcorp.moneycorp.local
+
+# Get Global Catalog for Current Forest
+C:> Get-ADForest @ select -ExpandProperty GlobalCatalogs
+
+# Map Trust of a Forest
+C:> Get-ADTrust -Filter 'msDS-TrustForestTrustInfo -ne "$null"'
+
+# Ennumerate Forest Trust
+C:> Get-ADForest
+C:> Get-ADForest -Identity <ForestName>
+
+#Domains of Forest Enumeration
+C:> (Get-ADForest).Domains
+```
+### BloodHound Enumeration
+---
+- Setup:
+  - Install and run neo4j:
+```powershell
+C:> neo4j.bat install-service
+C:> neo4j.bat start
+```
+  - Go to http://localhost:7474 and log using `neo4j` and `neo4j`.
+  - Change the password for `neo4j` user to the desireed one
+  - Run `BloodHound.exe` from `BloodHound-win32-x64`
+  - Will ask for credentials: bolt://localhost:7687  -  neo4j  -  PASSWORD
+
+- Run Collectors:
+  - Powershell:
+```powershell
+C:> . .\SharpHound.ps1
+C:> Invoke-BloodHound -CollectionMethod All -Verbose
+```
+  - Exe Collector
+```powershell
+C:> .\SharpHound.exe --CollectionMethod All --LdapUsername <UserName> --LdapPassword <Password> --domain <Domain> --domaincontroller <Domain Controller's Ip> --OutputDirectory <PathToFile>
+ ```
