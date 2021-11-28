@@ -263,57 +263,42 @@ C:> Get-ForestGlobalCatalog -Forest eurocorp.local
 C:> Get-ForestTrust
 C:> Get-ForestTrust -Forest eurocorp.local
 ```
-### User Hunting
----
-#### Find machines on a domain or users on a given machine that are logged on
+- User Hunting
 ```powershell
+# Find machines on a domain or users on a given machine that are logged on
 C:> Invoke-UserHunter -ComputerName COMPUTERNAME -Username *
-```
-#### Find Machines Where Current User has Local Admin Access
-```powershell
+
+# Find Machines Where Current User has Local Admin Access
 C:> Find-LocalAdminAccess -Verbose
-```
-This queries de DC for a list of computers using `Get-NetComputer` and then runs `Invoke-CheckLocalAdminAccess` on each machine.
-Check the Scripts:
-- `Find-WMILocalAdminAccess.ps1`
-- `Find-PSRemotingLocalAdminAccess.ps1`: 
-```powershell
-C:> . .Find-PSRemotingLocalAdminAccess.ps1
-C:> Find-PSRemotingLocalAdminAccess 
-computer-name
-C:> Enter-PSessiom -ComputerName computer-name
-[computer-name]: C:>
-```
-- Enter-PSession: Function from Powershell Core to log into a remote session as the current user.
-#### Find Computers were Domain Admin (or specified user/group) has Sessions
-```powershell
+### This queries de DC for a list of computers using `Get-NetComputer` and then runs `Invoke-CheckLocalAdminAccess` on each machine.
+###    Check the Scripts:
+###    - `Find-WMILocalAdminAccess.ps1`
+###    - `Find-PSRemotingLocalAdminAccess.ps1`: 
+   C:> . .Find-PSRemotingLocalAdminAccess.ps1
+   C:> Find-PSRemotingLocalAdminAccess <computer>
+   C:> Enter-PSessiom -ComputerName computer-name
+   [computer-name]: C:>
+
+# Find Computers were Domain Admin (or specified user/group) has Sessions
 C:> Find-DomainUserLocation -Verbose
 C:> Find-DomainUserLocation -UserGroupIdentity "RDPUsers"
-```
-This queries DC for the current or provided domain for members of the given group using `Get-DomainGroupMember`, then gets a list of computers with `Get-DomainComputer` and list sessions of logged on users using `Get-NetSession` or `Get-NetLoggedOn` from each machine.
 
-#### Computers Where a Domain Admin Session is Available and Current User has Admin Access
-```powrshell
+# Computers Where a Domain Admin Session is Available and Current User has Admin Access
 C:> Find-DomainUserLocation -CheckAccess
-```
-#### Find Computers Where a Domain Admin Session is Available (File Servers and Distributed File Servers)
-```powershell
+
+# Find Computers Where a Domain Admin Session is Available (File Servers and Distributed File Servers)
 C:> Find-DomainUserLocation -Stealth
 ```
-### Processes Enumeration
----
-#### Get running processes for a given remote machine
+- Processes Enumeration
 ```powershell
+# Get running processes for a given remote machine
 C:> Get-NetProcess -ComputerName COMPUTERNAME -RemoteUserName DOMAIN\USER -RemotePassword PASSWORD | ft
 ```
-### Misc
----
-#### Check if USER can add someone to Admins Group
-Get the Distinguished Name of Domain Admins Group
+- Misc
 ```powershell
-C:> Get-NetGroup "domain admins" -FullData
-```
-Check Permissions over that ACL
-```powershell
-C:> Get-ObjectAcl -ResolveGUIDs | ? {$_.objectdn -eq "CN=Domain Admins,CN=Users,DC=offense,DC=local" -and $_.IdentityReference -eq "DOMAIN\USER"}
+# Check if USER can add someone to Admins Group
+### Get the Distinguished Name of Domain Admins Group
+    C:> Get-NetGroup "domain admins" -FullData
+### Check Permissions over that ACL
+    C:> Get-ObjectAcl -ResolveGUIDs | ? {$_.objectdn -eq "CN=Domain Admins,CN=Users,DC=offense,DC=local" -and $_.IdentityReference -eq "DOMAIN\USER"}
 ```
