@@ -71,88 +71,85 @@ C:> (Get-DomainPolicy -domain domain.local)."system access"
 C:> Get-NetDomainController
 C:> Get-NetDomainController -Domain domain.local
 ```
-- Enumerate Domain Users
+- Domain Users
 ```powershell
 C:> Get-NetUser
-C:> Get-NetUser -Username user
+C:> Get-NetUser -Username <user>
 C:> Get-DomainUser 
-C:> Get-DomainUser -Identity user
+C:> Get-DomainUser -Identity <user>
 
 # Save results to File
 C:> Get-DomainUser | Out-File -FilePath .\DomainUsers.txt
 ```
 - Users Properties 
 ```powershell
-C:> Get-DomainUser -Identity user Properties *
+C:> Get-DomainUser -Identity <user> Properties *
 C:> Get-UserProperty
 
 # List specific properties
 C:> Get-UserProperty -Properties pwdlastset
-C:> Get-DomainUser -Properties samaccountname,logonCount
+C:> Get-DomainUser -Properties samaccountname,logonCount | Format-List
+
+#Enumerate user logged on a machine
+C:> Get-NetLoggedon -ComputerName <ComputerName>
+
+#Enumerate Session Information for a machine
+C:> Get-NetSession -ComputerName <ComputerName>
+
+# Search string in user attributes
+C:> Get-DomainUser -LDAPFilter "Description=*built*" | select name,Description      
 ```
-#### Get Current Domain
+- Computers in Current Domain
 ```powershell
-C:> Get-ADDomain
+C:> Get-DomainComputer | select Name
+C:> Get-DomainComputer -OperatingSystem "*Server 2016*"             # Computers whose OS is "Server 2016"
+C:> Get-DomainComputer -Ping                                       
+
+C:> Get-DomainComputer -Properties OperatingSystem, Name, DnsHostName | Sort-Object -Property DnsHostName
+
+#Enumerate Live machines 
+C:> Get-DomainComputer -Ping -Properties OperatingSystem, Name, DnsHostName | Sort-Object -Property DnsHostName
 ```
-#### Get Object of Another Domain
+> `Get-DomainComputer` has a filter flag, `-SearchBase`, that filters by  the `distinguishedname`.
+
+- Group and Group Members
 ```powershell
-C:> Get-ADDomain -Identity donain.local
-```
-#### Get Domain SID for Current Domain
-```powershell
-C:> (Get-ADDDomain).DomainSID
-```
-#### Get Domain Controllers for Current Domain
-```powershell
-C:> Get-ADDomainController
-```
-#### Get Domain Controllers for Another Domain
-```powershell
-C:> Get-ADDomainController -DomainName domain.local -Discover
-```
-### Domain Users Enumeration
----
-#### List of Users in the Domain
-```powershell
-C:> Get-ADUser -Filter * -Properties *
-C:> Get-ADUser -Identity user -Properties *
-```
-#### List of properties for users in the current domain
-```powershell
-C:> Get-ADUser -Filter * -Properties * | select -First 1 | Get-Member -MemberType *Property | select Name
-C:> Get-ADUser -Filter * .PRoperties * | select name,@{expression={[datetime]::fromFileTime($_.pwdlastset)}}
-```
-#### Search Strings in Users Attributes
-```powershell
-C:> Get-DomainUser -LDAPFilter "Description=*built*" | select name Description      # Returns Users with the *built* text in description
-C:> Get-ADUser -Filter 'Description -like "*built*"' -Properties Description | select name,Description
+# List Domain Groups
+C:> Get-DomainGroup | select Name
+C:> Get-DomainGroup -Domain <targetdomain>
+
+# Groups containing "admin" in the Group Name
+C:> Get-DomainGroup *admin*
+
+# Group Membership for given user
+C:> Get-DomainGroup UserName <user>
+
+# Domain members that belong to a given group
+C:> Get-NetGroupMember -Identity "Domain Users"
+C:> Get-DomainGroupMember -Identity "Domain Admins" -Recurse
+
+# Return members of Specific Group (eg. Domain Admins & Enterprise Admins)
+C:> Get-DomainGroup -Identity <GroupName> | Select-Object -ExpandProperty Member 
+C:> Get-DomainGroupMember -Identity <GroupName> | Select-Object MemberDistinguishedName
 ```
 ### Groups Enumeration
 ---
 #### Get All Groups in Current Domain
 ```powershell
-C:> Get-DomainGroup | select Name
-C:> Get-DomainGroup -Domain <targetdomain>
 C:> Get-ADGroup -Filter * | select Name
 C:> Get-ADGroup -Filter * -Properties *
 ```
 #### Get all Groups Containing "admin" in the Group Name
 ```powershell
-C:> Get-DomainGroup *admin*
 C:> Get-ADGroup -Filter 'Name -like "*admin*"' | select Name
 ```
-#### Domain Members That Belong to a Given Group
-```powershell
-C:> Get-NetGroupMember -GroupName "Domain Users"
-```
+
 #### Get Members of Domain Admins Group
 ```powershell
-C:> Get-DomainGroupMember -Identity "Domain Admins" -Recurse
 C:> Get-ADGroupMember -Identity "Domain Admins" -Recursive
 ```
 #### Get Group Membership of a User
 ```powershell
-C:> Get-DomainGroup UserName "user"
 C:> Get-ADPrincipalGroupMembership -Identity user
 ```
 #### List Local Groups on Machine (Requires Admin Privs on non-dc Machines)
@@ -168,21 +165,9 @@ C:> Get-NetLocalGroup -ComputerName computer -Recurse
 C:> Get-NetLocalGroupMember -ComputerName computer -GroupName Administrators
 ```
 
-### Computers Enumeration
----
-#### List of Computers in Current Domain
-```powershell
-C:> Get-DomainComputer | select Name
-C:> Get-DomainComputer -OperatingSystem "*Server 2016*"             # Computers whose OS is "Server 2016"
-C:> Get-DomainComputer -Ping                                        # Computers Online from the Domain
-C:> Get-ADComputer -Filter * | select Name
-C:> Get-ADComputer -Filter * -Properties *
-C:> Get-ADComputer -Filter * 'OperatingSystem -like "*Server 2016*"' -Properties OperatingSystem | select Name,OperatingSystem
-C:> Get-ADComputer -Filter * -Properties DNSHostName | %{Test-Connection -Count 1 -ComputerName $_.DNSHostName}  
-```
 > `%{}` Iteration for the results before the pipe. `$_` Variabe for the iterated value
 
-> `Get-DomainComputer` has a filter flag, `-SearchBase`, that filters by  the `distinguishedname`:
+
 
 ### Misc Enumeration
 ---
