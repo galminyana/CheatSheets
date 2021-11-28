@@ -62,11 +62,11 @@ C:> Get-DomainPolicy
 C:> (Get-DomainPolicy)."system access"
                       ."Kerberos Policy"
 ```				  
-- Get Domain Policy for Another Domain
+- **Get Domain Policy for Another Domain**
 ```powershell
 C:> (Get-DomainPolicy -domain domain.local)."system access"
 ```
-- Get Domain Controllers
+- **Get Domain Controllers**
 ```powershell
 C:> Get-NetDomainController
 C:> Get-NetDomainController -Domain domain.local
