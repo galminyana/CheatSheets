@@ -1,20 +1,17 @@
 # Active Directory Enumeration
 
-- [AD Enumeration](#ad-enumeration)
 - [Tools](#tools)
 - [Domain (or subdomain) Enumeration](#domain--or-subdomain--enumeration)
 - [PowerView Enumeration](#powerview-enumeration)
 - [AD Module Enumeration](#ad-module-enumeration)
 - [BloodHound Enumeration](#bloodhound-enumeration)
 
-
-### AD Enumeration
+### Tools
+---
 No Admin Privileges required:
 ```powershell
 c:> whoami /priv
 ```
-### Tools
----
 
 - [PowerView](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)
 
