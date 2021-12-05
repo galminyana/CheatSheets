@@ -99,7 +99,7 @@ C:> Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
 C:> $ExecutionContext.SessionState.LanguageMode
 ```
 - `ConstrainedLanguage`
-- 'FullLanguage`
+- `FullLanguage`
 > Bypassing AppLocker, automatically bypasses Language Mode
 ### Port Forwarding
 ---
