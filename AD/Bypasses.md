@@ -90,9 +90,13 @@ Steps:
 
 ### AppLocker
 ---
-
 ```powershell
 C:> Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
+```
+Check using Registry Keys:
+```powershell
+C:> reg query HKLM\Software\Policies\Microsoft\Windows\SRPV2
+C:> reg query HKLM\Software\Policies\Microsoft\Windows\SRPV2\Script\06dce67b-934c-454f-a263-2515c8796a5d
 ```
 #### Constrained LAnguage Mode (CLM)
 ```powershell
