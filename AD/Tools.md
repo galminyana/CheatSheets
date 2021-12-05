@@ -57,7 +57,8 @@ PS C:>
 ---
 Starts an interactive session with a single remote computer. During the session, the commands that you type run on the remote computer, just as though you were typing directly on the remote computer. You can have only one interactive session at a time.
 ```powershell
-C:> Enter-PSSession -ComputerName COMPUTER
+C:> Enter-PSSession <host>
+C:> Enter-PSSession -ComputerName <host>
 ```
 ### Invoke-Command (cmdlet)
 ---
@@ -65,6 +66,9 @@ Runs commands on a local or remote computer and returns all output from the comm
 ```powershell
 C:> invoke-command -ComputerName WCOMPUTER -ScriptBlock {whoami}
 
+# Created Session
+C:> $sess = New-PSSession <host>
+C:> Invoke-Command -ScriptBlock {whoami}.ps1 -Session $sess
 ```
 ### WinRS.exe
 ---
