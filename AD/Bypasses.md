@@ -88,6 +88,28 @@ Steps:
 - Reescan
 - Repeat until we get as result "AMSI_RESULT_NOT_DETECTED" or "Blank"
 
+### AppLocker
+---
+
+```powershell
+C:> Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
+```
+#### Constrained LAnguage Mode (CLM)
+```powershell
+C:> $ExecutionContext.SessionState.LanguageMode
+```
+- `ConstrainedLanguage`
+- 'FullLanguage`
+> Bypassing AppLocker, automatically bypasses Language Mode
+### Port Forwarding
+---
+```powershell
+C:> netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.x
+
+# To execute using RMI (note the `$null` to avoid redirection issues
+C:> $null | winrs -r:dcorp-mgmt "netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.100.x"
+```
+
 ### References
 ---
 - [Pentest Laboratories](https://pentestlaboratories.com/2021/05/17/amsi-bypass-methods/): Ways to Bypass AMSI
