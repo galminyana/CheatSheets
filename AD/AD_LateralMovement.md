@@ -46,8 +46,11 @@ C:> Invoke-Command -FilePath c:\scripts\test.ps1 -ComputerName <computer>
 C:> Invoke-Command -FilePath c:\scripts\test.ps1 -ComputerName (Get-Content <list_of_servers>)
 
 # Run Command (Script Block) on Remote Computer
-C:> Invoke-Command -ComputerName Server01 -Credential <domain>\<user> -ScriptBlock {whoami;hostname}
+C:> Invoke-Command -ComputerName <host> -Credential <domain>\<user> -ScriptBlock {whoami;hostname}
 C:> Invoke-Command -Scriptblock {Get-Process} -ComputerName (Get-Content <list_of_servers>)
+
+# Execute Locally Loaded Function in Remote Computer
+C:> Invoke-Command -ScriptBlock ${function:Get-PassHashes} -ComputerName <host>
 
 # Persistent Connection, Series of Commands Sharing Data
 C:> $s = New-PSSession -ComputerName <computer>                             # Without this, 2 lines below wouldn't share data on $s
