@@ -55,6 +55,17 @@ C:> Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\ -Name 'Security
 ```
 - All logons on DC logged to `C:\Windows\system32\kiwissp.log`
 
+### SDPROP and AdminSDHolder
+- `sdprop` is a process that runs evey hour and compares ACL of protected groups with members of the ACL of `AdminSDHolder`. Any differences are overwriten.
+- With DA privileges on `AdminSDHolder` object, a user can be added to the `AsminSDHolder` ACL and will be added to protected groups when `sdprop` runs
+```powershell
+C:> . .\Invoke-SDPropagator.ps1
+
+# Force `sdprop` to run
+C:> Invoke-SDPropagator
+
+
+```
 
 ### MORE
 
