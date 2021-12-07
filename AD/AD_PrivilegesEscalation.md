@@ -71,3 +71,5 @@ C:> Get-DomainUser -Identity supportuser | select serviceprincipalname
 # Set SPN for the user
 C:> Set-DomainObject -Identity support1user | Set @{serviceprincipalname='ops/whatever1'}
 ```
+
+### Kerberos Delegation
