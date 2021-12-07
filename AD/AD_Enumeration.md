@@ -82,6 +82,9 @@ C:> Get-NetUser -Username <user>
 C:> Get-DomainUser 
 C:> Get-DomainUser -Identity <user>
 
+# Get Users for Services
+C:> Get-DomainUser -SPN
+
 # Save results to File
 C:> Get-DomainUser | Out-File -FilePath .\DomainUsers.txt
 ```
