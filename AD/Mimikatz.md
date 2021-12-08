@@ -66,6 +66,8 @@ Extracts passwords, keys, pin codes, tickets from memory of LSASS.
 
 - **SEKURLSA::krbtgt** : Get domain Kerberos service account (KRBTGT) password data
 
+- **SEKURLSA::tickets /export** : 
+
 #### LSADUMP Module
 --- 
 Interacts with the Windows Local Security Authority (LSA) to extract credentials. Most of these commands require either debug rights (`privilege::debug`) or local System.
