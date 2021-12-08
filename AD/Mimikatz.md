@@ -108,3 +108,5 @@ The KERBEROS Mimikatz module is used to interface with the official Microsoft Ke
   - `/service` : Kerberos Service running in the server: host, cifs, http...
   -  `rc4` : NTLM hash for the service
 
+- **KERBEROS::ptt** : 
+
