@@ -71,6 +71,9 @@ C:> Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\ -Name 'Security
 ### ACL Persistence
 
 - **SDPROP and AdminSDHolder**
+
+  AdminSDHolder is a special AD container with some "default" security permissions that is used as a template for protected AD accounts and groups (like Domain Admins, Enterprise Admins, etc.) to prevent their accidental and unintended modifications, and to keep them secure.
+Once you have agained Domain Admin privileges, AdminSDHolder container can be abused by backdooring it by giving your user GenericAll privileges, which effectively makes that user a Domain Admin.
 ```powershell
 #`sdprop` is a process that runs evey hour and compares ACL of protected groups with members of the ACL of `AdminSDHolder`. Any differences are overwriten.
 # With DA privileges on `AdminSDHolder` object, a user can be added to the `AsminSDHolder` ACL and will be added to protected groups when `sdprop` runs
