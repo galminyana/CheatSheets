@@ -252,6 +252,9 @@ C:> Get-DomainObjectAcl -SearchBase "LDAP://CN=Domain Admins,CN=Users,DC=dollarc
 
 # Search for interesting ACEs
 C:> Find-InterestingDomainAcl -ResolveGUIDs
+C:> Find-InterestingDomainAcl -Identity <user or group> -ResolveGUIDs
+# ACL for a username or group
+Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IDentityreferencename -match "<username or group>"}
 
 # Get ACL Associated With Specified Path
 C:> Get-PathAcl -Path "\\dcorp-dc.dollarcorp.moneycorp.local\sysvol"
