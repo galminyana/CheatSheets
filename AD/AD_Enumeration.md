@@ -288,6 +288,7 @@ C:> Get-ForestDomain | %{Get-DomainTrust -Domain $_.Name} | ?{$_.TrustAttributes
 
 # Get All Domains of the Forest for Current User
 C:> Get-NetForestDomain
+C:> Get-ForestDomain
 
 # Forest Mapping
 C:> Get-NetForestTrust
