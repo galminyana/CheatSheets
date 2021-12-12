@@ -1,22 +1,19 @@
-## Local Privilege Escalation
+# Local Privilege Escalation
 
-  * [PowerUP](#powerup)
+- [PowerUP](#powerup)
     + [Find Vulnerable Services](#find-vulnerable-services)
-      - [Abuse Found Vulnerable Services](#abuse-found-vulnerable-services)
-  * [PrivEsc](#privesc)
+    + [Abuse Found Vulnerable Services](#abuse-found-vulnerable-services)
+- [PrivEsc](#privesc)
     + [Find Vulnerable Services](#find-vulnerable-services-1)
-  * [PrivescCheck](#privesccheck)
-  * [WinPEAS](#winpeas)
-
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
+- [PrivescCheck](#privesccheck)
+- [WinPEAS](#winpeas)
 
 ### PowerUP
 ---
 ```powershell
 C:> . .\PowerUp.ps1
 ```
-#### Find Vulnerable Services
+##### Find Vulnerable Services
 
 - Run All Checks
 ```powershell
@@ -50,7 +47,7 @@ C:> Invoke-PrivEsc
 - Mode     : Mode to use - full or lhf (default).
 - Extended : Switch enables lookups that may last for several minutes.
 - 
-#### Find Vulnerable Services
+##### Find Vulnerable Services
 - Run All Checks
 ```powershell
 C:> Invoke-PrivEsc
