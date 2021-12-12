@@ -1,10 +1,10 @@
-## AD Lateral Movement
+## AL Lateral Movement
 
 - [PowerShell Remoting](#powershell-remoting)
-    + [Enable PowerShell Remoting From [M$ Documentation](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enable-psremoting?view=powershell-7.2), creates rules on computer firewall to allow remote connections.](#enable-powershell-remoting-from--m--documentation--https---docsmicrosoftcom-en-us-powershell-module-microsoftpowershellcore-enable-psremoting-view-powershell-72---creates-rules-on-computer-firewall-to-allow-remote-connections)
-    + [Create Remote Session [M$ Documented](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/new-pssession?view=powershell-7.2)](#create-remote-session--m--documented--https---docsmicrosoftcom-en-us-powershell-module-microsoftpowershellcore-new-pssession-view-powershell-72-)
+    + [Enable PowerShell Remoting](#enable-powershell-remoting)
+    + [Create Remote Session](#create-remote-session)
     + [Entering into Existing PSSession](#entering-into-existing-pssession)
-    + [**Remote Execution**](#--remote-execution--)
+    + [Remote Execution](#remote-execution)
 - [WinRS](#winrs)
     + [Execute Remote Command](#execute-remote-command)
 - [MimiKatz PowerShell Port](#mimikatz-powershell-port)
@@ -29,11 +29,11 @@ C:> . .\Find-PSRemotingLocalAdminAccess.ps1
 C:> Find-PSRemotingLocalAdminAccess
 ```
 
-##### Enable PowerShell Remoting From [M$ Documentation](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enable-psremoting?view=powershell-7.2), creates rules on computer firewall to allow remote connections. 
+##### Enable PowerShell Remoting  
 ```powershell
 C:> Enable-PSRemoting 
 ```
-##### Create Remote Session [M$ Documented](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/new-pssession?view=powershell-7.2)
+##### Create Remote Session 
 ```powershell
 # Create a Session in Local Computer
 C:> New-PSSession
@@ -53,7 +53,7 @@ C:> Enter-PSSession -ComputerName <computer>
 C:> $remote_computer = New-PSSesion -ComputerName <computer>
 C:> Enter-PSSession -Session $remote_computer
 ```
-##### **Remote Execution**
+##### Remote Execution
 ```powershell
 # Remote Execution With Credentials
 c:> $SecPassword = ConvertTo-SecureString '<password>' -AsPlainText -Force
