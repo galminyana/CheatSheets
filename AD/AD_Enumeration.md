@@ -47,35 +47,35 @@ Name                    : homelab.local
 ```
 ### PowerView Enumeration
 ---
-- **Get Current Domain**
+##### **Get Current Domain**
 ```powershell
 C:> Get-NetDomain
 C:> Get-Domain
 ```
-- **Get Other Domains**
+ ##### **Get Other Domains**
 ```powershell
 C:> Get-NetDomain -Domain domain.local
 ```
-- **Get Domain SID**
+##### **Get Domain SID**
 ```powershell
 C:> Get-DomainSID
 ```
-- **Get Domain Policy for Current Domain**
+##### **Get Domain Policy for Current Domain**
 ```powershell
 C:> Get-DomainPolicy
 C:> (Get-DomainPolicy)."system access"
                       ."Kerberos Policy"
-```				  
-- **Get Domain Policy for Another Domain**
+```	  
+##### **Get Domain Policy for Another Domain**
 ```powershell
 C:> (Get-DomainPolicy -domain domain.local)."system access"
 ```
-- **Get Domain Controllers**
+##### **Get Domain Controllers**
 ```powershell
 C:> Get-NetDomainController
 C:> Get-NetDomainController -Domain domain.local
 ```
-- **Domain Users**
+##### **Domain Users**
 ```powershell
 C:> Get-NetUser
 C:> Get-NetUser -Username <user>
@@ -88,7 +88,7 @@ C:> Get-DomainUser -SPN
 # Save results to File
 C:> Get-DomainUser | Out-File -FilePath .\DomainUsers.txt
 ```
-- **Users Properties** 
+##### **Users Properties** 
 ```powershell
 C:> Get-DomainUser -Identity <user> Properties *
 C:> Get-UserProperty
@@ -106,7 +106,7 @@ C:> Get-NetSession -ComputerName <ComputerName>
 # Search string in user attributes
 C:> Get-DomainUser -LDAPFilter "Description=*built*" | select name,Description      
 ```
-- **Computers in Current Domain**
+##### **Computers in Current Domain**
 ```powershell
 C:> Get-DomainComputer | select Name
 C:> Get-DomainComputer -OperatingSystem "*Server 2016*"             # Computers whose OS is "Server 2016"
@@ -128,7 +128,7 @@ C:> Get-LastLoggedOn -ComputerName <computer>
 ```
 > `Get-DomainComputer` has a filter flag, `-SearchBase`, that filters by  the `distinguishedname`.
 
-- **Group and Group Members**
+##### **Group and Group Members**
 ```powershell
 # List Domain Groups
 C:> Get-DomainGroup | select Name
@@ -156,7 +156,7 @@ C:> Get-NetLocalGroup -ComputerName <computer> -Recurse
 C:> Get-NetLocalGroupMember -GroupName Administrators | Select-Object MemberName, IsGroup, IsDomain
 C:> Get-NetLocalGroupMember -ComputerName computer -GroupName Administrators
 ```
-- **Shares**
+##### **Shares**
 ```powershell
 # Enumerate Domain Shares
 C:> Find-DomainShare
@@ -176,7 +176,7 @@ C:> Invoke-FileFinder -Verbose
 # Get Fileservers on Domain
 C:> Get-NetFileServer
 ```
-- **GPO Enumeration**
+##### **GPO Enumeration**
 ```powershell
 # GPO List in the Current Domain
 C:> Get-DomainGPO
@@ -199,7 +199,7 @@ C:> Get-DomainGPOComputerLocalGroupMapping -ComputerIdentity <computer>
 ## Get Machines where the Usert is Member of a Specific Group
 C:> Get-DomainGPOUserLocalGroupMapping -Identity <user> -Verbose
 ```
-- **OU Enumeration**
+##### **OU Enumeration**
 ```powershell
 # Get Domain OUs
 C:> Get-DomainOU
@@ -212,7 +212,7 @@ C:> Get-DomainGPO -Identity "{AB306569-220D-43FF-B03B-83E8F4EF8081}"
 C:>  Get-DomainOU -Identity "StudentMachines"| %{Get-DomainComputer -SearchBase $_.distinguishedname}
 ```
 
-- **ACL Enumeration**
+##### **ACL Enumeration**
 ```powershell
 # ACL Associated to Specified Object
 C:> Get-DomainObjectAcl -SamAccountName user -ResolveGUIDs
@@ -241,7 +241,7 @@ C:> Get-ObjectAcl -SamAccountName USER2 -ResolveGUIDs | ? {$_.IdentityReference 
 ###  Also password can be changed like this
      C:> Set-DomainUserPassword -Identity USER2 -AccountPassword (ConvertTo-SecureString 'PASSWORD' -AsPlainText -Force) -Verbose
 ```
-- **Domain Trusts Enumeration**
+##### **Domain Trusts Enumeration**
 ```powershell
 # Enumerate Domain Trust Relationships of the Current User
 C:> Get-NetDomainTrust
@@ -267,7 +267,7 @@ C:> Get-ForestGlobalCatalog -Forest eurocorp.local
 C:> Get-ForestTrust
 C:> Get-ForestTrust -Forest eurocorp.local
 ```
-- **User Hunting**
+##### **User Hunting**
 ```powershell
 # Find machines on a domain or users on a given machine that are logged on
 C:> Invoke-UserHunter -ComputerName COMPUTERNAME -Username *
@@ -299,12 +299,12 @@ C:> Test-AdminAccess -ComputerName <computer>
 # List domain Computers and user access
 C:> Get-DomainComputer | Test-AdminAccess
 ```
-- **Processes Enumeration**
+##### **Processes Enumeration**
 ```powershell
 # Get running processes for a given remote machine
 C:> Get-NetProcess -ComputerName COMPUTERNAME -RemoteUserName DOMAIN\USER -RemotePassword PASSWORD | ft
 ```
-- Misc
+##### Misc
 ```powershell
 # Check if USER can add someone to Admins Group
 ### Get the Distinguished Name of Domain Admins Group
@@ -315,7 +315,7 @@ C:> Get-NetProcess -ComputerName COMPUTERNAME -RemoteUserName DOMAIN\USER -Remot
 
 ### AD Module Enumeration
 ---
-- **Get Current Domain**
+##### **Get Current Domain**
 ```powershell
 C:> Get-ADDomain
 ```
@@ -323,22 +323,22 @@ C:> Get-ADDomain
 ```powershell
 C:> Get-ADDomain -Identity domain.local
 ```
-- **Get Domain SID**
+##### **Get Domain SID**
 ```powershell
 C:> (Get-ADDDomain).DomainSID
 ```
-- **Get Domain Controllers**
+##### **Get Domain Controllers**
 ```powershell
 C:> Get-ADDomainController
 C:> Get-ADDomainController -DomainName domain.local -Discover
 ```
-- **Domain Users**
+##### **Domain Users**
 ```powershell
 C:> Get-ADUser -Filter * -Properties *
 C:> Get-ADUser -Identity <user> -Properties *
 C:> Get-ADUser -Filter * -Identity <user> -Properties *
 ```
-- **Users Properties** 
+##### **Users Properties** 
 ```powershell
 C:> Get-ADUser -Filter * -Properties * | select -First 1 | Get-Member -MemberType *Property | select Name
 C:> Get-ADUser -Filter * .PRoperties * | select name,@{expression={[datetime]::fromFileTime($_.pwdlastset)}}
@@ -346,7 +346,7 @@ C:> Get-ADUser -Filter * .PRoperties * | select name,@{expression={[datetime]::f
 # Search in user properties
 C:> Get-ADUser -Filter 'Description -like "*built*"' -Properties Description | select name,Description
 ```
-- **Computers in Current Domain**
+##### **Computers in Current Domain**
 ```powershell
 C:> Get-ADComputer -Filter * | select Name
 C:> Get-ADComputer -Filter * -Properties *
@@ -354,7 +354,7 @@ C:> Get-ADComputer -Filter * 'OperatingSystem -like "*Server 2016*"' -Properties
 C:> Get-ADComputer -Filter * -Properties DNSHostName | %{Test-Connection -Count 1 -ComputerName $_.DNSHostName} 
 ```
 
-- **Group and Group Members**
+##### **Group and Group Members**
 ```powershell
 C:> Get-ADGroup -Filter * | select Name
 C:> Get-ADGroup -Filter * -Properties *
@@ -368,7 +368,7 @@ C:> Get-ADGroupMember -Identity "Domain Admins" -Recursive
 # Get Group Membership for a User
 C:> Get-ADPrincipalGroupMembership -Identity user
 ```
-- **OU Enumeration**
+##### **OU Enumeration**
 ```powershell
 # Get domain OU
 C:> Get-ADOrganizationalUnit -Filter * -Properties *
@@ -392,14 +392,14 @@ C:> Get-ADForest -Identity <ForestName>
 #Domains of Forest Enumeration
 C:> (Get-ADForest).Domains
 ```
-- **ACL**
+##### **ACL**
 ```powerview
 # Enumerate ACL using AD Module. Without Resolving GUIDs
 C:> (Get-Acl 'AD:\CN=Administrator,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local').Access
 ```
 ### BloodHound Enumeration
 ---
-- Setup:
+##### Setup:
   - Install and run neo4j:
    ```powershell
    C:> neo4j.bat install-service
@@ -410,7 +410,7 @@ C:> (Get-Acl 'AD:\CN=Administrator,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local'
   - Run `BloodHound.exe` from `BloodHound-win32-x64`
   - Will ask for credentials: bolt://localhost:7687  -  neo4j  -  PASSWORD
 
-- Run Collectors:
+##### Run Collectors:
   - Powershell:
    ```powershell
    C:> . .\SharpHound.ps1
