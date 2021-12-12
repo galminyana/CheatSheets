@@ -1,6 +1,8 @@
-- [`Invoke-PowerShellTcp.ps1`](#-invoke-powershelltcpps1-)
-- [`Find-PSRemotingLocalAdminAccess.ps1`](#-find-psremotinglocaladminaccessps1-)
-- [`Find-WMILocalAdminAccess.ps1`](#-find-wmilocaladminaccessps1-)
+# Tools
+
+- [Invoke-PowerShellTcp.ps1](#-invoke-powershelltcpps1-)
+- [Find-PSRemotingLocalAdminAccess.ps1](#-find-psremotinglocaladminaccessps1-)
+- [Find-WMILocalAdminAccess.ps1](#-find-wmilocaladminaccessps1-)
 - [Enter-PSSession (cmdlet)](#enter-pssession--cmdlet-)
 - [Invoke-Command (cmdlet)](#invoke-command--cmdlet-)
 - [WinRS.exe](#winrsexe)
