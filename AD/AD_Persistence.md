@@ -1,6 +1,6 @@
 ## AD Persistence
 
-- Get krbtgt Hash](#get-krbtgt-hash)
+- [Get krbtgt Hash](#get-krbtgt-hash)
 - [Golden Ticket](#golden-ticket)
 - [Silver Ticket](#silver-ticket)
 - [Skeleton Key](#skeleton-key)
@@ -13,7 +13,6 @@
     + [WMI Security Descriptors](#wmi-security-descriptors)
     + [Remote Registry](#remote-registry)
 - [MORE](#more)
-
 
 ### Get krbtgt Hash
 ```powershell
