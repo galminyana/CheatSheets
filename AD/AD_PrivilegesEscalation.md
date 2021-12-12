@@ -1,5 +1,18 @@
-## Privileges Escalation in AD
 
+## AD Privilege Escalation
+
+- [Kerberoasting](#kerberoasting)
+    + [Using `Rubeus.exe`](#using--rubeusexe-)
+    + [Using Mimikatz](#using-mimikatz)
+- [Targeted Kerberoasting AS-REPs](#targeted-kerberoasting-as-reps)
+    + [Enumerating accounts with Kerberos Preauth disabled](#enumerating-accounts-with-kerberos-preauth-disabled)
+    + [Disable Kerberos Preauth](#disable-kerberos-preauth)
+    + [ASREPRoast : Request Encrypted AS-REP for Offline Brute Force](#asreproast---request-encrypted-as-rep-for-offline-brute-force)
+- [Targeted Kerberoasting Set SPN](#targeted-kerberoasting-set-spn)
+- [Kerberos Delegation](#kerberos-delegation)
+    + [Uncostrained Delegation](#uncostrained-delegation)
+    + [Printer Bug](#printer-bug)
+  * [Constrained Delegation](#constrained-delegation)
 
 ### Kerberoasting
 ---
