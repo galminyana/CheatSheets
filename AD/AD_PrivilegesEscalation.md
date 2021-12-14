@@ -201,6 +201,11 @@ C:> Rubeus.exe s4u /user:machine1$ /aes256:<machine1_hash> /msdsspn:http/<host> 
 ```
 ### DNSAdmins
 ---
+```
+[NAH]
+```
+Not Worth the Effort.
+
 ### Escalate Across Trusts
 ---
 #### Child to Parent using sIDHistory
