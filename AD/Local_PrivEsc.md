@@ -1,19 +1,22 @@
-# Local Privilege Escalation
+## Local PrivEsc
 
 - [PowerUP](#powerup)
-    + [Find Vulnerable Services](#find-vulnerable-services)
-    + [Abuse Found Vulnerable Services](#abuse-found-vulnerable-services)
+  * [Find Vulnerable Services](#find-vulnerable-services)
+  * [Abuse Found Vulnerable Services](#abuse-found-vulnerable-services)
 - [PrivEsc](#privesc)
-    + [Find Vulnerable Services](#find-vulnerable-services-1)
+  * [Find Vulnerable Services](#find-vulnerable-services-1)
 - [PrivescCheck](#privesccheck)
 - [WinPEAS](#winpeas)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 ### PowerUP
 ---
 ```powershell
 C:> . .\PowerUp.ps1
 ```
-##### Find Vulnerable Services
+#### Find Vulnerable Services
 
 - Run All Checks
 ```powershell
@@ -31,7 +34,7 @@ C:> Get-ModifiableServiceFile
 ```powershell
 C:> Get-ModifiableService
 ```
-##### Abuse Found Vulnerable Services
+#### Abuse Found Vulnerable Services
 In the three cmdlets, a `AbuseFunction` field is returned with the command to run to gain privileges. To make the user member of Local Administrators, can use:
 ```powershell
 # Make <user> member of the Admins group. Just need to relog session and that's it.
@@ -47,7 +50,7 @@ C:> Invoke-PrivEsc
 - Mode     : Mode to use - full or lhf (default).
 - Extended : Switch enables lookups that may last for several minutes.
 
-##### Find Vulnerable Services
+#### Find Vulnerable Services
 - Run All Checks
 ```powershell
 C:> Invoke-PrivEsc
