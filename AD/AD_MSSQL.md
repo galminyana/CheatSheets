@@ -53,6 +53,7 @@ DCORP-STUDENT76                        DCORP-STUDENT76                          
 ```
 ### Database Links
 ---
+A database link allows a SQL Server to access other resources like other SQL Server. If we have two linked SQL Servers we can execute stored procedures in them. Database links also works across Forest Trust
 #### Look for Links to Remote Servers
 ```powershell
 C:> Get-SQLServerLink -Instance <mssql_instance> -Verbose
