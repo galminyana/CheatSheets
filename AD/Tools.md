@@ -2,11 +2,11 @@
 
 - [gwmi Commands](#gwmi-commands)
 - [Schedule Tasks in Remote Computer](#schedule-tasks-in-remote-computer)
-- [`Invoke-PowerShellTcp.ps1`](#-invoke-powershelltcpps1-)
-- [`Find-PSRemotingLocalAdminAccess.ps1`](#-find-psremotinglocaladminaccessps1-)
-- [`Find-WMILocalAdminAccess.ps1`](#-find-wmilocaladminaccessps1-)
-- [Enter-PSSession (cmdlet)](#enter-pssession--cmdlet-)
-- [Invoke-Command (cmdlet)](#invoke-command--cmdlet-)
+- [Invoke-PowerShellTcp.ps1](#-invoke-powershelltcpps1-)
+- [Find-PSRemotingLocalAdminAccess.ps1](#-find-psremotinglocaladminaccessps1-)
+- [Find-WMILocalAdminAccess.ps1](#-find-wmilocaladminaccessps1-)
+- [Enter-PSSession](#enter-pssession-)
+- [Invoke-Command](#invoke-command-)
 - [WinRS.exe](#winrsexe)
 - [Loader.exe](#loaderexe)
 - [CMD Intersting Commands](#cmd-intersting-commands)
@@ -90,14 +90,14 @@ Version         : 10.0.14393
 The current user has Local Admin access on: COMPUTER.domain.local
 PS C:>
 ```
-### Enter-PSSession (cmdlet)
+### Enter-PSSession
 ---
 Starts an interactive session with a single remote computer. During the session, the commands that you type run on the remote computer, just as though you were typing directly on the remote computer. You can have only one interactive session at a time.
 ```powershell
 C:> Enter-PSSession <host>
 C:> Enter-PSSession -ComputerName <host>
 ```
-### Invoke-Command (cmdlet)
+### Invoke-Command
 ---
 Runs commands on a local or remote computer and returns all output from the commands, including errors.
 ```powershell
