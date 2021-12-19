@@ -1,21 +1,3 @@
-## Interesting Tools and Tricks
-
-- [gwmi Commands](#gwmi-commands)
-- [Schedule Tasks in Remote Computer](#schedule-tasks-in-remote-computer)
-- [Invoke-PowerShellTcp.ps1](#-invoke-powershelltcpps1-)
-- [Find-PSRemotingLocalAdminAccess.ps1](#-find-psremotinglocaladminaccessps1-)
-- [Find-WMILocalAdminAccess.ps1](#-find-wmilocaladminaccessps1-)
-- [Enter-PSSession](#enter-pssession-)
-- [Invoke-Command](#invoke-command-)
-- [WinRS.exe](#winrsexe)
-- [Loader.exe](#loaderexe)
-- [CMD Intersting Commands](#cmd-intersting-commands)
-    + [Task Scheduling](#task-scheduling)
-    + [Port Redirection](#port-redirection)
-- [File Copy Using Powershell](#file-copy-using-powershell)
-- [Run WMI Commands](#run-wmi-commands)
-- [BloodHound](#bloodhound)
-
 
 ### gwmi Commands
 ---
