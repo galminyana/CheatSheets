@@ -63,6 +63,9 @@ C:> Get-SQLServerLink -Instance <mssql_instance> -Verbose
 ```powershell
 # Find for a Sysadmin attribute on a server
 C:> Get-SQLServerLinkCrawl -Instance <mssql_instance> -Verbose
+
+
+
 ```
 ### Execute Commands
 ---
