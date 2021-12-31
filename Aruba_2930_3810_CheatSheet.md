@@ -203,3 +203,15 @@ To view for specific VLAN with specified address:
 ```markup
 show ip igmp vlan VLAN_ID group IP_ADDR
 ```
+#### Enable IGMP v3
+```markup
+igmp lookup-mode ip
+(config) vlan VLANID ip igmp version 3 
+```
+#### IGMP Debugging
+```markup
+debug destination buffer
+debug ip igmp
+show debug
+show debug buffer | include TXT
+```
