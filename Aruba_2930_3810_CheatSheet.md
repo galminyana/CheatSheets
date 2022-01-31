@@ -215,3 +215,133 @@ debug ip igmp
 show debug
 show debug buffer | include TXT
 ```
+
+### VSF 
+---
+#### Create VSF: Auto-Join / Plug and Play
+Configure one switch with VSF and a second, factory default switch that is connected will join and form a VSF automatically 
+
+**Configure Member 1** – configure one switch with VSF and reboot 
+```markup
+vsf member 1 link 1 b1
+vsf enable domain 2
+```
+**Connnect Member 2** – connect a factory default switch to the VSF port configured on Member 1. 
+After a few brief moments, the VSF will detect the new device, reboot the new switch and join the VSF. 
+
+
+#### Create VSF: Manual configuration
+Configure both VSF members manually 
+
+Assign VSF ports to VSF link 
+Enable VSF domain ID and reboot 
+
+
+**Configure Member 1** – configure member 1 with VSF and reboot 
+```markup
+vsf member 1 link 1 b1
+vsf enable domain 2
+```
+**Configure Member 2** – configure member 2 with VSF and reboot 
+```markup
+vsf member 2 link 1 b1
+vsf enable domain 2
+```
+Connect VSF switches –connect member 1 and 2 configured VFS ports before member 2 finish its boot cycle and validate VSF status after reboot 
+
+#### VSF provisioning – configure one switch with VSF, and manually provision a second switch with: 
+
+Chassis type; called loose provision 
+Chassis type and mac-address; called strict provisioning 
+Connect a second member matching the provisioning 
+
+**Configuring Member 1** – configure one switch with VSF and reboot 
+```markup
+vsf enable domain 1 
+switch(config)# vsf member 1 link 1 1/49,1/50
+switch(config)# vsf member 1 link 2 1/51,1/52
+```
+On Member 1, provision Member 2 – after Member 1 reboots, provision Member 2 for either: 
+
+Loose provision – This scenario is will allow ANY device with matching J# to join the VSF domain for this you will need to get the device J# (you can find it when you execute show running-config) 
+```markup
+switch(config)# vsf member 2 type jl256a 
+switch(config)# vsf member 2 link 1 2/49,2/50 
+switch(config)# vsf member 2 link 2 2/51,2/52 
+```
+Strict provision - This scenario is will only devices with matching J# + MAC to join the VSF domain for this you will need to get the device J# and MAC address (you can find them when you executing show running-config, and show system) 
+```markup
+switch(config)# vsf member 2 type jl256a mac-address e0071b-000002 
+switch(config)# vsf member 2 link 1 2/49,2/50 
+switch(config)# vsf member 2 link 2 2/51,2/52 
+```
+**Connect Member 2** – connect member 2 and validate VSF status after reboot 
+For Member 2 to join the stack it can either be default configuration or pre-provisioned as well 
+
+> To avoid broadcast storms or loops in your network while configuring a VSF, it is recommended to first disconnect or disable all ports you want to add to or remove from the VSF. After you finish configuring the VSF, enable or re-connect the ports.
+
+#### VSF Commands
+```markup
+show vsf 
+show vsf detail 
+show vsf link 
+show vsf link detail 
+vsf member x priority xxx -> If all members have the same priority, the member with the lowest MAC address is selected as Commander
+show running-config 
+
+#Removing and shutting down a VSF member 
+vsf member <x> remove 
+
+#Shutting down a member 
+vsf member <x> shutdown 
+
+#Commander failover to the Standby
+redundancy switchover
+```
+#### Replace VSF Member
+
+Shutdown or power down the affected member
+```markup
+vsf member <x> shutdown 
+````
+Physically disconnect all VSF links 
+
+**Auto**
+
+From the Commander, remove VSF related port/link configuration for the old member in the stack 
+```markup
+no vsf member 2 link 1 2/b5
+```
+From the Commander, remove the module (via software) that the VSF link was configured for the old member 
+```markup
+no module 2/b
+```
+From the Commander, loose (or strict, adding mac-address) provision the new member in the stack 
+```markup
+vsf member 2 type J9850A <optional mac-address>
+```
+Connect the new, factory default member, to the port where previous old member was connected 
+
+New VSF member will reboot and join the VSF stack through plug-n-play 
+
+Strict
+
+If the member is to be replaced with a different model, the member must first be removed from the configuration
+```markup
+vsf member <x> remove
+```
+Once the switch has been shut down, disconnected, or removed from the VSF configuration (if required), use the following command to replace it in the VSF configuration and re-add VSF link port assignments (replace the type and MAC address with your desired values): 
+```markup
+switch(config)# vsf member 6 type jl256a mac-address e0071b-000001 
+switch(config)# vsf member 6 link 1 6/49,6/50 
+switch(config)# vsf member 6 link 2 6/51,6/52
+```
+### Recover Switch
+---
+```markup
+erase startup-config - restore the factory default configuration using the console
+copy tftp startup-config 10.1.0.12 xxxxx.cfg
+show config files
+startup-default primary config xxxxx.cfg
+boot system flash primary
+```
