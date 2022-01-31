@@ -237,12 +237,12 @@ Assign VSF ports to VSF link
 Enable VSF domain ID and reboot 
 
 
-**Configure Member 1** – configure member 1 with VSF and reboot 
+##### Configure Member 1 – configure member 1 with VSF and reboot 
 ```markup
 vsf member 1 link 1 b1
 vsf enable domain 2
 ```
-**Configure Member 2** – configure member 2 with VSF and reboot 
+##### Configure Member 2 – configure member 2 with VSF and reboot 
 ```markup
 vsf member 2 link 1 b1
 vsf enable domain 2
@@ -255,7 +255,7 @@ Chassis type; called loose provision
 Chassis type and mac-address; called strict provisioning 
 Connect a second member matching the provisioning 
 
-**Configuring Member 1** – configure one switch with VSF and reboot 
+##### Configuring Member 1 – configure one switch with VSF and reboot 
 ```markup
 vsf enable domain 1 
 switch(config)# vsf member 1 link 1 1/49,1/50
@@ -275,7 +275,7 @@ switch(config)# vsf member 2 type jl256a mac-address e0071b-000002
 switch(config)# vsf member 2 link 1 2/49,2/50 
 switch(config)# vsf member 2 link 2 2/51,2/52 
 ```
-**Connect Member 2** – connect member 2 and validate VSF status after reboot 
+##### Connect Member 2 – connect member 2 and validate VSF status after reboot 
 For Member 2 to join the stack it can either be default configuration or pre-provisioned as well 
 
 > To avoid broadcast storms or loops in your network while configuring a VSF, it is recommended to first disconnect or disable all ports you want to add to or remove from the VSF. After you finish configuring the VSF, enable or re-connect the ports.
@@ -306,7 +306,7 @@ vsf member <x> shutdown
 ````
 Physically disconnect all VSF links 
 
-**Auto**
+##### Auto
 
 From the Commander, remove VSF related port/link configuration for the old member in the stack 
 ```markup
@@ -324,7 +324,7 @@ Connect the new, factory default member, to the port where previous old member w
 
 New VSF member will reboot and join the VSF stack through plug-n-play 
 
-Strict
+##### Strict
 
 If the member is to be replaced with a different model, the member must first be removed from the configuration
 ```markup
