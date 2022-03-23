@@ -9,7 +9,7 @@
 | `cluster list` | Show all cluster members info | 
 | `system boot-image` | Show/make active unit images |
 
-## Deal with boot images
+### Deal with boot images
 ```markup
 [appadmin@CPPM]# system boot-image
 Usage:
@@ -20,7 +20,23 @@ Where,
                        with [-l] option in front of an entry
 [appadmin@CPPM]#
 ```
-## Routes
+### CLI Update/Upgrade
+```markup
+# system upgrade
+
+Usage:
+    system upgrade user@hostname:/<filename> [-w] [-l] [-L]
+    system upgrade http(s)://hostname/<filename> [-w] [-l] [-L]
+    system upgrade <filename> [-w] [-l] [-L]
+
+    -w   -- restore last 1 week of access tracker records after upgrade
+    -l   -- restore all access tracker records from this version
+    -L   -- do not backup or restore access tracker records from this version
+
+    If none of the options above are provided, access tracker records are backed up
+    but will not be restored by default.
+```
+### Routes
 ```markup
 network ip add <mgmt|data|greN> [-i <id>] <[-s <SrcAddr>] [-d <DestAddr>]> [-g <ViaAddr>]
 ```
