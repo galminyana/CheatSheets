@@ -48,4 +48,19 @@ Result Example:
 ```powershell
 C> Import-Module AADInternals.psd1 -Verbose
 ```
-
+#### Get Tenant Name, Authentication, Brand Name, and Domain Name
+```powershell
+C> Get-AADIntLoginInformation -UserName [USER]@[DOMAIN].onmicrosoft.com
+```
+#### Get Tenant ID
+```powershell
+C> Get-AADIntTenantID -Domain [DOMAIN].onmicrosoft.com
+```
+#### Get Tenant Domains
+```powershell
+C> Get-AADIntTenantDomains -Domain [DOMAIN].onmicrosoft.com
+```
+#### Get All Info
+```powershell
+C> Get-AADIntReconAsOutsider -DomainName [DOMAIN].onmicrosoft.com
+```
