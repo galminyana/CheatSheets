@@ -8,7 +8,7 @@ Username can be whatever value, domain, the one we want to check. Returns a XML 
 https://login.microsoftonline.com/getuserrealm.srf?login=[USERNAME@DOMAIN]&xml=1
 
 Result Example:
-```markup
+```xml
 <RealmInfo Success="true">
   <State>4</State>
   <UserState>1</UserState>
@@ -22,7 +22,7 @@ Result Example:
 </RealmInfo>
 ```
 Non existing Domain, returns something like this:
-```markup
+```xml
 <RealmInfo Success="true">
   <State>4</State>
   <UserState>1</UserState>
@@ -37,7 +37,7 @@ Replace DOMAIN with the domain to recon:
 https://login.microsoftonline.com/[DOMAIN]/.well-known/openid-configuration
 
 Result Example:
-```markup
+```xml
 
 ```
 
