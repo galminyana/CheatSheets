@@ -64,3 +64,18 @@ C> Get-AADIntTenantDomains -Domain [DOMAIN].onmicrosoft.com
 ```powershell
 C> Get-AADIntReconAsOutsider -DomainName [DOMAIN].onmicrosoft.com
 ```
+
+### MicroBuster
+---
+
+```powershell
+C> Import-Module .\MicroBurst.psm1   
+```
+#### Enumerate Subdomains
+```powershell
+C> Invoke-EnumerateAzureSubDomains -Base microsoft
+```
+#### Enumerate Shared Blobs
+```powershell
+C> Invoke-EnumerateAzureBlobs -Base microsoft
+```
