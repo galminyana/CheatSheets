@@ -104,6 +104,7 @@ C> Get-AzureADMSGroup | ?{$_.GroupTypes -eq 'DynamicMembership'}
 
 #### Invite USer to the Tenant
 C>  New-AzureADMSInvitation -InvitedUserDisplayName "HackerInvited69" -InvitedUserEmailAddress "USERDOMAIN.onmicrosoft.com" -InviteRedirectUrl https://portal.azure.com -SendInvitationMessage $true
+#   Then with the Invite Redeem URL returned by the CMDlet execution, go there and login as the user invited to accept
 ```  
 
 ### Az Module
