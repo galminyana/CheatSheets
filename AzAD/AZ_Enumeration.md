@@ -47,35 +47,44 @@ Result Example:
 
 ```powershell
 C> Import-Module AADInternals.psd1 -Verbose
-```
+
 #### Get Tenant Name, Authentication, Brand Name, and Domain Name
-```powershell
 C> Get-AADIntLoginInformation -UserName [USER]@[DOMAIN].onmicrosoft.com
-```
+
 #### Get Tenant ID
-```powershell
 C> Get-AADIntTenantID -Domain [DOMAIN].onmicrosoft.com
-```
+
 #### Get Tenant Domains
-```powershell
 C> Get-AADIntTenantDomains -Domain [DOMAIN].onmicrosoft.com
-```
+
 #### Get All Info
-```powershell
 C> Get-AADIntReconAsOutsider -DomainName [DOMAIN].onmicrosoft.com
 ```
 
 ### MicroBuster
 ---
-
 ```powershell
 C> Import-Module .\MicroBurst.psm1   
-```
+
 #### Enumerate Subdomains
-```powershell
 C> Invoke-EnumerateAzureSubDomains -Base microsoft
-```
+
 #### Enumerate Shared Blobs
-```powershell
 C> Invoke-EnumerateAzureBlobs -Base microsoft
 ```
+
+### AzureAD Module
+---
+```powershell
+#### Get all App obejects registered with the current Tenant
+C> Get-AzureADApplication -All $true
+
+#### Get all details about an app
+C> Get-AzureADApplication -ObjectId <id> | fl *
+
+#### Get an app based on the display name
+C> Get-AzureADApplication -All $true | ?{$_.DisplayName -match "name"}
+
+### Show apps with an application password (password not shown)
+C> Get-AzureADApplicationPAsswordCredential
+```  
