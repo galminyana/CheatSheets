@@ -115,7 +115,7 @@ C> $password = ConvertTo-SecureString 'PASSWORD' -AsPlainText -Force
 C> $creds = New-Object System.Management.Automation.PSCredential('USER@DOMAIN.onmicrosoft.com', $password)
 C> Connect-AzAccount -Credential $creds
 
-### List resources where USEr has access
+### List resources where User has access
 C> Get-AzResource
 
 # If the user does not have access, the following exception arises
@@ -126,8 +126,12 @@ C> Get-AzResource
 #        + CategoryInfo          : CloseError: (:) [Get-AzResource], ValidationException
 #        + FullyQualifiedErrorId : Microsoft.Azure.Commands.ResourceManager.Cmdlets.Implementation.GetAzureResourceCmdlet
 
-### 
+## Also, JSON files in the .Azure folder in user profile, is used to store credentials for Azure. Always protect this folder
 
+### Enumerate Azure resources accessible to an enterprise application 
+C> Get-AzResource
+
+### 
 ```
 ### AzureADPreview
 ---
