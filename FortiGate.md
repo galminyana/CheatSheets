@@ -106,3 +106,15 @@ HD logging space usage for vdom "root": 268600MB/354422MB
 # get system ha status
 # execute ha manage 0 admin
 ```
+
+### Enable TLS versions
+---
+```markup
+# config system global
+    set admin-https-ssl-versions  (shift + ?)           <----- To list down the available tls version.
+tlsv1-0    TLS 1.0.
+tlsv1-1    TLS 1.1.
+tlsv1-2    TLS 1.2.
+    set admin-https-ssl-versions  tlsv1-2                <----- with this setting, only tls 1.2 is allowed.
+end
+```
