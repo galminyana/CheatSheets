@@ -1,0 +1,250 @@
+<html>
+<head>
+<title>P&aacute;gina Personal de Guillem - Entidad Emisora de Certificados Digitales</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<table width="98%" border="0" align="center" bgcolor="#99CCFF">
+  <tr align="center" valign="middle"> 
+    <td width="10%" height="30"><font size="-1"><a href="../../inicio.html">Inicio</a></font></td>
+    <td width="10%" height="30"><font size="-1"><a href="../../gnulinux/inicio.html">GNU/Linux</a></font></td>
+    <td width="10%" height="30"><font size="-1"><a href="../../equipos/inicio.html">Equipos</a></font></td>
+    <td width="10%" height="30"><font size="-1"><a href="../../programas/inicio.html">Programas</a></font></td>
+    <td width="10%" height="30"><font size="-1"><a href="../../ucontroladores/inicio.html">uControladores</a></font></td>
+    <td width="10%" height="30"><font size="-1"><a href="../../robotica/inicio.html">Rob&oacute;tica</a></font></td>
+    <td width="10%" height="30"><font size="-1"><a href="../../enlaces/inicio.html">Enlaces</a></font></td>
+    <td width="10%" height="30"><font size="-1"><a href="../../sobremi/inicio.html">El 
+      Autor </a></font></td>
+  </tr>
+</table>
+<table width="98%" border="0" align="center">
+  <tr>
+    <td valign="top">
+      <p>&nbsp;</p>
+      <p><font size="+1"><b><u>Entidad Emisora de Certificados Digitales</u></b></font></p>
+      <p><u><b>Introducci&oacute;n</b></u></p>
+      <p>El protocolo SSL (Secure Sockets Layer) fue creado por Netscape para 
+        asegurar las comunicaciones entre servidores web y los navegadores. Se 
+        trata de un protocolo est&aacute;ndar, que utiliza cifrado de clave sim&eacute;trica 
+        y de clave p&uacute;blica con la finalidad de proporcionar una conexi&oacute;n 
+        segura entre un cliente y un servidor. </p>
+      <p>SSL proporciona tres servicios b&aacute;sicos de seguridad:</p>
+      <ul>
+        <li>Privacidad en la comunicaci&oacute;n, mediante una combinaci&oacute;n 
+          de cifrado mediante clave privada y clave p&uacute;blica. Todo el tr&ntilde;&aacute;fico 
+          entre un cliente SSL y un servidor SSL se cifra mediante una clave, 
+          negociando el algoritmo de cifrado en el establecimiento y configuraci&oacute;n 
+          de la sesi&oacute;n.
+        <li>Integridad en la comunicaci&oacute;n, para asegurar que la comunicaci&oacute;n 
+          no se ve alterada. Para ello se utilizan claves p&uacute;blicas, privadas 
+          y algoritmos hash.
+        <li>Autentificaci&oacute;n m&uacute;tua entre el cliente y el servidor, 
+          para asegurar que cada uno es quien dice ser. Cliente y servidor se 
+          identifican mediante certificados de clave p&uacute;blica.
+      </ul>
+      <p>A continuaci&oacute;n se explica como utilizar el protocolo SSL, utilizando 
+        las herramientas proporcionadas por <a href="http://www.openssl.org">OpenSSL</a>. 
+        Se explicar&aacute; como crear una autoridad cerficadora (CA), como solicitar 
+        certificados a la CA y como obtener informaci&oacute;n de los certificados. 
+        En ning&uacute;n momento lo explicado a continuaci&oacute;n pretende ser 
+        un manual de como utilizarlo con total garant&iacute;a. Para ello es necesario 
+        complementarlo con otros documentos en la p&aacute;gina web del Proyecto 
+        OpenSSL. </p>
+      <p><u><b>Configuraci&oacute;n de la Entidad Certificadora</b></u></p>
+      <p>Un entidad emisora de certificados nos permitir&aacute; que todos aquellos 
+        clientes que tengan instalado el certificado de la CA, confiar&aacute;n 
+        autom&aacute;ticamente en los certificados que sean emitidos (firmados) 
+        por la CA. Tambi&eacute;n los certificados que hayan sido invalidados 
+        (revocados) poor la CA dejar&aacute;n de ser de confianza en los clientes.</p>
+      <p>Los pasos a seguir para crear una entidad certificadora son:</p>
+      <p>1.- Creaci&oacute;n de la estructura de la estructura de directorios 
+        necesaria, en la ruta donde se desee. En este caso en /etc/sslCA.</p>
+      <table width="80%" border="0" align="center">
+        <tr>
+          <td bgcolor="#CCCCCC"> 
+            <p>$ cd /etc/sslCA<br>
+              $ mkdir certs; mkdir private<br>
+              $ chmod 700 private<br>
+              $ echo '01' &gt; serial<br>
+              $ touch index.txt</p>
+            </td>
+        </tr>
+      </table>
+      <p>2.- Modificar el <a href="ficheros/openssl/openssl.cnf">archivo de configuraci&oacute;n</a> 
+        de openssl seg&uacute;n nuestras necesidades.</p>
+      <p>3.- En el directorio /etc/sslCA/private generamos la clave privada. El 
+        par&aacute;metro <i>genrsa</i> indica que deseamos generar una clave privada 
+        RSA, <i>-des3</i> que la clave privada sea cifrada con el algoritmo Triple 
+        DES y que se establezca una contrase&ntilde;a, <i>-out</i> indica el fichero 
+        donde almacenar la clave, y <i>&lt;tama&ntilde;o&gt;</i> es el tama&ntilde;o 
+        de la clave a generar en bits (1024 o 2048 son suficiente en la mayoria 
+        de casos). El fichero generado debe ser de lectura &uacute;nicamente para 
+        el usuario.</p>
+      <table width="80%" border="0" align="center">
+        <tr>
+          <td bgcolor="#CCCCCC">$ cd /etc/sslCA/private<br>
+            $ openssl genrsa -des3 -out CA.key &lt;tama&ntilde;o&gt;</td>
+        </tr>
+      </table>
+      <p>4.- Generamos el certificado de la entidad emisora en el directorio /etc/sslCA/certs. 
+        El par&aacute;metro <i>req</i> nos permitir&aacute; crear (en este caso) 
+        un certificado digital auto firmado, <i>-new</i> crea una nueva petici&oacute;n 
+        de certificado, <i>-key</i> indica el fichero de donde obtener la clave 
+        privada, <i>-x509</i> genera un certificado autofirmado, <i>-days</i> 
+        indica el n&uacute;mero de dias de validez del certificado cuando se especifica 
+        la opci&oacute;n <i>-x509</i>, <i>-out</i> fichero de salida de la petici&oacute;n.</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl req -new -key CA.key -x509 -days 3650 
+            -out ../certs/CA.crt</td>
+        </tr>
+      </table>
+      <p>Los datos que solicitar&aacute;n son los siguientes:</p>
+      <ul>
+        <li>Country Name: 2 letras del pais (ES)
+        <li>State or Province Name
+        <li>Locality Name
+        <li>Organization Name: Ejemplo de Autoridad
+        <li>Organizational Unit Name: Certificate Authority
+        <li>Common Name: Ejemplo de Autoridad CA
+        <li>Email Address: CA@ejemplo.net
+      </ul>
+      <p>En estos momentos tenemos generada la clave privada y el certificado 
+        raiz de la entidad emisora. Despu&eacute;s de realizar una copia de seguridad 
+        y poner a salvo la clave privada (en un CD-Rom y utilizarla solamente 
+        cuando se haya de firmar certificados), necesitamos generar la huella 
+        digital de certificado (fingerprint) mediante el siguiente comando:</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl x509 -fingerprint -md5 -noout -in CA.crt</td>
+        </tr>
+      </table>
+      <p>La opci&oacute;n x509 se utiliza para obtener informaci&oacute;n del 
+        certificado, -fingerprint genera la huella digital, -md5 genera la huella 
+        en MD5 (se pueden especificar otras opciones como -sha1, -md2, etc...), 
+        -noout evita que se imprima por pantalla el certificado, -in el certificado 
+        del que generar la huella. Hay que tener presente, que Netscape por ejemplo, 
+        valida las huellas en formato MD5, mientras que Internet Explorer las 
+        utiliza con SHA1.</p>
+      <p><u><b>Crear peticiones para firmar certificados, y firmar certificados 
+        con nuestra Entidad Certificadora</b></u></p>
+      <p>Se trata como crear claves mediante OpenSSL, generar una petici&oacute;n 
+        de certificado (CSR) y generar un certificado sin alterar los campos de 
+        la CSR. Los certificados creados pueden ser utilizados en servidores de 
+        correo, de web, en clientes de correo electr&oacute;nico y como m&eacute;todo 
+        de validaci&oacute;n en otras aplicaciones.</p>
+      <p>1.- Crear la clave primaria. en este punto se debe decidir si proteger 
+        la clave primaria con una contrase&ntilde;a o no. En el caso de que el 
+        certificado vaya a utilizarse en un servidor Web Apache, si la clave privada 
+        se protege con contrase&ntilde;a, esta se deber&agrave; introducir cada 
+        vez que se reinicie el servicio. Se proporcionan los comandos para crear 
+        la clave con contrase&ntilde;a y si ella. Sin contrase&ntilde;a:</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl genrsa -out /etc/sslCA/private/new.key 
+            &lt;tama&ntilde;o_clave&gt; </td>
+        </tr>
+      </table>
+      <p>Y con contrase&ntilde;a:</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl genrsa -des3 -out /etc/sslCA/private/new.key 
+            &lt;tama&ntilde;o_clave&gt; </td>
+        </tr>
+      </table>
+      <p>2.- Creaci&oacute;n de la petici&oacute;n de certificado. En este caso 
+        el usuario que genera la petici&oacute;n debe rellenar los campos anteriores 
+        teniendo presente a que se va a destinar el certificado, por ser necesario 
+        seg&uacute;n el campo introducir valores concretos en campos determinados 
+        (bien la direcci&oacute;n URL si se va a destinar a un servidor web, bien 
+        la direcci&oacute;n de correo si se va a utilizar para correo-e en el 
+        campo CN)</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl req -new -key /etc/sslCA/private/new.key 
+            -out new.csr</td>
+        </tr>
+      </table>
+      <p>El usuario debe hacer llegar la petici&oacute;n CSR, para que pueda ser 
+        firmada despu&eacute;s de que nos aseguremos que realmente la petici&oacute;n 
+        que tenemos es v&aacute;lida. La firma se realiza con el siguiente comando, 
+        creando un certificado digital v&aacute;lido para un a&ntilde;o:</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl x509 -req -days 365 -in new.csr -CA 
+            CA.crt -CAkey CA.key -CAcreateserial -out new.crt</td>
+        </tr>
+      </table>
+      <p><u><b>Obtener informaci&oacute;n de un Certificado</b></u></p>
+      <p>Se explican las opciones para obtener informaci&oacute;n diversa de un 
+        certificado digital. La linea de comandos necesaria para la obtenci&oacute;n 
+        de informaci&oacute;n es:</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl x509 -&lt;opcion&gt; -in certificado.crt 
+            -noout </td>
+        </tr>
+      </table>
+      <p>El par&aacute;metro <i>-noout</i> evita que se imprima por pantalla el 
+        certificado. Las Opciones pueden ser:</p>
+      <ul>
+        <li>serial: muestra el valor del n&uacute;mero de serie 
+        <li>hash: muestra el valor de hash 
+        <li>subject: muestra los valores DN del propietario del certificado 
+        <li>issuer: muestra los valores DN de la Entidad que ha firmado el certificado 
+        <li>email: muestra la direcci&oacute;n de correo electr&oacute;nico del 
+          propietario del certificado 
+        <li>startdate, enddate, dates: cuando empieza la validez del certificado 
+          y cuando finaliza 
+        <li>purpose: prop&oacute;sitos del certificado 
+        <li>pubkey: imprime la clave p&uacute;blica del certificado 
+        <li>fingerprint: huella digital 
+        <li>alias: alias del certificado 
+        <li>text: imprime todo 
+      </ul>
+      <p><u><b>Conversion de un Certificado en diferentes formatos</b></u></p>
+      <p>A partir del par clave privada (.key) y el certificado (.crt), formato 
+        PEM, podemos convertirlo al formato PKCS12, tambi&eacute;n conocido como 
+        ficheros PFX. Almacena en un formato binario las claves privadas, p&uacute;blicas 
+        y el certificado. La conversi&oacute;n se realiza mediante el comando:</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl pkcs12 -export -in certs/new.crt -inkey 
+            private/new.key -out new.p12 [-name nombre]</td>
+        </tr>
+      </table>
+      <p>Para convertir de PKCS12 a PEM:</p>
+      <p>1.- Obtenemos la clave p&uacute;blica del certificado</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl pkcs12 -export -in new.p12 -clcerts 
+            -nokeys -out certs/out.crt</td>
+        </tr>
+      </table>
+      <p>2.- Obtenemos la clave privada del certificado, utilizando el siguiente 
+        comando para obtener la clave protegida mediante contrase&ntilde;a</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl pkcs12 -nocerts -in new.p12 -out private/new.key</td>
+        </tr>
+      </table>
+      <p>o utilizando el siguiente comando para obtenerla con contrase&ntilde;a:</p>
+      <table width="80%" border="0" align="center">
+        <tr> 
+          <td bgcolor="#CCCCCC">$ openssl pkcs12 -nocerts -in new.p12 -out private/new.key 
+            -nodes </td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
+      <p><u><b>Revocar Certificados con la Autoridad Certificadora</b></u></p>
+      <p>&gt;FIXME&gt;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>
