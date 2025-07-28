@@ -106,7 +106,19 @@ HD logging space usage for vdom "root": 268600MB/354422MB
 # get system ha status
 # execute ha manage 0 admin
 ```
-
+Check the FortiGate HA status in the CLI:
+ ```markup
+# get system ha status
+# diagnose system ha checksum cluster
+ ```
+Force the Backup unit to synchronize with the Primary unit:
+ ```markup
+# execute ha synchronize start 
+```
+Recalculation of checksums. 1st the Primary unit then the Backup:
+ ```markup
+# diagnose system ha checksum recalculate 
+ ```
 ### Enable TLS versions
 ---
 ```markup
